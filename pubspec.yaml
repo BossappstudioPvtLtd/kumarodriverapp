@@ -52,6 +52,11 @@ dependencies:
   easy_localization: ^3.0.7
   flutter_tts: ^3.3.0 
   language_picker: ^0.4.3
+  http: ^1.2.1
+  provider: ^6.1.2
+  screen_brightness: ^1.0.1
+  nb_utils: ^7.0.2
+  in_app_purchase: ^3.2.0
   
 dev_dependencies:
   flutter_test:
@@ -80,6 +85,7 @@ flutter:
      - assets/images/
      - assets/logo/
      - assets/avatar/
+     - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

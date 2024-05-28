@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, deprecated_member_use
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import 'package:kumari_drivers/BottamNavigation/profile_edt.dart';
 import 'package:kumari_drivers/Settings/settingscreen.dart';
 import 'package:kumari_drivers/components/Text_Edt.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
+import 'package:kumari_drivers/components/screen_bright.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -170,11 +172,16 @@ class ProfilePageState extends State<ProfilePage> {
                                           shape: const CircleBorder(),
                                           elevation: 6,
                                           child: Icon(
-                                            Icons.info_outline,
+                                            Icons.wb_sunny_outlined,
                                             size: 30,
                                             color: Colors.green[900],
                                           ),
-                                          onPressed: () {}),
+                                          onPressed: () {showCupertinoModalPopup(
+                              context: context,
+                              builder: (builder) {
+                                return const ScreanBrightness();
+                              });
+                        }),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -193,14 +200,14 @@ class ProfilePageState extends State<ProfilePage> {
                                                     backgroundColor:
                                                         Colors.black87,
                                                     elevation: 20,
-                                                    title: const TextEdt(
-                                                      text: 'Email Sign Out',
+                                                    title:  TextEdt(
+                                                      text: 'Email Sign Out'.tr(),
                                                       color: Colors.white,
                                                       fontSize: null,
                                                     ),
-                                                    content: const TextEdt(
+                                                    content:  TextEdt(
                                                       text:
-                                                          'Do you want to continue with sign out?',
+                                                          'Do you want to continue with sign out?'.tr(),
                                                       fontSize: null,
                                                       color: Colors.grey,
                                                     ),
@@ -218,7 +225,7 @@ class ProfilePageState extends State<ProfilePage> {
                                                             },
                                                             elevationsize: 20,
                                                             text:
-                                                                '   Cancel    ',
+                                                                '   Cancel    '.tr(),
                                                             fontSize: 17,
                                                             containerheight: 40,
                                                             containerwidth: 100,
@@ -237,7 +244,7 @@ class ProfilePageState extends State<ProfilePage> {
                                                                   .pop();
                                                             },
                                                             elevationsize: 20,
-                                                            text: 'Continue',
+                                                            text: 'Continue'.tr(),
                                                             fontSize: 17,
                                                             containerheight: 40,
                                                             containerwidth: 100,
@@ -288,37 +295,37 @@ class ProfilePageState extends State<ProfilePage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      containerList("Current Location",
+                                      containerList("Current Location".tr(),
                                           _locationMessage, Icons.my_location),
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      containerList("User Name",
+                                      containerList("User Name".tr(),
                                           "${data['name']}", Icons.person),
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      containerList("User Email",
+                                      containerList("User Email".tr(),
                                           "${data['email']}", Icons.email),
                                       const SizedBox(
                                         height: 15,
                                       ),
                                       containerList(
-                                          "Phone Number",
+                                          "Phone Number".tr(),
                                           "${data['phone']}",
                                           Icons.phone_android_rounded),
                                       const SizedBox(
                                         height: 15,
                                       ),
                                       containerList(
-                                          "Car Model",
+                                          "Car Model".tr(),
                                           "${data['car_details']['carModel']}",
                                           Icons.local_taxi),
                                       const SizedBox(
                                         height: 15,
                                       ),
                                       containerList(
-                                          "Car seats",
+                                          "Car Seats".tr(),
                                           "${data['car_details']['carSeats']}",
                                           Icons
                                               .airline_seat_recline_normal_rounded),
@@ -326,7 +333,7 @@ class ProfilePageState extends State<ProfilePage> {
                                         height: 15,
                                       ),
                                       containerList(
-                                          "car Number",
+                                          "Car Number".tr(),
                                           "${data['car_details']['carNumber']}",
                                           Icons.numbers_outlined),
                                       const SizedBox(

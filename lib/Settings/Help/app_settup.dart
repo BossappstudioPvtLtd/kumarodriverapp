@@ -35,16 +35,16 @@ class AppSettUpState extends State<AppSettUp> {
 
   final TextEditingController startridecontroller = TextEditingController(
       text:
-          'Starting the RideOnce the passenger is in the car, start the trip in the app.Confirm the destination and follow the suggested route unless the passenger requests a specific route..'
+          'Starting the RideOnce the passenger is in the car, start the trip in the app.Confirm the destination and follow the suggested route unless the passenger requests a specific route.'
               .tr());
 
   final TextEditingController duringcontroller = TextEditingController(
       text:
-          'During the RideDrive safely and adhere to traffic laws.Engage in polite conversation if the passenger is open to it, but respect their preference for quiet if they seem disinterested..'
+          'During the RideDrive safely and adhere to traffic laws.Engage in polite conversation if the passenger is open to it, but respect their preference for quiet if they seem disinterested.'
               .tr());
   final TextEditingController endingcontroller = TextEditingController(
       text:
-          'Ending the RideConfirm arrival at the destination in the app.Ensure the passenger has all their belongings before they leave..'
+          'Ending the RideConfirm arrival at the destination in the app.Ensure the passenger has all their belongings before they leave.'
               .tr());
 
   Language initialLang = Language('en', 'English');
@@ -80,7 +80,7 @@ class AppSettUpState extends State<AppSettUp> {
             height: 20,
           ),
           TextEdt(
-            text: 'Going Online '.tr(),
+            text: 'Going Online'.tr(),
             fontSize: 16,
             color: null,
           ),

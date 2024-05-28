@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:kumari_drivers/Settings/Settings_Components/forward_button.dart';
 
-class SettingItem extends StatelessWidget {
+class SettingItem extends StatefulWidget {
   final String title;
   final Color bgColor;
   final Color iconColor;
   final IconData icon;
   final Function() onTap;
   final String? value;
+  final Widget? child;
   const SettingItem({
     super.key,
     required this.title,
@@ -15,9 +15,14 @@ class SettingItem extends StatelessWidget {
     required this.iconColor,
     required this.icon,
     required this.onTap,
-    this.value,
+    this.value, this.child,
   });
 
+  @override
+  State<SettingItem> createState() => _SettingItemState();
+}
+
+class _SettingItemState extends State<SettingItem> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -33,42 +38,42 @@ class SettingItem extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding:  EdgeInsets.only(left: 10),
               child: Container(
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: bgColor,
+                  color: widget.bgColor,
                 ),
                 child: Icon(
-                  icon,
-                  color: iconColor,
+                  widget.icon,
+                  color: widget.iconColor,
                 ),
               ),
             ),
-            const SizedBox(width: 20),
+             SizedBox(width: 20),
             Text(
-              title,
-              style: const TextStyle(
+              widget.title,
+              style:  TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const Spacer(),
-            value != null
+             Spacer(),
+            widget.value != null
                 ? Text(
-                    value!,
-                    style: const TextStyle(
+                    widget.value!,
+                    style:  TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                     ),
                   )
-                : const SizedBox(),
-            const SizedBox(width: 20),
-            ForwardButton(
-              onTap: onTap,
-            ),
+                :  SizedBox(),
+             SizedBox(width: 20),
+            Container(
+              child:widget.child
+            )
           ],
         ),
       ),

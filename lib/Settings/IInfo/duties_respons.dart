@@ -8,35 +8,26 @@ import 'package:kumari_drivers/components/material_textfield.dart';
 import 'package:kumari_drivers/components/speek_button.dart';
 import 'package:language_picker/languages.dart';
 
-class Managing  extends StatefulWidget {
-  const Managing({super.key});
+class DutiesRsp  extends StatefulWidget {
+  const DutiesRsp({super.key});
 
   @override
-  State<Managing> createState() => ManagingState();
+  State<DutiesRsp> createState() => DutiesRspState();
 }
 
-class ManagingState extends State<Managing> {
-   final TextEditingController farecalculationcontroller = TextEditingController(
+class DutiesRspState extends State<DutiesRsp> {
+   final TextEditingController passengerscontroller = TextEditingController(
       text:
-          'Fare Calculation The app will automatically calculate the fare based on distance, time, and any applicable surcharges (e.g., surge pricing).'
-              .tr());
-  final TextEditingController paymentscontroller = TextEditingController(
-      text:
-          'Receiving Payments Payments are typically processed through the app, with the fare being credited to your account.If the passenger opts to pay in cash (if the app supports this), collect the exact amount and confirm receipt in the app.'  .tr());
+          'Driving Passengers: Transporting passengers to their destinations safely and efficiently.'.tr());
   final TextEditingController servicecontroller = TextEditingController(
       text:
-          'Customer Service Be polite, professional, and helpful.Maintain a clean and comfortable vehicle.g'.tr());
-
-  final TextEditingController trackingcontroller = TextEditingController(
+          'Customer Service: Providing good customer service, assisting passengers with luggage, and handling payments.'.tr());
+           final TextEditingController navigationcontroller = TextEditingController(
       text:
-          'Tracking Earnings Regularly check the “Earnings” section in the app to monitor your income.Understand how much you earn per trip and any deductions (e.g., service fees).' .tr());
+          'Navigation: Knowing the local area well, including alternate routes to avoid traffic or road closures.'.tr());
+  final TextEditingController maintenanceController =TextEditingController(text: "Vehicle Maintenance: Keeping the cab clean and in good working condition, performing regular maintenance checks.".tr());
 
-  final TextEditingController updatedcontroller = TextEditingController(
-      text:
-          'Staying UpdatedApp Updates Regularly update the app to the latest version to access new features and security improvements.Policy Changes Stay informed about any changes in the app’s policies, fare structures, or terms of service.Driver Support Utilize the app’s help center or customer support for any issues or questions.Participate in any available training or information sessions offered by the app company.'
-              .tr());
- 
-
+    
   Language initialLang = Language('en', 'English');
   var langList = [];
   var selectedLang;
@@ -59,7 +50,7 @@ class ManagingState extends State<Managing> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-          title: Text("Managing".tr()),
+          title: Text("Duties and Responsibilities".tr()),
           backgroundColor: Colors.white),
       backgroundColor: Colors.white,
       body: ListView(
@@ -69,7 +60,7 @@ class ManagingState extends State<Managing> {
             height: 20,
           ),
           TextEdt(
-            text: 'Farecal Culation'.tr(),
+            text: 'Driving Passengers'.tr(),
             fontSize: 16,
             color: null,
           ),
@@ -77,7 +68,7 @@ class ManagingState extends State<Managing> {
             height: 10,
           ),
           MaterialTextField(
-            controller: farecalculationcontroller,
+            controller: passengerscontroller,
           ),
           const SizedBox(
             height: 20,
@@ -85,38 +76,13 @@ class ManagingState extends State<Managing> {
           InkWell(
             onTap: () {
               setState(() {
-                tts.speak(farecalculationcontroller.text);
+                tts.speak(passengerscontroller.text);
               });
             },
             child: const SpeakButton(),
           ),
           TextEdt(
-            text: 'Receiving Payments'.tr(),
-            fontSize: 16,
-            color: null,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          MaterialTextField(
-            controller: paymentscontroller,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                tts.speak(paymentscontroller.text);
-              });
-            },
-            child: const SpeakButton(),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextEdt(
-            text: 'Maintaining a Good Rating'.tr(),
+            text: 'Customer Service'.tr(),
             fontSize: 16,
             color: null,
           ),
@@ -138,15 +104,18 @@ class ManagingState extends State<Managing> {
             child: const SpeakButton(),
           ),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
           TextEdt(
-            text: 'Tracking Earnings'.tr(),
+            text: 'Navigation'.tr(),
             fontSize: 16,
             color: null,
           ),
+          const SizedBox(
+            height: 10,
+          ),
           MaterialTextField(
-            controller: trackingcontroller,
+            controller: navigationcontroller,
           ),
           const SizedBox(
             height: 20,
@@ -154,39 +123,36 @@ class ManagingState extends State<Managing> {
           InkWell(
             onTap: () {
               setState(() {
-                tts.speak(trackingcontroller.text);
+                tts.speak(navigationcontroller.text);
               });
             },
             child: const SpeakButton(),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextEdt(
-            text: 'Tracking Earnings'.tr(),
-            fontSize: 16,
-            color: null,
-          ),
-          MaterialTextField(
-            controller: updatedcontroller,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                tts.speak(updatedcontroller.text);
-              });
-            },
-            child: const SpeakButton(),
-          ),
-          const SizedBox(
-            height: 10,
           ),
          
           const SizedBox(
             height: 10,
+          ),
+          TextEdt(
+            text: 'Vehicle Maintenance'.tr(),
+            fontSize: 16,
+            color: null,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          MaterialTextField(
+            controller: maintenanceController,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                tts.speak(maintenanceController.text);
+              });
+            },
+            child: const SpeakButton(),
           ),
         ],
       ),

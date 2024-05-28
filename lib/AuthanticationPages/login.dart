@@ -91,7 +91,7 @@ class LoginScreenState extends State<LoginScreen>
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) =>
-          LoadingDialog(messageText: "Allowing you to Login..."),
+          LoadingDialog(messageText: "Allowing you to Login."),
     );
 
     final User? userFirebase = (await FirebaseAuth.instance

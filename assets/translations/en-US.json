@@ -1,0 +1,187 @@
+{
+    "Settings": "Settings",
+    "Account":"Account",
+    "Dark Mode":"Dark Mode",
+    "Language":"Language",
+    "Notifications":"Notifications",
+    "Help":"Help",
+    "Info":"Info",
+    "App SettUp":"App SettUp",
+    "Ride":"Ride",
+    "Managing":"Managing",
+    "Accident ":"Accident",
+
+
+   "Responsibilities":"Responsibilities",
+   "Conditions":"Conditions",
+   "Setting Up The App":"Setting Up The App",
+
+
+
+
+
+    "Email Sign Out":"Email Sign Out",
+    "Do you want to continue with sign out?":"Do you want to continue with sign out?",
+    "   Cancel    ":"   Cancel    ",
+    "Continue":"Continue",
+    "Current Location":"Current Location",
+    "User Name":"User Name",
+    "User Email":"User Email",
+    "Phone Number":"Phone Number",
+    "Car Model":"Car Model",
+    "Car Seats":"Car Seats",
+    "Car Number":"Car Number",
+
+   
+   
+    
+    "Profile Editing":"Profile Editing",
+    "Add your profile":"Add your profile",
+    "Submit":"Submit",
+
+
+    "Home":"Home",
+    "Trips":"Trips",
+    "Profile":"Profile",
+
+
+    "Going Online":"Going Online",
+    "Receiving Ride":"Receiving Ride",
+    "Navigating":"Navigating",
+    "Start Ride":"Start Ride",
+    "During the RideDrive":"During the RideDrive",
+    "Ending the Ride":"Ending the Ride",
+    "Going Online Toggle the status to “Online” to start receiving ride requests.":"Going Online Toggle the status to “Online” to start receiving ride requests.",
+    "Receiving Ride RequestsWhen a ride request comes in, the app will alert you with a sound or vibration.Quickly review the request details (pickup location, estimated fare) and accept or decline it.":"Receiving Ride RequestsWhen a ride request comes in, the app will alert you with a sound or vibration.Quickly review the request details (pickup location, estimated fare) and accept or decline it.",
+    "Navigating to the Pickup Locationapp’s built-in navigation to reach the passenger’s location.Communicate with the passenger if you encounter any issues finding them (e.g., use the in-app messaging or call feature).":"Navigating to the Pickup Locationapp’s built-in navigation to reach the passenger’s location.Communicate with the passenger if you encounter any issues finding them (e.g., use the in-app messaging or call feature).",
+    "Starting the RideOnce the passenger is in the car, start the trip in the app.Confirm the destination and follow the suggested route unless the passenger requests a specific route.":"Starting the RideOnce the passenger is in the car, start the trip in the app.Confirm the destination and follow the suggested route unless the passenger requests a specific route.",
+    "During the RideDrive safely and adhere to traffic laws.Engage in polite conversation if the passenger is open to it, but respect their preference for quiet if they seem disinterested.":"During the RideDrive safely and adhere to traffic laws.Engage in polite conversation if the passenger is open to it, but respect their preference for quiet if they seem disinterested.",
+    "Ending the RideConfirm arrival at the destination in the app.Ensure the passenger has all their belongings before they leave.":"Ending the RideConfirm arrival at the destination in the app.Ensure the passenger has all their belongings before they leave.",
+
+
+
+
+
+    "Download the App":"Download the App",
+    "Create an Account":"Create an Account",
+    "Profile Setup":"Profile Setup",
+    "'Home Screen":"'Home Screen",
+    "Menu Option":"Menu Option",
+    "Download the cab driver app from your smartphone’s app store (e.g., kumari cab Driver, Lyft Driver),":"Download the cab driver app from your smartphone’s app store (e.g., kumari cab Driver, Lyft Driver),",
+    "Create an Account, Sign up using your personal details, email, and phone number.Complete the verification process, which might include submitting documents like your driver’s license, vehicle registration, and insurance.":"Create an Account, Sign up using your personal details, email, and phone number.Complete the verification process, which might include submitting documents like your driver’s license, vehicle registration, and insurance.",
+    "Upload a professional photo of yourself.Enter your vehicle details (make, model, year, and color).Set your preferences for working hours and payment methods":"Upload a professional photo of yourself.Enter your vehicle details (make, model, year, and color).Set your preferences for working hours and payment methods",
+    "Familiarize yourself with the home screen which typically shows your current location, status (online/offline), and nearby ride requests.":"Familiarize yourself with the home screen which typically shows your current location, status (online/offline), and nearby ride requests.",
+    "Explore the menu to find options like trip history, earnings, ratings, and account settings.":"Explore the menu to find options like trip history, earnings, ratings, and account settings.",
+    "Learn how to access notifications for ride requests, updates, and messages from the app support team.":"Learn how to access notifications for ride requests, updates, and messages from the app support team.",
+    
+    
+    
+
+    "Farecal Culation":"Farecal Culation",
+    "Receiving Payments":"Receiving Payments",
+    "Maintaining a Good Rating":"Maintaining a Good Rating",
+    "Tracking Earnings":"Tracking Earnings",
+    "Update":"Update",
+    "Fare Calculation The app will automatically calculate the fare based on distance, time, and any applicable surcharges (e.g., surge pricing).":"Fare Calculation The app will automatically calculate the fare based on distance, time, and any applicable surcharges (e.g., surge pricing).",
+    "Receiving Payments Payments are typically processed through the app, with the fare being credited to your account.If the passenger opts to pay in cash (if the app supports this), collect the exact amount and confirm receipt in the app.":"Receiving Payments Payments are typically processed through the app, with the fare being credited to your account.If the passenger opts to pay in cash (if the app supports this), collect the exact amount and confirm receipt in the app.",
+    "Customer Service Be polite, professional, and helpful.Maintain a clean and comfortable vehicle.g":"Customer Service Be polite, professional, and helpful.Maintain a clean and comfortable vehicle.g",
+    "Tracking Earnings Regularly check the “Earnings” section in the app to monitor your income.Understand how much you earn per trip and any deductions (e.g., service fees).":"Tracking Earnings Regularly check the “Earnings” section in the app to monitor your income.Understand how much you earn per trip and any deductions (e.g., service fees).",
+    "Staying UpdatedApp Updates Regularly update the app to the latest version to access new features and security improvements.Policy Changes Stay informed about any changes in the app’s policies, fare structures, or terms of service.Driver Support Utilize the app’s help center or customer support for any issues or questions.Participate in any available training or information sessions offered by the app company.":"Staying UpdatedApp Updates Regularly update the app to the latest version to access new features and security improvements.Policy Changes Stay informed about any changes in the app’s policies, fare structures, or terms of service.Driver Support Utilize the app’s help center or customer support for any issues or questions.Participate in any available training or information sessions offered by the app company.",
+
+    "Sefty ans Accident":"Sefty ans Accident",
+    "Following Health Guidelines":"Following Health Guidelines",
+    "Safety Features":"Safety Features",
+    "Following Health Guidelines Adhere to any health and safety guidelines provided by the app (e.g., wearing masks, sanitizing the vehicle).":"Following Health Guidelines Adhere to any health and safety guidelines provided by the app (e.g., wearing masks, sanitizing the vehicle).",
+    "Safety Features Familiarize yourself with the app’s safety features, such as emergency assistance or the ability to share your location with trusted contacts.":"Safety Features Familiarize yourself with the app’s safety features, such as emergency assistance or the ability to share your location with trusted contacts.",
+        
+
+
+    
+
+     
+
+    "Requirements":"Requirements",
+    "Duties Responsibilities":"Duties Responsibilities",
+    "Earnings":"Earnings",
+    "Challenges":"Challenges",
+    "Working Conditions":"Working Conditions",
+    "Special Instructions":"Special Instructions",
+    "Safety Instructions":"Safety Instructions",
+    "Communication":"Communication",
+    "Licensing and Certification: Most places require cab drivers to have a special license in addition to a regular drivers license. This often involves:Passing a background check.Completing a taxi driver training program.Passing a written exam and a road test.Obtaining a taxi drivers permit or license.":"Licensing and Certification: Most places require cab drivers to have a special license in addition to a regular drivers license. This often involves:Passing a background check.Completing a taxi driver training program.Passing a written exam and a road test.Obtaining a taxi drivers permit or license.",
+    "Age and Driving Experience: Typically, cab drivers must be at least 21 years old and have a certain amount of driving experience, often 1-3 years.":"Age and Driving Experience: Typically, cab drivers must be at least 21 years old and have a certain amount of driving experience, often 1-3 years.",
+    "Health and Fitness: A medical examination may be required to ensure that the driver is physically capable of operating a taxi safely.":"Health and Fitness: A medical examination may be required to ensure that the driver is physically capable of operating a taxi safely.",
+
+
+    "Duties and Responsibilities":"Duties and Responsibilities",
+    "Driving Passengers":"Driving Passengers",
+    "Customer Service":"Customer Service",
+    "Navigation":"Navigation",
+    "Vehicle Maintenance":"Vehicle Maintenance",
+    "Driving Passengers: Transporting passengers to their destinations safely and efficiently.":"Driving Passengers: Transporting passengers to their destinations safely and efficiently.",
+    "Customer Service: Providing good customer service, assisting passengers with luggage, and handling payments.":"Customer Service: Providing good customer service, assisting passengers with luggage, and handling payments.",
+    "Navigation: Knowing the local area well, including alternate routes to avoid traffic or road closures.":"Navigation: Knowing the local area well, including alternate routes to avoid traffic or road closures.",
+     "Vehicle Maintenance: Keeping the cab clean and in good working condition, performing regular maintenance checks.":"Vehicle Maintenance: Keeping the cab clean and in good working condition, performing regular maintenance checks.",
+
+    "Requirements to Become a Cab Driver":"Requirements to Become a Cab Driver",
+    "Licensing and Certification":"Licensing and Certification",
+    "Age and Driving Experience":"Age and Driving Experience",
+    "Wages":"Wages",
+    "Expenses":"Expenses",
+    "Wages: Earnings can vary widely based on location, hours worked, and whether the driver owns their cab or leases it. Tips can also be a significant part of a cab drivers income.":"Wages: Earnings can vary widely based on location, hours worked, and whether the driver owns their cab or leases it. Tips can also be a significant part of a cab drivers income.",
+    "Expenses: Drivers may be responsible for fuel, maintenance, insurance, and lease fees if they do not own their vehicle.":"Expenses: Drivers may be responsible for fuel, maintenance, insurance, and lease fees if they do not own their vehicle.",
+
+    "Safety":"Safety",
+    "Competition":"Competition",
+    "Passenger Behavior":"Passenger Behavior",
+    "Late-Night Driving":"Late-Night Driving",
+    "Safety: Dealing with potentially dangerous situations, difficult passengers, and the risk of accidents.":"Safety: Dealing with potentially dangerous situations, difficult passengers, and the risk of accidents.",
+    "Competition: Increased competition from ride-sharing services like Uber and Lyft.":"Competition: Increased competition from ride-sharing services like Uber and Lyft.",
+    "Passenger Behavior: Dealing with unruly or aggressive passengers can pose significant safety risks.":"Passenger Behavior: Dealing with unruly or aggressive passengers can pose significant safety risks.",
+    "Late-Night Driving: Driving at night increases the risk of encountering criminal activities or accidents.":"Late-Night Driving: Driving at night increases the risk of encountering criminal activities or accidents.",
+    
+
+    
+    "Working Hours":"Working Hours",
+    "Environment":"Environment",
+    "Benefits":"Benefits",
+    "Flexibility":"Flexibility",
+    "Hours: Cab drivers often work long and irregular hours, including nights, weekends, and holidays.":"Hours: Cab drivers often work long and irregular hours, including nights, weekends, and holidays.",
+    "Environment: They spend most of their time on the road, which can be stressful due to traffic, weather conditions, and dealing with various types of passengers.":"Environment: They spend most of their time on the road, which can be stressful due to traffic, weather conditions, and dealing with various types of passengers.",
+    "Flexibility: Some cab drivers enjoy flexible working hours.":"Flexibility: Some cab drivers enjoy flexible working hours.",
+    "Independence: Drivers often have a significant degree of independence and autonomy.":"Independence: Drivers often have a significant degree of independence and autonomy.",
+    
+
+
+    "Passenger Preferences":"Passenger Preferences",
+    "Assistance Needed":"Assistance Needed",
+    "Special Needs":"Special Needs",
+    "The passenger has mention any special requirements such as mobility issues, need for assistance with luggage, etc.":"The passenger has mention any special requirements such as mobility issues, need for assistance with luggage, etc.",
+    "The passenger will need assistance with luggage at both the pick-up and drop-off locations. Please help with loading and unloading bags.":"The passenger will need assistance with luggage at both the pick-up and drop-off locations. Please help with loading and unloading bags.",
+    "The passenger has mobility issues. Please park as close to the entrance as possible and assist them in and out of the vehicle.If applicable, ensure the wheelchair ramp or other necessary equipment is ready for use.":"The passenger has mobility issues. Please park as close to the entrance as possible and assist them in and out of the vehicle.If applicable, ensure the wheelchair ramp or other necessary equipment is ready for use.",
+    "The passenger is hearing impaired. Please communicate via text message or written notes if necessary.If the passenger speaks a different language, use the translation app [App Name] to facilitate communication.":"The passenger is hearing impaired. Please communicate via text message or written notes if necessary.If the passenger speaks a different language, use the translation app [App Name] to facilitate communication.",
+    
+    
+   
+    "COVID-19 Precautions":"COVID-19 Precautions",
+    "Driving Safety":"Driving Safety",
+    "Passenger Safety":"Passenger Safety",
+    "Vehicle Maintenance:Ensure the vehicle is in excellent working condition.Perform a safety check before the trip, including brakes, lights, tires, and fluid levels.":"Vehicle Maintenance:Ensure the vehicle is in excellent working condition.Perform a safety check before the trip, including brakes, lights, tires, and fluid levels.",
+    "COVID-19 Precautions:Sanitize the vehicle before and after each trip.Ensure passengers wear masks if required.Provide hand sanitizer in the vehicle":"COVID-19 Precautions:Sanitize the vehicle before and after each trip.Ensure passengers wear masks if required.Provide hand sanitizer in the vehicle",
+    "Driving Safety:Always wear your seat belt and ensure all passengers do the same.Adhere to all traffic laws and speed limits.Avoid using your phone while driving; use hands-free options if necessary.":"Driving Safety:Always wear your seat belt and ensure all passengers do the same.Adhere to all traffic laws and speed limits.Avoid using your phone while driving; use hands-free options if necessary.",
+    "Passenger Safety:Assist passengers with entering and exiting the vehicle, especially those with mobility issues.Store luggage securely to prevent movement during transit.Ensure child safety seats are installed and used correctly if transporting young children.":"Passenger Safety:Assist passengers with entering and exiting the vehicle, especially those with mobility issues.Store luggage securely to prevent movement during transit.Ensure child safety seats are installed and used correctly if transporting young children.",
+   
+   
+
+     
+    "During the Trip":"During the Trip",
+    "Emergency Contact":"Emergency Contact",
+    "Report":"Report",
+    "Pre-Trip Communication:On the day of the trip, send a confirmation message to [Insert Contact Person’s Name] at [Insert Phone Number] or [Insert Email Address] at least 30 minutes before the scheduled pickup time.If there are any changes to your schedule or any unexpected delays, inform [Insert Contact Person’s Name] immediately.":"Pre-Trip Communication:On the day of the trip, send a confirmation message to [Insert Contact Person’s Name] at [Insert Phone Number] or [Insert Email Address] at least 30 minutes before the scheduled pickup time.If there are any changes to your schedule or any unexpected delays, inform [Insert Contact Person’s Name] immediately.",
+    "During the Trip:Keep your phone charged and easily accessible for any urgent communication.If you encounter any issues during the trip (e.g., traffic delays, route changes, passenger requests), promptly inform [Insert Contact Person’s Name] at [Insert Phone Number].Use hands-free devices for communication while driving to ensure safety.":"During the Trip:Keep your phone charged and easily accessible for any urgent communication.If you encounter any issues during the trip (e.g., traffic delays, route changes, passenger requests), promptly inform [Insert Contact Person’s Name] at [Insert Phone Number].Use hands-free devices for communication while driving to ensure safety.",
+    "Emergency Contact:In case of an emergency, contact [Insert Name and Phone Number] immediately.Be prepared to provide clear information about the nature of the emergency and your current location.":"Emergency Contact:In case of an emergency, contact [Insert Name and Phone Number] immediately.Be prepared to provide clear information about the nature of the emergency and your current location.",
+    "Post-Trip Communication:After the trip is completed, send a brief message to confirm the successful drop-off of the passenger.Report any incidents or issues encountered during the trip to [Insert Contact Person’s Name] at [Insert Phone Number or Email Address].":"Post-Trip Communication:After the trip is completed, send a brief message to confirm the successful drop-off of the passenger.Report any incidents or issues encountered during the trip to [Insert Contact Person’s Name] at [Insert Phone Number or Email Address].",
+    "Pre-Trip Communication":"Pre-Trip Communication"
+
+
+}
