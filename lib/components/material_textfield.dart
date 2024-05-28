@@ -14,13 +14,13 @@ class MaterialTextFieldState extends State<MaterialTextField> {
     return Material(
       color: Colors.white,
       elevation: 10,
-      borderRadius: BorderRadius.circular(23),
+      borderRadius: BorderRadius.circular(8),
       child: TextField(
         controller: widget.controller,
         maxLines: 5,
         decoration: InputDecoration(
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       ),
     );
   }

@@ -8,23 +8,25 @@ import 'package:kumari_drivers/components/material_textfield.dart';
 import 'package:kumari_drivers/components/speek_button.dart';
 import 'package:language_picker/languages.dart';
 
-class HealthSafety  extends StatefulWidget {
-  const HealthSafety({super.key});
+class Requirements  extends StatefulWidget {
+  const Requirements({super.key});
 
   @override
-  State<HealthSafety> createState() => HealthSafetyState();
+  State<Requirements> createState() => RequirementsState();
 }
 
-class HealthSafetyState extends State<HealthSafety> {
-   final TextEditingController healthguidelinescontroller = TextEditingController(
+class RequirementsState extends State<Requirements> {
+   final TextEditingController certificationcontroller = TextEditingController(
       text:
-          'Following Health Guidelines Adhere to any health and safety guidelines provided by the app (e.g., wearing masks, sanitizing the vehicle).'
-              .tr());
-  final TextEditingController safetycontroller = TextEditingController(
+          'Licensing and Certification: Most places require cab drivers to have a special license in addition to a regular drivers license. This often involves:Passing a background check.Completing a taxi driver training program.Passing a written exam and a road test.Obtaining a taxi drivers permit or license.'.tr());
+  final TextEditingController experiencecontroller = TextEditingController(
       text:
-          'Safety Features Familiarize yourself with the app’s safety features, such as emergency assistance or the ability to share your location with trusted contacts.'  .tr());
- 
- 
+          'Age and Driving Experience: Typically, cab drivers must be at least 21 years old and have a certain amount of driving experience, often 1-3 years.'.tr());
+           final TextEditingController fitnesscontroller = TextEditingController(
+      text:
+          'Health and Fitness: A medical examination may be required to ensure that the driver is physically capable of operating a taxi safely.'.tr());
+
+    
 
   Language initialLang = Language('en', 'English');
   var langList = [];
@@ -48,7 +50,7 @@ class HealthSafetyState extends State<HealthSafety> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-          title: Text("Sefty ans Accident".tr()),
+          title: Text("Requirements to Become a Cab Driver".tr()),
           backgroundColor: Colors.white),
       backgroundColor: Colors.white,
       body: ListView(
@@ -58,7 +60,7 @@ class HealthSafetyState extends State<HealthSafety> {
             height: 20,
           ),
           TextEdt(
-            text: 'Following Health Guidelines'.tr(),
+            text: 'Licensing and Certification'.tr(),
             fontSize: 16,
             color: null,
           ),
@@ -66,7 +68,7 @@ class HealthSafetyState extends State<HealthSafety> {
             height: 10,
           ),
           MaterialTextField(
-            controller: healthguidelinescontroller,
+            controller: certificationcontroller,
           ),
           const SizedBox(
             height: 20,
@@ -74,13 +76,16 @@ class HealthSafetyState extends State<HealthSafety> {
           InkWell(
             onTap: () {
               setState(() {
-                tts.speak(healthguidelinescontroller.text);
+                tts.speak(certificationcontroller.text);
               });
             },
             child: const SpeakButton(),
+          ),
+           const SizedBox(
+            height: 20,
           ),
           TextEdt(
-            text: 'Safety Features'.tr(),
+            text: 'Age and Driving Experience'.tr(),
             fontSize: 16,
             color: null,
           ),
@@ -88,7 +93,7 @@ class HealthSafetyState extends State<HealthSafety> {
             height: 10,
           ),
           MaterialTextField(
-            controller: safetycontroller,
+            controller: experiencecontroller,
           ),
           const SizedBox(
             height: 20,
@@ -96,7 +101,7 @@ class HealthSafetyState extends State<HealthSafety> {
           InkWell(
             onTap: () {
               setState(() {
-                tts.speak(safetycontroller.text);
+                tts.speak(experiencecontroller.text);
               });
             },
             child: const SpeakButton(),
@@ -106,9 +111,6 @@ class HealthSafetyState extends State<HealthSafety> {
           ),
          
          
-          const SizedBox(
-            height: 10,
-          ),
         ],
       ),
     );

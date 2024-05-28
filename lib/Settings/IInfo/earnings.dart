@@ -8,23 +8,21 @@ import 'package:kumari_drivers/components/material_textfield.dart';
 import 'package:kumari_drivers/components/speek_button.dart';
 import 'package:language_picker/languages.dart';
 
-class HealthSafety  extends StatefulWidget {
-  const HealthSafety({super.key});
+class Earnings  extends StatefulWidget {
+  const Earnings({super.key});
 
   @override
-  State<HealthSafety> createState() => HealthSafetyState();
+  State<Earnings> createState() => EarningsState();
 }
 
-class HealthSafetyState extends State<HealthSafety> {
-   final TextEditingController healthguidelinescontroller = TextEditingController(
+class EarningsState extends State<Earnings> {
+   final TextEditingController wagescontroller = TextEditingController(
       text:
-          'Following Health Guidelines Adhere to any health and safety guidelines provided by the app (e.g., wearing masks, sanitizing the vehicle).'
-              .tr());
-  final TextEditingController safetycontroller = TextEditingController(
+          'Wages: Earnings can vary widely based on location, hours worked, and whether the driver owns their cab or leases it. Tips can also be a significant part of a cab drivers income.'.tr());
+  final TextEditingController expensescontroller = TextEditingController(
       text:
-          'Safety Features Familiarize yourself with the app’s safety features, such as emergency assistance or the ability to share your location with trusted contacts.'  .tr());
- 
- 
+          'Expenses: Drivers may be responsible for fuel, maintenance, insurance, and lease fees if they do not own their vehicle.'.tr());
+         
 
   Language initialLang = Language('en', 'English');
   var langList = [];
@@ -48,7 +46,7 @@ class HealthSafetyState extends State<HealthSafety> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-          title: Text("Sefty ans Accident".tr()),
+          title: Text("Requirements to Become a Cab Driver".tr()),
           backgroundColor: Colors.white),
       backgroundColor: Colors.white,
       body: ListView(
@@ -58,7 +56,7 @@ class HealthSafetyState extends State<HealthSafety> {
             height: 20,
           ),
           TextEdt(
-            text: 'Following Health Guidelines'.tr(),
+            text: 'Wages'.tr(),
             fontSize: 16,
             color: null,
           ),
@@ -66,7 +64,7 @@ class HealthSafetyState extends State<HealthSafety> {
             height: 10,
           ),
           MaterialTextField(
-            controller: healthguidelinescontroller,
+            controller: wagescontroller,
           ),
           const SizedBox(
             height: 20,
@@ -74,13 +72,16 @@ class HealthSafetyState extends State<HealthSafety> {
           InkWell(
             onTap: () {
               setState(() {
-                tts.speak(healthguidelinescontroller.text);
+                tts.speak(wagescontroller.text);
               });
             },
             child: const SpeakButton(),
+          ),
+           const SizedBox(
+            height: 20,
           ),
           TextEdt(
-            text: 'Safety Features'.tr(),
+            text: 'Expenses'.tr(),
             fontSize: 16,
             color: null,
           ),
@@ -88,7 +89,7 @@ class HealthSafetyState extends State<HealthSafety> {
             height: 10,
           ),
           MaterialTextField(
-            controller: safetycontroller,
+            controller: expensescontroller,
           ),
           const SizedBox(
             height: 20,
@@ -96,7 +97,7 @@ class HealthSafetyState extends State<HealthSafety> {
           InkWell(
             onTap: () {
               setState(() {
-                tts.speak(safetycontroller.text);
+                tts.speak(expensescontroller.text);
               });
             },
             child: const SpeakButton(),
@@ -106,9 +107,6 @@ class HealthSafetyState extends State<HealthSafety> {
           ),
          
          
-          const SizedBox(
-            height: 10,
-          ),
         ],
       ),
     );

@@ -11,16 +11,16 @@ class SpeakButton extends StatelessWidget {
               children: [
                 Container(
                   height: 45,
-                  width: 150,
+                  width: 130,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.indigo.shade400,
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   child:  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.record_voice_over_outlined),
+                      const Icon(Icons.record_voice_over_outlined,color: Colors.white,),
                       const SizedBox(
                         width: 10,
                       ),

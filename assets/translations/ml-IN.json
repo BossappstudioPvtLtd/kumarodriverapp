@@ -1,0 +1,166 @@
+{
+    "Settings": "ക്രമീകരണങ്ങൾ",
+    "Account": "അക്കൗണ്ട്",
+    "Dark Mode": "ഡാർക്ക് മോഡ്",
+    "Language": "ഭാഷ",
+    "Notifications": "അറിയിപ്പുകൾ",
+    "Help": "സഹായം",
+    "Info": "വിവരം",
+
+
+
+
+
+    "Responsibilities": "ذെന്തമാണ്നിരവധി",
+    "Conditions": "നിബന്ധനകൾ",
+
+
+
+
+    "Licensing and Certification": "അനുവദനം മറ്റുള്ളവ",
+    "Age and Driving Experience": "പ്രായം കൂടി ഡ്രൈവിംഗ് പരിചയം",
+
+
+
+
+
+    "Email Sign Out": "ഇമെയിൽ അപകരം",
+    "Do you want to continue with sign out?": "നിങ്ങള്‍ അപകരിക്കുന്നത് തുടരാമോ?",
+    "Cancel": "റദ്ദാക്കുക",
+    "Continue": "തുടരുക",
+    "Current Location": "നിലവിലെ സ്ഥലം",
+    "User Name": "ഉപയോക്തൃനാമം",
+    "User Email": "ഉപയോക്താവിന്റെ ഇമെയിൽ",
+    "Phone Number": "ഫോണ്‍ നമ്പര്‍",
+    "Car Model": "കാര്‍ മോഡല്‍",
+    "Car Seats": "കാര്‍ സീറ്റുകള്‍",
+    
+    "Car Number": "കാർ നമ്പർ",
+    "Home": "ഹോം",
+    "Trips": "യാത്രകൾ",
+    "Profile": "പ്രൊഫൈൽ",
+
+
+    "Profile Editing": "പ്രൊഫൈല്‍ എഡിറ്റിംഗ്",
+    "Add your profile": "നിങ്ങളുടെ പ്രൊഫൈല്‍ ചേര്‍ക്കുക",
+    "Submit": "സമർപ്പിക്കുക",
+
+
+
+
+
+    "App SettUp": "ആപ്പ് സജ്ജീകരണം",
+    "Ride": "യാത്ര",
+    "Managing": "മാനേജ്മെന്റ്",
+    "Accident": "അപകടം",
+    "Setting Up The App": "ആപ്പ് സജ്ജമാക്കൽ",
+    "Going Online": "ഓൺലൈനിൽ പോകുന്നു",
+    "Receiving Ride": "യാത്ര സ്വീകരിക്കൽ",
+    "Navigating": "വഴികാട്ടൽ",
+    "Start Ride": "യാത്ര ആരംഭിക്കുക",
+    "During the RideDrive": "യാത്രയുടെ സമയത്ത് ഡ്രൈവ് ചെയ്യുക",
+    "Ending the Ride": "യാത്ര അവസാനിപ്പിക്കൽ",
+    "Going Online Toggle the status to “Online” to start receiving ride requests.": "ഓൺലൈനിൽ പോകുന്നു: യാത്രാ അഭ്യർത്ഥനകൾ സ്വീകരിക്കാൻ നില 'ഓൺലൈൻ' ആക്കി മാറ്റുക.",
+    "Receiving Ride RequestsWhen a ride request comes in, the app will alert you with a sound or vibration.Quickly review the request details (pickup location, estimated fare) and accept or decline it.": "യാത്രാ അഭ്യർത്ഥനകൾ സ്വീകരിക്കൽ: ഒരു യാത്രാ അഭ്യർത്ഥന വരുമ്പോൾ, ആപ്പ് ശബ്ദം അല്ലെങ്കിൽ കംപനം ഉപയോഗിച്ച് നിങ്ങളെ അറിയിക്കും. അഭ്യർത്ഥനയുടെ വിശദാംശങ്ങൾ (പിക്കപ്പ് ലൊക്കേഷൻ, അനുമാനിക്കപ്പെട്ട കൂലി) വേഗത്തിൽ അവലോകനം ചെയ്ത് അത് അംഗീകരിക്കുക അല്ലെങ്കിൽ നിരസിക്കുക.",
+    "Navigating to the Pickup Locationapp’s built-in navigation to reach the passenger’s location.Communicate with the passenger if you encounter any issues finding them (e.g., use the in-app messaging or call feature).": "പിക്കപ്പ് ലൊക്കേഷനിലേക്ക് നാവിഗേഷൻ: ആപ്പ് നിർമ്മിത നാവിഗേഷൻ ഉപയോഗിച്ച് യാത്രക്കാരന്റെ ലൊക്കേഷനിലേക്ക് എത്തുക. അവരെ കണ്ടെത്തുന്നതിൽ എന്തെങ്കിലും പ്രശ്നങ്ങൾ നേരിടുന്നെങ്കിൽ, യാത്രക്കാരനുമായി ആശയവിനിമയം നടത്തുക (ഉദാ., ഇൻ-ആപ്പ് മെസ്സേജിംഗ് അല്ലെങ്കിൽ കോൾ ഫീച്ചർ ഉപയോഗിക്കുക).",
+    "Starting the RideOnce the passenger is in the car, start the trip in the app.Confirm the destination and follow the suggested route unless the passenger requests a specific route.": "യാത്ര ആരംഭിക്കൽ: യാത്രക്കാരൻ കാറിൽ ഇരിക്കുന്നതിനുശേഷം, ആപ്പിൽ യാത്ര ആരംഭിക്കുക. ഗമ്യസ്ഥാനം സ്ഥിരീകരിച്ച്, യാത്രക്കാരൻ ഒരു പ്രത്യേക റൂട്ടിനായി അഭ്യർത്ഥിക്കാത്ത പക്ഷം, നിർദ്ദേശിച്ച റൂട്ടിനെ പിന്തുടരുക.",
+    "During the RideDrive safely and adhere to traffic laws.Engage in polite conversation if the passenger is open to it, but respect their preference for quiet if they seem disinterested.": "യാത്രയുടെ സമയത്ത് ഡ്രൈവ് ചെയ്യുക: സുരക്ഷിതമായി ഡ്രൈവ് ചെയ്യുക, ഗതാഗത നിയമങ്ങൾ പാലിക്കുക. യാത്രക്കാരൻ ആഗ്രഹിച്ചാൽ വിനയപൂർവ്വം സംവദിക്കുക, എന്നാൽ അവർക്ക് മിണ്ടാതിരിക്കാൻ ഇഷ്ടമെങ്കിൽ അവരുടെ ആഗ്രഹത്തെ ബഹുമാനിക്കുക.",
+    "Ending the RideConfirm arrival at the destination in the app.Ensure the passenger has all their belongings before they leave.": "യാത്ര അവസാനിപ്പിക്കൽ: ആപ്പിൽ ഗമ്യസ്ഥാനത്ത് എത്തിയത് സ്ഥിരീകരിക്കുക. യാത്രക്കാരൻ പുറപ്പെടുന്നതിനു മുമ്പ്, അവർക്ക് അവരുടെ എല്ലാ സാധനങ്ങളും ഉണ്ടെന്ന് ഉറപ്പാക്കുക.",
+    "Download the App": "ആപ്പ് ഡൗൺലോഡ് ചെയ്യുക",
+    "Create an Account": "ഒരു അക്കൗണ്ട് സൃഷ്ടിക്കുക",
+    "Profile Setup": "പ്രൊഫൈൽ സജ്ജീകരണം",
+    "Home Screen": "ഹോം സ്ക്രീൻ",
+    "Menu Option": "മെനു ഓപ്ഷൻ",
+    "Download the cab driver app from your smartphone’s app store (e.g., kumari cab Driver, Lyft Driver),": "നിങ്ങളുടെ സ്മാർട്ഫോൺ ആപ്പ് സ്റ്റോറിൽ നിന്ന് കാബ് ഡ്രൈവർ ആപ്പ് ഡൗൺലോഡ് ചെയ്യുക (ഉദാ., കുമാരി കാബ് ഡ്രൈവർ, ലിഫ്റ്റ് ഡ്രൈവർ).",
+    "Create an Account, Sign up using your personal details, email, and phone number.Complete the verification process, which might include submitting documents like your driver’s license, vehicle registration, and insurance.": "ഒരു അക്കൗണ്ട് സൃഷ്ടിക്കുക, നിങ്ങളുടെ വ്യക്തിഗത വിവരങ്ങൾ, ഇമെയിൽ, ഫോണ നമ്പർ ഉപയോഗിച്ച് സൈൻ അപ്പ് ചെയ്യുക. ഡ്രൈവിംഗ് ലൈസൻസ്, വാഹന രജിസ്ട്രേഷൻ, ഇൻഷുറൻസ് പോലുള്ള ഡോക്യുമെന്റുകൾ സമർപ്പിക്കുന്നത് ഉൾപ്പെടുന്ന പരിശോധന പ്രക്രിയ പൂർത്തിയാക്കുക.",
+    "Upload a professional photo of yourself.Enter your vehicle details (make, model, year, and color).Set your preferences for working hours and payment methods": "നിങ്ങളുടെ പ്രൊഫഷണൽ ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക. നിങ്ങളുടെ വാഹനത്തിന്റെ വിശദാംശങ്ങൾ (മേക്ക്, മോഡൽ, വർഷം, നിറം) നൽകുക. ജോലി സമയവും പേയ്മെന്റ് രീതികളും തിരഞ്ഞെടുത്ത് സജ്ജമാക്കുക.",
+    "Familiarize yourself with the home screen which typically shows your current location, status (online/offline), and nearby ride requests.": "സാധാരണയായി നിങ്ങളുടെ നിലവിലെ സ്ഥലം, നില (ഓൺലൈൻ/ഓഫ്‌ലൈൻ), സമീപത്തുള്ള യാത്രാ അഭ്യർത്ഥനകൾ എന്നിവ കാണിക്കുന്ന ഹോം സ്ക്രീനുമായി പരിചയപ്പെടുക.",
+    "Explore the menu to find options like trip history, earnings, ratings, and account settings.": "യാത്രാ ചരിത്രം, വരുമാനം, റേറ്റിംഗ്, അക്കൗണ്ട് ക്രമീകരണങ്ങൾ തുടങ്ങിയ ഓപ്ഷനുകൾ കണ്ടെത്താൻ മെനു ആലോചിക്കുക.",
+    "Learn how to access notifications for ride requests, updates, and messages from the app support team.": "യാത്രാ അഭ്യർത്ഥനകൾ, അപ്‌ഡേറ്റുകൾ, ആപ്പ് പിന്തുണാ ടീമിന്റെ സന്ദേശങ്ങൾ എന്നിവയുടെ അറിയിപ്പുകൾ എങ്ങനെ ആക്സസ് ചെയ്യാമെന്ന് പഠിക്കുക.",
+    "Farecal Culation": "കൂലി കണക്കുകൂട്ടൽ",
+    "Receiving Payments": "പേയ്മെന്റുകൾ സ്വീകരിക്കുന്നു",
+    "Maintaining a Good Rating": "നല്ല റേറ്റിംഗ് നിലനിർത്തൽ",
+    "Tracking Earnings": "വരുമാനം പിന്തുടരുന്നു",
+    "Update": "അപ്‌ഡേറ്റ്",
+    "Fare Calculation The app will automatically calculate the fare based on distance, time, and any applicable surcharges (e.g., surge pricing).": "കൂലി കണക്കുകൂട്ടൽ: ദൂരം, സമയം, ബാധകമായ അധിക ചെലവ് (ഉദാ., സർജ് പ്രൈസിംഗ്) എന്നിവയെ അടിസ്ഥാനമാക്കി ആപ്പ് കൂലി സ്വയമേവ കണക്കാക്കും.",
+    "Receiving Payments Payments are typically processed through the app, with the fare being credited to your account.If the passenger opts to pay in cash (if the app supports this), collect the exact amount and confirm receipt in the app.": "പേയ്മെന്റുകൾ സ്വീകരിക്കുന്നു: പേയ്മെന്റുകൾ സാധാരണയായി ആപ്പ് മുഖേന പ്രോസസ് ചെയ്യുന്നു, കൂലി നിങ്ങളുടെ അക്കൗണ്ടിലേക്ക് ക്രെഡിറ്റ് ചെയ്യപ്പെടുന്നു. യാത്രക്കാരൻ കാഷ് നൽകാൻ തിരഞ്ഞെടുക്കുന്നുവെങ്കിൽ (അപ്പിൽ ഇത് പിന്തുണയ്ക്കുന്നുവെങ്കിൽ), ശരിയായ തുക ശേഖരിച്ച് ആപ്പിൽ സ്വീകരിച്ചതായി സ്ഥിരീകരിക്കുക.",
+    "Customer Service Be polite, professional, and helpful.Maintain a clean and comfortable vehicle.g": "ഉപഭോക്തൃ സേവനം: വിനീതവും പ്രൊഫഷണലും സഹായകവുമായിരിക്കുക. ശുചിയുള്ളതും സൗകര്യപ്രദവുമായ വാഹനത്തിൽ ശ്രദ്ധിക്കുക.",
+    "Tracking Earnings Regularly check the “Earnings” section in the app to monitor your income.Understand how much you earn per trip and any deductions (e.g., service fees).": "വരുമാനം പിന്തുടരുന്നു: നിങ്ങളുടെ വരുമാനം നിരീക്ഷിക്കാൻ ആപ്പിലെ 'വരുമാനം' വിഭാഗം സ്ഥിരമായി പരിശോധിക്കുക. ഓരോ യാത്രയിലും നിങ്ങൾ എത്ര സമ്പാദിക്കുന്നു, എന്തെങ്കിലും വെട്ടിച്ചുരുക്കലുകൾ (ഉദാ., സർവീസ് ഫീസ്) എന്നിവയെന്താണെന്ന് മനസിലാക്കുക.",
+    "Staying UpdatedApp Updates Regularly update the app to the latest version to access new features and security improvements.Policy Changes Stay informed about any changes in the app’s policies, fare structures, or terms of service.Driver Support Utilize the app’s help center or customer support for any issues or questions.Participate in any available training or information sessions offered by the app company.": "അപ്‌ഡേറ്റുകൾ നിലനിർത്തൽ: പുതിയ ഫീച്ചറുകളും സുരക്ഷാ മെച്ചപ്പെടുത്തലുകളും ആക്സസ് ചെയ്യുന്നതിനായി ആപ്പ് പുതിയ പതിപ്പിലേക്ക് സ്ഥിരമായി അപ്‌ഡേറ്റ് ചെയ്യുക. നയമാറ്റങ്ങൾ: ആപ്പിന്റെ നയങ്ങളിൽ, കൂലി ഘടനകളിൽ, അല്ലെങ്കിൽ സേവന വ്യവസ്ഥയിൽ ഉണ്ടാകുന്ന ഏതെങ്കിലും മാറ്റങ്ങളെക്കുറിച്ച് അറിയിച്ചിരിക്കുക. ഡ്രൈവർ പിന്തുണ: ഏതെങ്കിലും പ്രശ്നങ്ങൾ അല്ലെങ്കിൽ ചോദ്യങ്ങൾക്കായി ആപ്പിന്റെ സഹായ കേന്ദ്രം അല്ലെങ്കിൽ ഉപഭോക്തൃ പിന്തുണ ഉപയോഗിക്കുക. ആപ്പ് കമ്പനി നൽകുന്ന ഏതെങ്കിലും പരിശീലന സെഷനുകളിൽ അല്ലെങ്കിൽ വിവര സെഷനുകളിൽ പങ്കെടുക്കുക.",
+    "Sefty ans Accident": "സുരക്ഷയും അപകടവും",
+    "Following Health Guidelines": "ആരോഗ്യ നിർദേശങ്ങൾ പാലിക്കുന്നു",
+    "Safety Features": "സുരക്ഷാ സവിശേഷതകൾ",
+    "Following Health Guidelines Adhere to any health and safety guidelines provided by the app (e.g., wearing masks, sanitizing the vehicle).": "ആരോഗ്യ നിർദേശങ്ങൾ പാലിക്കുന്നു: ആപ്പിലൂടെ നൽകിയ ആരോഗ്യ, സുരക്ഷാ മാർഗ്ഗനിർദേശങ്ങൾ പാലിക്കുക (ഉദാ., മാസ്‌ക് ധരിക്കൽ, വാഹനം അണുവിമുക്തമാക്കൽ).",
+    "Safety Features Familiarize yourself with the app’s safety features, such as emergency assistance or the ability to share your location with trusted contacts.": "സുരക്ഷാ സവിശേഷതകൾ: അടിയന്തിര സഹായം അല്ലെങ്കിൽ വിശ്വസ്തരായ ബന്ധങ്ങളുമായി നിങ്ങളുടെ സ്ഥാനം പങ്കിടാനുള്ള കഴിവ് പോലുള്ള ആപ്പിന്റെ സുരക്ഷാ സവിശേഷതകളുമായി പരിചയപ്പെടുക.",
+    "Requirements": "ആവശ്യകതകൾ",
+    "Duties Responsibilities": "കാർമിക ചുമതലകൾ",
+    "Earnings": "വരുമാനം",
+    "Challenges": "വ്യത്യാസങ്ങൾ",
+    "Working Conditions": "ജോലി നിബന്ധനകൾ",
+    "Special Instructions": "വിശേഷ നിർദ്ദേശങ്ങൾ",
+    "Safety Instructions": "സുരക്ഷാ നിർദ്ദേശങ്ങൾ",
+    "Communication": "ബന്ധം",
+    "Licensing and Certification: Most places require cab drivers to have a special license in addition to a regular drivers license. This often involves:Passing a background check.Completing a taxi driver training program.Passing a written exam and a road test.Obtaining a taxi drivers permit or license.": "ഉപാധികളും സർട്ടിഫിക്കേഷനും: കൂടുതൽ സ്ഥലങ്ങളിലും സാധാരണ ഡ്രൈവർ ലൈസൻസിനൊപ്പം പ്രത്യേക ലൈസൻസും ക്യാബ് ഡ്രൈവർമാർക്കായി വേണം. ഇതിൽ പൊതുവെ ഉൾപ്പെടുന്നു: പശ്ചാത്തല പരിശോധന പാസ്സാകുക. ടാക്‌സി ഡ്രൈവർ പരിശീലന പരിപാടി പൂർത്തിയാക്കുക. എഴുത്തുപരീക്ഷയും റോഡ് ടെസ്റ്റും പാസ്സാകുക. ടാക്‌സി ഡ്രൈവർ പർമിറ്റ് അല്ലെങ്കിൽ ലൈസൻസ് നേടുക.",
+    "Age and Driving Experience: Typically, cab drivers must be at least 21 years old and have a certain amount of driving experience, often 1-3 years.": "പ്രായവും ഡ്രൈവിംഗ് പരിചയവും: സാധാരണയായി, ക്യാബ് ഡ്രൈവർമാർക്കു കുറഞ്ഞത് 21 വയസ്സുമുതൽ 1-3 വർഷം ഡ്രൈവിംഗ് പരിചയവും വേണം.",
+    "Health and Fitness: A medical examination may be required to ensure that the driver is physically capable of operating a taxi safely.": "ആരോഗ്യവും ഫിറ്റ്നസ്സും: ഡ്രൈവർ സുരക്ഷിതമായി ടാക്‌സി ഓടിക്കാൻ ശാരീരികമായി യോഗ്യനാണെന്ന് ഉറപ്പാക്കാൻ മെഡിക്കൽ പരിശോധന വേണം.",
+
+    "Duties and Responsibilities": "കാർമിക ചുമതലകൾ",
+    "Driving Passengers": "യാത്രക്കാരെ ഓടിക്കുക",
+    "Customer Service": "ഉപഭോക്തൃ സേവനം",
+    "Navigation": "നാവിഗേഷൻ",
+    "Vehicle Maintenance": "വാഹന പരിപാലനം",
+    "Driving Passengers: Transporting passengers to their destinations safely and efficiently.": "യാത്രക്കാരെ ഓടിക്കുക: യാത്രക്കാരെ അവരുടെ ലക്ഷ്യസ്ഥാനങ്ങളിൽ സുരക്ഷിതമായും കാര്യക്ഷമമായും എത്തിക്കുക.",
+    "Customer Service: Providing good customer service, assisting passengers with luggage, and handling payments.": "ഉപഭോക്തൃ സേവനം: നല്ല ഉപഭോക്തൃ സേവനം നൽകുക, യാത്രക്കാരെ ലഗേജ് ഉപകരണം ചെയ്യുക, പെയ്മെന്റുകൾ കൈകാര്യം ചെയ്യുക.",
+    "Navigation: Knowing the local area well, including alternate routes to avoid traffic or road closures.": "നാവിഗേഷൻ: ലോക്കൽ പ്രദേശം നന്നായി അറിയുക, ട്രാഫിക് അല്ലെങ്കിൽ റോഡ് അടച്ചുപൂട്ടലുകൾ ഒഴിവാക്കാനുള്ള ബദൽ മാർഗ്ഗങ്ങൾ ഉൾപ്പെടെ.",
+    "Vehicle Maintenance: Keeping the cab clean and in good working condition, performing regular maintenance checks.": "വാഹന പരിപാലനം: ക്യാബ് ശുചിയാക്കുക, നല്ല പ്രവർത്തന സാഹചര്യത്തിൽ സൂക്ഷിക്കുക, പതിവായി പരിപാലന പരിശോധനകൾ നടത്തുക.",
+
+    "Requirements to Become a Cab Driver": "ഒരു ക്യാബ് ഡ്രൈവർ ആകാൻ ആവശ്യമായ കാര്യങ്ങൾ",
+    "Wages": "കൂലി",
+    "Expenses": "ചിലവുകൾ",
+    "Wages: Earnings can vary widely based on location, hours worked, and whether the driver owns their cab or leases it. Tips can also be a significant part of a cab drivers income.": "കൂലി: സ്ഥലവും ജോലി സമയവും ഡ്രൈവർ തന്റെ ക്യാബ് സ്വന്തമാണോ അല്ലെങ്കിൽ വാടകയ്ക്കെടുത്തതാണോ എന്നതിനെ ആശ്രയിച്ച് വരുമാനം വിപുലമായിരിക്കും. ടിപ്പുകളും ക്യാബ് ഡ്രൈവർമാരുടെ വരുമാനത്തിന്റെ പ്രധാന ഘടകമാകും.",
+    "Expenses: Drivers may be responsible for fuel, maintenance, insurance, and lease fees if they do not own their vehicle.": "ചിലവുകൾ: ഡ്രൈവർക്ക് തന്റെ വാഹനം സ്വന്തമല്ലെങ്കിൽ ഇന്ധനം, പരിപാലനം, ഇൻഷുറൻസ്, വാടക ഫീസ് മുതലായവയ്ക്ക് ഉത്തരവാദിയായിരിക്കും.",
+
+    "Safety": "സുരക്ഷ",
+    "Competition": "മത്സരം",
+    "Passenger Behavior": "യാത്രക്കാരുടെ പെരുമാറ്റം",
+    "Late-Night Driving": "ഇടിയറക്ക് ഡ്രൈവിംഗ്",
+    "Safety: Dealing with potentially dangerous situations, difficult passengers, and the risk of accidents.": "സുരക്ഷ: അപകട സാധ്യതയുള്ള അവസ്ഥകൾ, ബുദ്ധിമുട്ടുള്ള യാത്രക്കാർ, അപകടങ്ങളുടെ സാധ്യത എന്നിവയോട് ഇടപഴകുക.",
+    "Competition: Increased competition from ride-sharing services like Uber and Lyft.": "മത്സരം: Uber, Lyft പോലെയുള്ള റൈഡ്-ഷെയറിംഗ് സേവനങ്ങളാൽ വർദ്ധിച്ച മത്സരമുണ്ട്.",
+    "Passenger Behavior: Dealing with unruly or aggressive passengers can pose significant safety risks.": "യാത്രക്കാരുടെ പെരുമാറ്റം: അനിയന്ത്രിതമായ അല്ലെങ്കിൽ ആക്രമണകരമായ യാത്രക്കാരുമായി ഇടപഴകുക പ്രധാന സുരക്ഷാ വെല്ലുവിളികൾക്ക് കാരണമാകാം.",
+    "Late-Night Driving: Driving at night increases the risk of encountering criminal activities or accidents.": "ഇടിയറക്ക് ഡ്രൈവിംഗ്: രാത്രിയിൽ ഡ്രൈവിംഗ് ചെയ്യുന്നത് ക്രിമിനൽ പ്രവർത്തനങ്ങൾ അല്ലെങ്കിൽ അപകടങ്ങൾ നേരിടാനുള്ള സാധ്യത വർദ്ധിപ്പിക്കുന്നു.",
+
+    "Working Hours": "ജോലി സമയം",
+    "Environment": "ശുദ്ധമാനരീതികൾ",
+    "Benefits": "നൽ‌വഴികൾ",
+    "Flexibility": "ആസൂത്രണക്ഷമത",
+    "Hours: Cab drivers often work long and irregular hours, including nights, weekends, and holidays.": "സമയം: ക്യാബ് ഡ്രൈവർമാർക്കു നീണ്ട, ക്രമരഹിതമായ സമയങ്ങളിൽ ജോലി ചെയ്യേണ്ടിവരും, രാത്രികളും, വീക്കൻഡുകളും അവധികളും ഉൾപ്പെടെ.",
+    "Environment: They spend most of their time on the road, which can be stressful due to traffic, weather conditions, and dealing with various types of passengers.": "ശുദ്ധമാനരീതികൾ: അവർ അവരുടെ സമയത്തിന്റെ ഭൂരിഭാഗവും റോഡിൽ ചെലവഴിക്കുന്നു, ഇത് ട്രാഫിക്, കാലാവസ്ഥാ വ്യതിയാനങ്ങൾ, വിവിധയിനം യാത്രക്കാരുമായി ഇടപഴകുന്നതിന് കാരണം സമ്മർദ്ദമാകാം.",
+    "Flexibility: Some cab drivers enjoy flexible working hours.": "ആസൂത്രണക്ഷമത: ചില ക്യാബ് ഡ്രൈവർമാർക്ക് തന്മൂല്യമായ ജോലി സമയം അനുഭവിക്കാൻ കഴിയും.",
+    "Independence: Drivers often have a significant degree of independence and autonomy.": "സ്വതന്ത്രത: ഡ്രൈവർമാർക്ക് സാധാരണയായി ഒരു പ്രധാന സ്വാതന്ത്ര്യവും സ്വയംഭരണവുമുണ്ടാകും.",
+
+
+    "Passenger Preferences": "യാത്രക്കാരന്റെ ഇഷ്ടങ്ങൾ",
+    "Assistance Needed": "സഹായം ആവശ്യമുണ്ട്",
+    "Special Needs": "പ്രത്യേക ആവശ്യങ്ങൾ",
+    "The passenger has mention any special requirements such as mobility issues, need for assistance with luggage, etc.": "യാത്രക്കാരൻ പ്രാപ്യതാ പ്രശ്നങ്ങൾ, ലഗേജ് സഹായം മുതലായ പ്രത്യേക ആവശ്യങ്ങൾ സൂചിപ്പിച്ചിട്ടുണ്ടോ എന്ന് പറയുക.",
+    "The passenger will need assistance with luggage at both the pick-up and drop-off locations. Please help with loading and unloading bags.": "യാത്രക്കാരന് പിക്കപ്പ് പോയിന്റിലും ഡ്രോപോഫ് പോയിന്റിലും ലഗേജിനൊപ്പം സഹായം ആവശ്യമുണ്ട്. ബാഗുകൾ ലോഡ് ചെയ്യുന്നതിലും അൺലോഡ് ചെയ്യുന്നതിലും സഹായിക്കുക.",
+    "The passenger has mobility issues. Please park as close to the entrance as possible and assist them in and out of the vehicle.If applicable, ensure the wheelchair ramp or other necessary equipment is ready for use.": "യാത്രക്കാരന് പ്രാപ്യതാ പ്രശ്നങ്ങളുണ്ട്. കവാടത്തിന് ככלയാവും അടുത്ത് പാർക്ക് ചെയ്യുക, വാഹനത്തിൽ കയറിയിറങ്ങുന്നതിനുള്ള സഹായം നൽകുക. ഇത് ബാധകമാണെങ്കിൽ, വീൽചെയർ റാമ്പ് അല്ലെങ്കിൽ മറ്റ് ആവശ്യമായ ഉപകരണങ്ങൾ ഉപയോഗിക്കാൻ തയ്യാറാണ് എന്ന് ഉറപ്പാക്കുക.",
+    "The passenger is hearing impaired. Please communicate via text message or written notes if necessary.If the passenger speaks a different language, use the translation app [App Name] to facilitate communication.": "യാത്രക്കാരന് കേൾവിക്കുറവുണ്ട്. ആവശ്യമായ സാഹചര്യത്തിൽ, ടെക്സ്റ്റ് മെസേജുകൾ അല്ലെങ്കിൽ എഴുത്തു കുറിപ്പുകൾ വഴി ആശയവിനിമയം നടത്തുക. യാത്രക്കാരൻ വേറെ ഭാഷ സംസാരിക്കുകയാണെങ്കിൽ, ആശയവിനിമയം സുഗമമാക്കാൻ വിവർത്തന ആപ്പ് [App Name] ഉപയോഗിക്കുക.",
+
+    "COVID-19 Precautions": "COVID-19 മുൻകരുതലുകൾ",
+    "Driving Safety": "ഡ്രൈവിംഗ് സുരക്ഷ",
+    "Passenger Safety": "യാത്രക്കാരുടെ സുരക്ഷ",
+    "Vehicle Maintenance:Ensure the vehicle is in excellent working condition.Perform a safety check before the trip, including brakes, lights, tires, and fluid levels.": "വാഹന പരിപാലനം: വാഹനം ഉത്തമ പ്രവർത്തന നിലയിൽ ആണെന്ന് ഉറപ്പാക്കുക. യാത്രയ്ക്കു മുമ്പ് ബ്രേക്കുകൾ, ലൈറ്റുകൾ, ടയർ, ദ്രാവക നില എന്നിവ ഉൾപ്പെടെ സുരക്ഷാ പരിശോധന നടത്തുക.",
+    "COVID-19 Precautions:Sanitize the vehicle before and after each trip.Ensure passengers wear masks if required.Provide hand sanitizer in the vehicle": "COVID-19 മുൻകരുതലുകൾ: ഓരോ യാത്രക്കും മുമ്പും ശേഷം വാഹനത്തിൽ സാനിറ്റൈസ് ചെയ്യുക. യാത്രക്കാർക്ക് ആവശ്യമായാൽ മാസ്‌ക്ക് ധരിക്കുന്നത് ഉറപ്പാക്കുക. വാഹനത്തിൽ ഹാൻഡ് സാനിറ്റൈസർ നൽകുക.",
+    "Driving Safety:Always wear your seat belt and ensure all passengers do the same.Adhere to all traffic laws and speed limits.Avoid using your phone while driving; use hands-free options if necessary.": "ഡ്രൈവിംഗ് സുരക്ഷ: സീറ്റ്ബെൽറ്റ് ധരിക്കണം, എല്ലാ യാത്രക്കാരും അതു ധരിക്കുന്നതും ഉറപ്പാക്കണം. എല്ലാ ട്രാഫിക് നിയമങ്ങളും സ്പീഡ് പരിധികളും പാലിക്കുക. ഡ്രൈവിംഗ് ചെയ്യുമ്പോൾ ഫോൺ ഉപയോഗിക്കുന്നത് ഒഴിവാക്കുക; ആവശ്യമായാൽ ഹാൻഡ്സ്-ഫ്രീ ഓപ്ഷനുകൾ ഉപയോഗിക്കുക.",
+    "Passenger Safety:Assist passengers with entering and exiting the vehicle, especially those with mobility issues.Store luggage securely to prevent movement during transit.Ensure child safety seats are installed and used correctly if transporting young children.": "യാത്രക്കാരുടെ സുരക്ഷ: യാത്രക്കാർക്ക് വാഹനത്തിൽ കയറിയിറങ്ങാനുള്ള സഹായം നൽകുക, പ്രത്യേകിച്ച് പ്രാപ്യതാ പ്രശ്നമുള്ളവർക്ക്. യാത്രയ്ക്കിടെ ചലനമില്ലാതെ ലഗേജ് സുരക്ഷിതമായി സൂക്ഷിക്കുക. ചെറുപ്പക്കാരെ കൊണ്ടുപോകുമ്പോൾ, കുട്ടികളുടെ സുരക്ഷാ സീറ്റുകൾ ശരിയായി ഇൻസ്റ്റാൾ ചെയ്യുകയും ഉപയോഗിക്കുകയും ചെയ്യുക.",
+
+    "During the Trip": "യാത്രയ്ക്കിടെ",
+    "Emergency Contact": "അടിയന്തര ബന്ധം",
+    "Report": "റിപ്പോർട്ട്",
+    "Pre-Trip Communication:On the day of the trip, send a confirmation message to [Insert Contact Person’s Name] at [Insert Phone Number] or [Insert Email Address] at least 30 minutes before the scheduled pickup time.If there are any changes to your schedule or any unexpected delays, inform [Insert Contact Person’s Name] immediately.": "യാത്രയുടെ ദിവസം, ഷെഡ്യൂൾ ചെയ്ത പിക്കപ്പ് സമയത്തിന് കുറഞ്ഞത് 30 മിനിറ്റിനു മുമ്പ് [Contact Person’s Name] [Phone Number] അല്ലെങ്കിൽ [Email Address] ലേക്ക് ഒരു ഉറപ്പിക്കൽ സന്ദേശം അയക്കുക. നിങ്ങളുടെ ഷെഡ്യൂളിൽ മാറ്റങ്ങളോ അനിഷ്ടപ്രതീക്ഷ ഇല്ലാത്ത വൈകലോ ഉണ്ടെങ്കിൽ, [Contact Person’s Name] നെ ഉടനെ അറിയിക്കുക.",
+    "During the Trip:Keep your phone charged and easily accessible for any urgent communication.If you encounter any issues during the trip (e.g., traffic delays, route changes, passenger requests), promptly inform [Insert Contact Person’s Name] at [Insert Phone Number].Use hands-free devices for communication while driving to ensure safety.": "യാത്രയ്ക്കിടെ: അടിയന്തര ആശയവിനിമയത്തിനായി ഫോൺ ചാർജ്ഡ് ആയും എളുപ്പത്തിൽ ലഭ്യമായും സൂക്ഷിക്കുക. യാത്രയ്ക്കിടെ ഏതെങ്കിലും പ്രശ്നങ്ങൾ നേരിടുകയാണെങ്കിൽ (ഉദാ. ട്രാഫിക് വൈകലുകൾ, റൂട്ടിൽ മാറ്റങ്ങൾ, യാത്രക്കാരുടെ അഭ്യർത്ഥനകൾ), [Contact Person’s Name] [Phone Number] ലേക്ക് ഉടനെ അറിയിക്കുക. സുരക്ഷ ഉറപ്പാക്കാൻ ഡ്രൈവിംഗിനിടയിൽ ആശയവിനിമയത്തിനായി ഹാൻഡ്സ്-ഫ്രീ ഉപകരണങ്ങൾ ഉപയോഗിക്കുക.",
+    "Emergency Contact:In case of an emergency, contact [Insert Name and Phone Number] immediately.Be prepared to provide clear information about the nature of the emergency and your current location.": "അടിയന്തര സാഹചര്യത്തിൽ: അടിയന്തര സാഹചര്യം ഉണ്ടായാൽ, [Name and Phone Number] നെ ഉടനെ ബന്ധപ്പെടുക. അടിയന്തര സാഹചര്യം എങ്ങനെയാണെന്ന് വ്യക്തമാക്കാൻ, നിങ്ങളുടെ നിലവിലെ സ്ഥലം വിവരങ്ങൾ നൽകാൻ തയ്യാറാവുക.",
+    "Post-Trip Communication:After the trip is completed, send a brief message to confirm the successful drop-off of the passenger.Report any incidents or issues encountered during the trip to [Insert Contact Person’s Name] at [Insert Phone Number or Email Address].": "യാത്രയ്ക്ക് ശേഷമുള്ള ആശയവിനിമയം: യാത്ര പൂർത്തിയാക്കിയതിന് ശേഷം, യാത്രക്കാരനെ വിജയകരമായി ഡ്രോപ്പ് ചെയ്തത് ഉറപ്പാക്കാൻ ഒരു ചുരുക്ക സന്ദേശം അയക്കുക. യാത്രയ്ക്കിടെ നേരിട്ട സംഭവങ്ങളോ പ്രശ്നങ്ങളോ [Contact Person’s Name] [Phone Number or Email Address] ലേക്ക് റിപ്പോർട്ട് ചെയ്യുക.",
+    "Pre-Trip Communication": "യാത്രയ്ക്ക് മുമ്പുള്ള ആശയവിനിമയം"
+}

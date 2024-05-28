@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kumari_drivers/BottamNavigation/ernings_page.dart';
 import 'package:kumari_drivers/BottamNavigation/home_page.dart';
@@ -57,23 +58,23 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const
+        items: 
         [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home"
+            icon: const Icon(Icons.home),
+            label: "Home".tr(),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.credit_card),
-              label: "Earnings"
+              icon: const Icon(Icons.credit_card),
+              label: "Earnings".tr(),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_tree),
-              label: "Trips"
+              icon: const Icon(Icons.account_tree),
+              label: "Trips".tr(),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Profile"
+              icon: const Icon(Icons.person),
+              label: "Profile".tr(),
           ),
         ],
         currentIndex: indexSelected,

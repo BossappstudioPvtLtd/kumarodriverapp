@@ -63,7 +63,7 @@ class RideState extends State<Ride> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-          title: Text("Setting Up The App".tr()),
+          title: Text("Ride".tr()),
           backgroundColor: Colors.white),
       backgroundColor: Colors.white,
       body: ListView(
