@@ -157,11 +157,11 @@ class ProfilePageState extends State<ProfilePage> {
                                               size: 30,
                                               color: Colors.blueGrey),
                                           onPressed: () {
-                                           Navigator.push(
+                                            Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (_) => const Settings(
-                                                     )));
+                                                    builder: (_) =>
+                                                        const Settings()));
                                           }),
                                     ),
                                     Padding(
@@ -176,12 +176,13 @@ class ProfilePageState extends State<ProfilePage> {
                                             size: 30,
                                             color: Colors.green[900],
                                           ),
-                                          onPressed: () {showCupertinoModalPopup(
-                              context: context,
-                              builder: (builder) {
-                                return const ScreanBrightness();
-                              });
-                        }),
+                                          onPressed: () {
+                                            showCupertinoModalPopup(
+                                                context: context,
+                                                builder: (builder) {
+                                                  return const ScreanBrightness();
+                                                });
+                                          }),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -200,14 +201,16 @@ class ProfilePageState extends State<ProfilePage> {
                                                     backgroundColor:
                                                         Colors.black87,
                                                     elevation: 20,
-                                                    title:  TextEdt(
-                                                      text: 'Email Sign Out'.tr(),
+                                                    title: TextEdt(
+                                                      text:
+                                                          'Email Sign Out'.tr(),
                                                       color: Colors.white,
                                                       fontSize: null,
                                                     ),
-                                                    content:  TextEdt(
+                                                    content: TextEdt(
                                                       text:
-                                                          'Do you want to continue with sign out?'.tr(),
+                                                          'Do you want to continue with sign out?'
+                                                              .tr(),
                                                       fontSize: null,
                                                       color: Colors.grey,
                                                     ),
@@ -225,7 +228,8 @@ class ProfilePageState extends State<ProfilePage> {
                                                             },
                                                             elevationsize: 20,
                                                             text:
-                                                                '   Cancel    '.tr(),
+                                                                '   Cancel    '
+                                                                    .tr(),
                                                             fontSize: 17,
                                                             containerheight: 40,
                                                             containerwidth: 100,
@@ -244,7 +248,8 @@ class ProfilePageState extends State<ProfilePage> {
                                                                   .pop();
                                                             },
                                                             elevationsize: 20,
-                                                            text: 'Continue'.tr(),
+                                                            text:
+                                                                'Continue'.tr(),
                                                             fontSize: 17,
                                                             containerheight: 40,
                                                             containerwidth: 100,
