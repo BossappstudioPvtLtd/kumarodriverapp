@@ -5,7 +5,6 @@ import 'package:kumari_drivers/BottamNavigation/home_page.dart';
 import 'package:kumari_drivers/BottamNavigation/profile_page.dart';
 import 'package:kumari_drivers/BottamNavigation/trips_page.dart';
 
-
 class Dashboard extends StatefulWidget
 {
   const Dashboard({super.key});
@@ -50,10 +49,10 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
-        children:  const [
+        children:   [
         HomePage(),
-        EarningsPage(),
-          TripsPage(),
+        ErningsPage(),
+          GalleryScreen(),
           ProfilePage(),
         ],
       ),

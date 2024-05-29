@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, library_private_types_in_public_api, unnecessary_import
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -28,7 +29,7 @@ class DropDown1State extends State<DropDown1> {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 height: 57,
-                width: 320,
+                width: 323,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -71,13 +72,13 @@ class DropDown1State extends State<DropDown1> {
                       ],
                       onChanged: widget.onChanged,
                       onSaved: widget.onChanged,
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         
-                       icon:  Icon(Icons.airline_seat_recline_normal_rounded),
+                       icon:  const Icon(Icons.airline_seat_recline_normal_rounded),
                       
                           enabled: false,
-                          labelText:'Car Seats',
-                          labelStyle: TextStyle(color: Colors.black)),
+                          labelText:'Car Seats'.tr(),
+                          labelStyle: const TextStyle(color: Colors.black)),
                     ),
                   ),
                 ),

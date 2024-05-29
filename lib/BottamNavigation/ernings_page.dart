@@ -1,226 +1,467 @@
-import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
-import '../model/PlanModal.dart';
+// ignore_for_file: unused_element, deprecated_member_use, use_build_context_synchronously, unused_field
 
-class EarningsPage extends StatefulWidget {
-  const EarningsPage({super.key});
+import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kumari_drivers/components/car_seatsedt.dart';
+import 'package:kumari_drivers/components/loading_dialog.dart';
+import 'package:kumari_drivers/components/material_buttons.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+class ErningsPage extends StatefulWidget {
+  const ErningsPage({super.key});
 
   @override
-  EarningsPageState createState() => EarningsPageState();
+  _ErningsPageState createState() => _ErningsPageState();
 }
 
-class EarningsPageState extends State<EarningsPage> {
-  List<PlanModal> planList = [];
-  PageController controller =
-      PageController(initialPage: 0, viewportFraction: 0.85);
-  int selectedIndex = 0;
-  int pageIndex = 0;
-  Color blueButtonAndTextColor = const Color(0xFF3878ec);
+class _ErningsPageState extends State<ErningsPage> {
+  final Shader linearGradient = const LinearGradient(
+    colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
+  ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
+  final ImagePicker _picker = ImagePicker();
+  User? user = FirebaseAuth.instance.currentUser;
+  File? _profileImage;
+  File? _carImage;
+  File? _licenseImage;
+  File? _insuranceImage;
+  File? _rcBookImage;
+
+  late int _carSeats;
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _licenseNumberController =
+      TextEditingController();
+  final TextEditingController _insuranceExpiryDateController =
+      TextEditingController();
+  final TextEditingController _licenseExpiryDateController =
+      TextEditingController();
+  final TextEditingController vehicleModelTextEditingController =
+      TextEditingController();
+  final TextEditingController vehicleNumberTextEditingController =
+      TextEditingController();
+  final picker = ImagePicker();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _licenseNumberController.dispose();
+    _insuranceExpiryDateController.dispose();
+    _licenseExpiryDateController.dispose();
+    vehicleModelTextEditingController.dispose();
+    vehicleNumberTextEditingController.dispose();
+    super.dispose();
+  }
+
+  Future getImage(ImageSource source, Function(File?) setImage) async {
+    final pickedFile = await picker.pickImage(source: source);
+    setState(() {
+      if (pickedFile != null) {
+        setImage(File(pickedFile.path));
+      } else {
+        debugPrint('No image selected.');
+      }
+    });
+  }
+Future uploadFile() async {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => LoadingDialog(
+      messageText: "Updating your profile",
+    ),
+  );
+
+  if (_profileImage == null ||
+      _carImage == null ||
+      _licenseImage == null ||
+      _insuranceImage == null ||
+      _rcBookImage == null) {
+    // Show a snackbar or alert dialog to inform the user
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Please select all required images.'),
+      ),
+    );
+    return;
+  }
+
+  Map<String, String> uploadedUrls = {};
+  for (var image in [
+    {'image': _profileImage, 'type': 'profile_photo'},
+    {'image': _carImage, 'type': 'car_photo'},
+    {'image': _licenseImage, 'type': 'license_photo'},
+    {'image': _insuranceImage, 'type': 'insurance_photo'},
+    {'image': _rcBookImage, 'type': 'rc_book_photo'}
+  ]) {
+    if (image['image'] != null) {
+      String userId = _auth.currentUser!.uid;
+      String fileName = '${image['type']}/$userId';
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref().child(fileName);
+      UploadTask uploadTask = ref.putFile(image['image']! as File);
+      await uploadTask.whenComplete(() async {
+        String downloadURL = await ref.getDownloadURL();
+        uploadedUrls[image['type'] as String] = downloadURL;
+      });
+    }
+  }
+
+  updateUserData(uploadedUrls);
+}
+
+  Future<void> updateUserData(Map<String, String> urls) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    Map<String, dynamic> driverData = {
+      'name': _usernameController.text.trim(),
+      'phone': _phoneController.text.trim(),
+      'email': _emailController.text.trim(),
+      'photo': urls['profile_photo'],
+      'car_details': {
+        'carModel': vehicleModelTextEditingController.text.trim(),
+        'carNumber': vehicleNumberTextEditingController.text.trim(),
+        'carSeats': _carSeats,
+        'carPhoto': urls['car_photo']
+      },
+      'license_details': {
+        'licenseNumber': _licenseNumberController.text.trim(),
+        'licenseExpiryDate': _licenseExpiryDateController.text.trim(),
+        'licensePhoto': urls['license_photo'],
+      },
+      'insurance_details': {
+        'insuranceExpiryDate': _insuranceExpiryDateController.text.trim(),
+        'insurancePhoto': urls['insurance_photo']
+      },
+      'rc_book_details': {'rcBookPhoto': urls['rc_book_photo']}
+    };
+
+    await FirebaseDatabase.instance
+        .reference()
+        .child('drivers/$userId')
+        .update(driverData);
+
+    Navigator.pop(context);
+  }
+
+  Future<void> createUserData() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    Map<String, dynamic> driverData = {
+      'name': _usernameController.text.trim(),
+      'phone': _phoneController.text.trim(),
+      'email': _emailController.text.trim(),
+      'photo': null,
+      'car_details': {
+        'carModel': vehicleModelTextEditingController.text.trim(),
+        'carNumber': vehicleNumberTextEditingController.text.trim(),
+        'carSeats': _carSeats,
+        'carPhoto': null
+      },
+      'license_details': {
+        'licenseNumber': _licenseNumberController.text.trim(),
+        'licenseExpiryDate': _licenseExpiryDateController.text.trim(),
+        'licensePhoto': null,
+      },
+      'insurance_details': {
+        'insuranceExpiryDate': _insuranceExpiryDateController.text.trim(),
+        'insurancePhoto': null
+      },
+      'rc_book_details': {'rcBookPhoto': null}
+    };
+
+    await FirebaseDatabase.instance
+        .reference()
+        .child('drivers/$userId')
+        .set(driverData);
+  }
+
+  Future<void> deleteUserData() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseDatabase.instance
+        .reference()
+        .child('drivers/$userId')
+        .remove();
+  }
+
+  User? currentUser = FirebaseAuth.instance.currentUser;
+  DatabaseReference? userRef;
 
   @override
   void initState() {
     super.initState();
-    init();
-  }
-
-  Future<void> init() async {
-    planList.add(
-      PlanModal(
-        image: 'assets/images/crown.png',
-        title: '',
-        subTitle: 'A Simplest Start to everyone',
-        price: 'Free Trial',
-        planPriceSubTitle: 'per user/month',
-        optionList: [
-          PlanModal(title: 'Up to '),
-          PlanModal(title: 'Up to 20  per month'),
-          PlanModal(title: 'Single  record'),
-        ],
-      ),
-    );
-    planList.add(
-      PlanModal(
-        image: 'assets/images/crown.png',
-        title: 'Basic',
-        subTitle: 'A Simplest Start to everyone',
-        price: '99 Rs',
-        planPriceSubTitle: 'per user/month',
-        optionList: [
-          PlanModal(title: 'Up to '),
-          PlanModal(title: 'Up to 20  per month'),
-          PlanModal(title: 'Single  record'),
-        ],
-      ),
-    );
-    planList.add(
-      PlanModal(
-        image: 'assets/images/crown.png',
-        title: 'Standard',
-        subTitle: 'For Small and medium business',
-        price: '199 Rs',
-        planPriceSubTitle: 'per user/month',
-        optionList: [
-          PlanModal(title: 'Up to 20 users'),
-          PlanModal(title: 'Up to 200 '),
-          PlanModal(title: 'Single Company record'),
-        ],
-        isVisible: true,
-      ),
-    );
-    planList.add(
-      PlanModal(
-        image: 'assets/images/crown.png',
-        title: 'Enterprise',
-        subTitle: 'Solution for big organization',
-        price: '299 Rs',
-        planPriceSubTitle: 'per user / month',
-        optionList: [
-          PlanModal(title: 'Unlimited users'),
-          PlanModal(title: ''),
-          PlanModal(title: ''),
-        ],
-      ),
-    );
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
+    if (currentUser != null) {
+      userRef = FirebaseDatabase.instance
+          .reference()
+          .child('drivers/${currentUser!.uid}');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.scaffoldBackgroundColor,
-      body: Container(
-        color: Colors.amber,
-        height: context.height(),
-        width: context.width(),
-        child: PageView.builder(
-          controller: controller,
-          itemCount: planList.length,
-          onPageChanged: (index) {
-            pageIndex = index;
-            setState(() {});
-          },
-          itemBuilder: (_, int index) {
-            bool isPageIndex = selectedIndex == index;
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 50),
-              child: AnimatedContainer(
-                margin: EdgeInsets.symmetric(
-                    vertical: pageIndex == index ? 16 : 50, horizontal: 8),
-                height: pageIndex == index ? 0.5 : 0.45,
-                width: context.width(),
-                
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    stops: [0.1, 0.5, 0.7, 0.9],
-                    colors: [
-                      
-                      Color.fromARGB(255, 255, 255, 255),
-                      Color.fromARGB(255, 255, 255, 255),
-                      Color.fromARGB(255, 255, 255, 255),
-                      Color.fromARGB(255, 255, 255, 255),
-                      
-                     /* Color.fromARGB(255, 195, 190, 190),
-                      Color.fromARGB(255, 122, 120, 120),
-                      Color.fromARGB(255, 206, 198, 198),
-                      Color.fromARGB(255, 184, 179, 179),*/
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: defaultBoxShadow(),
-                ),
-                duration: 1000.milliseconds,
-                curve: Curves.linearToEaseOut,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Image.asset(
-                        planList[index].image.validate(),
-                        fit: BoxFit.cover,
-                        height: 190,
-                      ),
-                    ),
-                    SingleChildScrollView(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          "  Subscription ",
+          style: TextStyle(
+              fontSize: 36.0,
+              fontWeight: FontWeight.bold,
+              foreground: Paint()..shader = linearGradient),
+        ),
+        surfaceTintColor: Colors.white,
+      ),
+      body: currentUser == null || userRef == null
+          ? const Center(child: Text('No user logged in'))
+          : StreamBuilder(
+              stream: userRef!.onValue,
+              builder: (context, AsyncSnapshot event) {
+                if (event.hasData &&
+                    !event.hasError &&
+                    event.data.snapshot.value != null) {
+                  Map data = event.data.snapshot.value;
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(2),
                       child: Column(
                         children: [
-                          Text(planList[index].title.validate(),
-                              style: boldTextStyle(size: 30)),
-                          Text(planList[index].subTitle.validate(),
-                              style: secondaryTextStyle()),
-                          24.height,
-                          Text(planList[index].price.validate(),
-                              style: boldTextStyle(
-                                  size: 45, color: blueButtonAndTextColor)),
-                          Text(planList[index].planPriceSubTitle.validate(),
-                              style: secondaryTextStyle()),
-                          24.height,
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: UL(
-                              symbolType: SymbolType.Bullet,
-                              symbolColor: Colors.blue,
-                              spacing: 24,
-                              children: List.generate(
-                                planList[index].optionList!.length,
-                                (i) => Text(
-                                    planList[index]
-                                        .optionList![i]
-                                        .title
-                                        .validate(),
-                                    style: boldTextStyle()),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Text(
+                                  "Profile Details".tr(),
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black54),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
+                          40.height,
+                          buildImagePicker(context, _profileImage,
+                              data['photo'], (file) => _profileImage = file),
+                          const SizedBox(height: 20),
+                          buildForm(context, data),
+                          const SizedBox(height: 50),
+                          MaterialButtons(
+                            borderRadius: BorderRadius.circular(10),
+                            meterialColor: const Color.fromARGB(255, 3, 22, 60),
+                            containerheight: 50,
+                            elevationsize: 20,
+                            textcolor: Colors.white,
+                            fontSize: 18,
+                            textweight: FontWeight.bold,
+                            text: "Submit".tr(),
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                uploadFile();
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 100),
                         ],
                       ),
-                    ).expand(),
-                    AppButton(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      width: context.width() - 120,
-                      onTap: () {
-                        setState(() {});
-                        selectedIndex = index;
-                      },
-                      shapeBorder: RoundedRectangleBorder(
-                          borderRadius: radius(defaultRadius)),
-                      color: isPageIndex
-                          ? Colors.green.shade100
-                          : blueButtonAndTextColor,
-                      child: TextIcon(
-                        prefix: isPageIndex
-                            ? Icon(Icons.check,
-                                color: selectedIndex == index
-                                    ? Colors.green
-                                    : null,
-                                size: 16)
-                            : null,
-                        text: isPageIndex ? ' Your current plan' : 'Upgrade',
-                        textStyle: boldTextStyle(
-                            size: 18,
-                            color: isPageIndex ? Colors.green : white),
-                      ),
-                    ).paddingBottom(16),
-                  ],
+                    ),
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+    );
+  }
+
+  Widget buildImagePicker(BuildContext context, File? imageFile,
+      String imageUrl, Function(File?) setImage) {
+    return imageFile == null
+        ? Stack(
+            children: [
+              GestureDetector(
+                  onTap: () => getImage(ImageSource.gallery, setImage),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(40),
+                    elevation: 15,
+                    child: imageUrl.isNotEmpty
+                        ? CircleAvatar(
+                            radius: 43,
+                            backgroundColor: Colors.white,
+                            child: CircleAvatar(
+                                radius: 40,
+                                backgroundImage: NetworkImage(imageUrl)),
+                          )
+                        : Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey[200],
+                            ),
+                            child: const Placeholder(
+                              strokeWidth: 0,
+                              fallbackHeight: BorderSide.strokeAlignCenter,
+                            )),
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(top: 60, left: 60),
+                child: InkWell(
+                  onTap: () => getImage(ImageSource.gallery, setImage),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(25),
+                    color: const Color.fromARGB(235, 1, 72, 130),
+                    child: const SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: Icon(Icons.add_a_photo_rounded,
+                          size: 20, color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
-            );
-          },
+            ],
+          )
+        : Material(
+            elevation: 15,
+            borderRadius: BorderRadius.circular(30),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.file(
+                  imageFile,
+                  height: 100,
+                  width: 100,
+                )),
+          );
+  }
+
+  Widget buildForm(BuildContext context, Map data) {
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            buildSubheading("User Information"),
+            buildTextFormField(
+                _usernameController, 'User Name', data['name'], Icons.person),
+            const SizedBox(height: 20),
+            buildTextFormField(
+                _emailController, 'User Email', data['email'], Icons.email),
+            const SizedBox(height: 20),
+            buildTextFormField(_phoneController, 'Phone Number', data['phone'],
+                Icons.phone_android_rounded,
+                keyboardType: TextInputType.phone),
+            const SizedBox(height: 20),
+            buildSubheading("License Details"),
+            buildTextFormField(_licenseNumberController,
+                'Driving License Number', '', Icons.card_membership),
+            const SizedBox(height: 20),
+            buildTextFormField(_licenseExpiryDateController,
+                'License Expiry Date', '', Icons.date_range,
+                keyboardType: TextInputType.datetime),
+            const SizedBox(height: 20),
+            buildImagePicker(
+                context,
+                _licenseImage,
+                data['license_details']?['licensePhoto'] ?? '',
+                (file) => _licenseImage = file),
+            const SizedBox(height: 50),
+            buildSubheading("Car Details"),
+            buildTextFormField(vehicleModelTextEditingController, 'Car Model',
+                data['car_details']?['carModel'] ?? '', Icons.local_taxi),
+            const SizedBox(height: 20),
+            DropDown1(
+              onChanged: (value) => _carSeats = value!,
+              onSaved: (value) => _carSeats = value!,
+            ),
+            const SizedBox(height: 20),
+            buildTextFormField(
+                vehicleNumberTextEditingController,
+                'Car Number',
+                data['car_details']?['carNumber'] ?? '',
+                Icons.numbers_outlined),
+            const SizedBox(height: 20),
+            buildImagePicker(
+                context,
+                _carImage,
+                data['car_details']?['carPhoto'] ?? '',
+                (file) => _carImage = file),
+            const SizedBox(height: 20),
+            buildTextFormField(_insuranceExpiryDateController,
+                'Insurance Expiry Date', '', Icons.date_range,
+                keyboardType: TextInputType.datetime),
+            const SizedBox(height: 20),
+            buildImagePicker(
+                context,
+                _insuranceImage,
+                data['insurance_details']?['insurancePhoto'] ?? '',
+                (file) => _insuranceImage = file),
+            const SizedBox(height: 20),
+            buildSubheading("RC Book Details"),
+            buildImagePicker(
+                context,
+                _rcBookImage,
+                data['rc_book_details']?['rcBookPhoto'] ?? '',
+                (file) => _rcBookImage = file),
+            const SizedBox(height: 50),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextFormField(TextEditingController controller, String label,
+      String hintText, IconData icon,
+      {TextInputType keyboardType = TextInputType.text}) {
+    return Material(
+      elevation: 10,
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10.0),
+      child: TextFormField(
+        controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '$label cannot be empty';
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Icon(icon),
+            ),
+            border: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            labelText: label.tr(),
+            hintText: hintText),
+        keyboardType: keyboardType,
+      ),
+    );
+  }
+
+  Widget buildSubheading(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16, bottom: 8),
+      child: Text(
+        text.tr(),
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.black54,
         ),
       ),
     );

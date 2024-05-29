@@ -36,6 +36,7 @@ class _AccountScreenState extends State<Settings> {
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const Dashboard()));
+//Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back)),
         backgroundColor: Colors.white,

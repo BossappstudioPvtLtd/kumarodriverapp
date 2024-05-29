@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types, library_private_types_in_public_api, unnecessary_import
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -29,7 +28,7 @@ class DropDownState extends State<DropDown> {
               child: Material(
                 borderRadius: BorderRadius.circular(30.0),
                 child: Container(
-                    width: 60.0,
+                    width:55.0,
                     padding: const EdgeInsets.all(17.0),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -44,48 +43,54 @@ class DropDownState extends State<DropDown> {
                     )),
               ),
             ),
-             Container(
-                height: 57,
-                width: 350,
-                color: Colors.black,
-                
-                  child: Form(
-                    key: _formKey,
-                    child: DropdownButtonFormField(
-                      dropdownColor: Colors.black87,
-                      items:  [
-                        DropdownMenuItem(
-                            value: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(),
-                              child: Text(
-                                '3 seats'.tr(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            )),
-                        DropdownMenuItem(
-                            value: 4,
-                            child: Text(
-                              '4 seats'.tr(),
-                              style: const TextStyle(color: Colors.white),
-                            )),
-                        DropdownMenuItem(
-                            value: 7,
-                            child: Text(
-                              '7 seats'.tr(),
-                              style: const TextStyle(color: Colors.white),
-                            )),
-                      ],
-                      onChanged: widget.onChanged,
-                      onSaved: widget.onChanged,
-                      decoration:  InputDecoration(
-                          labelText: 'Car Seats'.tr(),
-                          labelStyle: const TextStyle(color: Colors.white70)),
+             Padding(
+               padding: const EdgeInsets.symmetric(horizontal: 1),
+               child: Container(
+                  height: 57,
+                  width: 264,
+                  color: Colors.black,
+                  
+                    child: Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: DropdownButtonFormField(
+                          dropdownColor: Colors.black87,
+                          items:  const [
+                            DropdownMenuItem(
+                                value: 3,
+                                child: Padding(
+                                  padding: EdgeInsets.only(),
+                                  child: Text(
+                                    '3 seats',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )),
+                            DropdownMenuItem(
+                                value: 4,
+                                child: Text(
+                                  '4 seats',
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                            DropdownMenuItem(
+                                value: 7,
+                                child: Text(
+                                  '7 seats',
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ],
+                          onChanged: widget.onChanged,
+                          onSaved: widget.onChanged,
+                          decoration:  const InputDecoration(
+                              labelText: 'Car Seats',
+                              labelStyle: TextStyle(color: Colors.white70)),
+                        ),
+                      ),
                     ),
-                  ),
+                  
                 
-              
-            ),
+                           ),
+             ),
           ],
         ),
       ],
