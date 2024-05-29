@@ -2,11 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:kumari_drivers/BottamNavigation/dashbord.dart';
+import 'package:kumari_drivers/Settings/Screens/help_screen.dart';
 import 'package:kumari_drivers/Settings/Settings_Components/forward_button.dart';
 import 'package:kumari_drivers/Settings/Settings_Components/setting_switch.dart';
 import 'package:kumari_drivers/Settings/Settings_Components/settings_item.dart';
-import 'package:kumari_drivers/Settings/help_screen.dart';
-import 'package:kumari_drivers/Settings/info_screen.dart';
+import 'package:kumari_drivers/Settings/Screens/info_screen.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});

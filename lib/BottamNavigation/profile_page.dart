@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kumari_drivers/BottamNavigation/profile_edt.dart';
-import 'package:kumari_drivers/Settings/settingscreen.dart';
+import 'package:kumari_drivers/Settings/Screens/setting_screen.dart';
 import 'package:kumari_drivers/components/Text_Edt.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
 import 'package:kumari_drivers/components/screen_bright.dart';

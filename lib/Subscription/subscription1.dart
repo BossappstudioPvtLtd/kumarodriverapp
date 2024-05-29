@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../model/PlanModal.dart';
+import 'payment_page.dart';
 
-class EarningsPage extends StatefulWidget {
-  const EarningsPage({super.key});
+class Subscription1 extends StatefulWidget {
+  const Subscription1({super.key});
 
   @override
-  EarningsPageState createState() => EarningsPageState();
+  Subscription1State createState() => Subscription1State();
 }
 
-class EarningsPageState extends State<EarningsPage> {
+class Subscription1State extends State<Subscription1> {
   List<PlanModal> planList = [];
-  PageController controller =
-      PageController(initialPage: 0, viewportFraction: 0.85);
+  PageController controller = PageController(initialPage: 0, viewportFraction: 0.85);
   int selectedIndex = 0;
   int pageIndex = 0;
   Color blueButtonAndTextColor = const Color(0xFF3878ec);
@@ -33,8 +33,8 @@ class EarningsPageState extends State<EarningsPage> {
         planPriceSubTitle: 'per user/month',
         optionList: [
           PlanModal(title: 'Up to '),
-          PlanModal(title: 'Up to 20  per month'),
-          PlanModal(title: 'Single  record'),
+          PlanModal(title: 'Up to 20 per month'),
+          PlanModal(title: 'Single record'),
         ],
       ),
     );
@@ -46,9 +46,9 @@ class EarningsPageState extends State<EarningsPage> {
         price: '99 Rs',
         planPriceSubTitle: 'per user/month',
         optionList: [
-          PlanModal(title: 'Up to '),
-          PlanModal(title: 'Up to 20  per month'),
-          PlanModal(title: 'Single  record'),
+          PlanModal(title: ''),
+          PlanModal(title: ''),
+          PlanModal(title: 'Single record'),
         ],
       ),
     );
@@ -194,8 +194,17 @@ class EarningsPageState extends State<EarningsPage> {
                           horizontal: 8, vertical: 4),
                       width: context.width() - 120,
                       onTap: () {
-                        setState(() {});
                         selectedIndex = index;
+                        setState(() {});
+                        if (!isPageIndex) {
+                          // Navigate to payment page with the selected plan
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentPage(plan: planList[index]),
+                            ),
+                          );
+                        }
                       },
                       shapeBorder: RoundedRectangleBorder(
                           borderRadius: radius(defaultRadius)),
