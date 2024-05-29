@@ -8,8 +8,6 @@ import 'dart:io';
 
 import 'package:kumari_drivers/components/material_buttons.dart';
 
-
-
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({super.key});
 
@@ -18,7 +16,7 @@ class GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreenState extends State<GalleryScreen> {
- Future<void> _signOut() async {
+  Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
@@ -26,8 +24,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
   List<XFile>? _imageFileList;
 
   void _pickImages() async {
-    final List<XFile>? selectedImages = await _picker.pickMultiImage();
-    if (selectedImages!.isNotEmpty) {
+    final List<XFile> selectedImages = await _picker.pickMultiImage();
+    if (selectedImages.isNotEmpty) {
       setState(() {
         _imageFileList = selectedImages;
       });
@@ -38,7 +36,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Images'),
+        title: const Text('Select Images'),
       ),
       body: Center(
         child: Column(
@@ -46,7 +44,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _pickImages,
-              child: Text('Pick Images from Gallery'),
+              child: const Text('Pick Images from Gallery'),
             ),
             Expanded(
               child: GridView.builder(
@@ -60,95 +58,76 @@ class _GalleryScreenState extends State<GalleryScreen> {
               ),
             ),
             Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 20, top: 10),
-                                      child: Material(
-                                        elevation: 5,
-                                        borderRadius: BorderRadius.circular(25),
-                                        color: Colors.white,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            showCupertinoDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    backgroundColor:
-                                                        Colors.black87,
-                                                    elevation: 20,
-                                                    title: TextEdt(
-                                                      text:
-                                                          'Email Sign Out'.tr(),
-                                                      color: Colors.white,
-                                                      fontSize: null,
-                                                    ),
-                                                    content: TextEdt(
-                                                      text:
-                                                          'Do you want to continue with sign out?'
-                                                              .tr(),
-                                                      fontSize: null,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    actions: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          MaterialButtons(
-                                                            onTap: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop(false);
-                                                            },
-                                                            elevationsize: 20,
-                                                            text:
-                                                                '   Cancel    '
-                                                                    .tr(),
-                                                            fontSize: 17,
-                                                            containerheight: 40,
-                                                            containerwidth: 100,
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10)),
-                                                            onPressed: null,
-                                                          ),
-                                                          MaterialButtons(
-                                                            onTap: () {
-                                                              _signOut();
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            elevationsize: 20,
-                                                            text:
-                                                                'Continue'.tr(),
-                                                            fontSize: 17,
-                                                            containerheight: 40,
-                                                            containerwidth: 100,
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10)),
-                                                            onPressed: null,
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          icon: const Icon(
-                                            Icons.power_settings_new,
-                                          ),
-                                          color: Colors.red,
-                                          iconSize: 30,
-                                        ),
-                                      ),
-                                    ),
+              padding: const EdgeInsets.only(right: 20, top: 10),
+              child: Material(
+                elevation: 5,
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+                child: IconButton(
+                  onPressed: () {
+                    showCupertinoDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.black87,
+                            elevation: 20,
+                            title: TextEdt(
+                              text: 'Email Sign Out'.tr(),
+                              color: Colors.white,
+                              fontSize: null,
+                            ),
+                            content: TextEdt(
+                              text:
+                                  'Do you want to continue with sign out?'.tr(),
+                              fontSize: null,
+                              color: Colors.grey,
+                            ),
+                            actions: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  MaterialButtons(
+                                    onTap: () {
+                                      Navigator.of(context).pop(false);
+                                    },
+                                    elevationsize: 20,
+                                    text: '   Cancel    '.tr(),
+                                    fontSize: 17,
+                                    containerheight: 40,
+                                    containerwidth: 100,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    onPressed: null,
+                                  ),
+                                  MaterialButtons(
+                                    onTap: () {
+                                      _signOut();
+                                      Navigator.of(context).pop();
+                                    },
+                                    elevationsize: 20,
+                                    text: 'Continue'.tr(),
+                                    fontSize: 17,
+                                    containerheight: 40,
+                                    containerwidth: 100,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    onPressed: null,
+                                  ),
+                                ],
+                              )
+                            ],
+                          );
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.power_settings_new,
+                  ),
+                  color: Colors.red,
+                  iconSize: 30,
+                ),
+              ),
+            ),
           ],
         ),
       ),

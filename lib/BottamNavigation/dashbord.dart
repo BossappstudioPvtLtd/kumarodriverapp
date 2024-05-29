@@ -51,7 +51,7 @@ class _DashboardState extends State<Dashboard> with SingleTickerProviderStateMix
         controller: controller,
         children:   [
         HomePage(),
-        ErningsPage(),
+        EarningsPage(),
           GalleryScreen(),
           ProfilePage(),
         ],

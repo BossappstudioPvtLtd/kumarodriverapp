@@ -12,7 +12,7 @@ class _SubscriptionState extends State<Subscription> {
 
   void _activateSubscription(String plan) {
     // Here you would include your activation logic, possibly involving backend calls
-    print('Activating $plan subscription');
+    debugPrint('Activating $plan subscription');
     // For demonstration purposes, we're just printing to the console
   }
 
