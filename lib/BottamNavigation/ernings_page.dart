@@ -11,13 +11,16 @@ class EarningsPage extends StatefulWidget {
 class _EarningsPageState extends State<EarningsPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const Subscription1()));
-          },
-          child: const Text("Subscribtion")),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const Subscription1()));
+            },
+            child: const Text("Subscribtion")),
+      ),
     );
   }
 }

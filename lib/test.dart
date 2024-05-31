@@ -1,158 +1,237 @@
 import 'package:flutter/material.dart';
-import 'package:kumari_drivers/model/PlanModal.dart';
-import 'package:nb_utils/nb_utils.dart';  //https://pub.dev/packages/nb_utils
-import 'package:razorpay_flutter/razorpay_flutter.dart';  //https://pub.dev/packages/razorpay_flutter
+import 'package:kumari_drivers/Subscription/payment_page.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
+import '../model/PlanModal.dart';
+import '../subscription_provider.dart';
 
-class DemoRazorPayScreen extends StatefulWidget {
-   final PlanModal plan;
-  const DemoRazorPayScreen({super.key,  required this.plan,  });
+class SubscriptionButton extends StatefulWidget {
+  const SubscriptionButton({super.key});
 
   @override
-  DemoRazorPayScreenState createState() => DemoRazorPayScreenState();
+  SubscriptionButtonState createState() => SubscriptionButtonState();
 }
 
-class DemoRazorPayScreenState extends State<DemoRazorPayScreen> {
-  late Razorpay _razorpay;
-  Color appColorPrimary = Color(0xFF1157FA);
-
-  /*fonts*/
-  String fontRegular = 'Regular';
-  String fontMedium = 'Medium';
-  String fontSemibold = 'Semibold';
-  String fontBold = 'Bold';
-  /* font sizes*/
-  double textSizeSmall = 12.0;
-  double textSizeSMedium = 14.0;
-  double textSizeMedium = 16.0;
-  double textSizeLargeMedium = 18.0;
-  double textSizeNormal = 20.0;
-  double textSizeLarge = 24.0;
-  double textSizeXLarge = 34.0;
+class SubscriptionButtonState extends State<SubscriptionButton> {
+  List<PlanModal> planList = [];
+  PageController controller = PageController(initialPage: 0, viewportFraction: 0.85);
+  int selectedIndex = 0;
+  int pageIndex = 0;
+  Color blueButtonAndTextColor = const Color(0xFF3878ec);
 
   @override
   void initState() {
     super.initState();
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    init();
   }
 
-  void openCheckout() async {
-    var options = {
-      'key': 'rzp_test_Fq8a7aTL51han5',
-      'amount':int.parse(widget.plan.price!.replaceAll(RegExp(r'[^0-9]'), '')) * 100,
-      'name': 'Acme Corp.',
-      'description': 'Fine T-Shirt',
-      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
-      'external': {
-        'wallets': ['paytm']
-      }
-    };
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+  Future<void> init() async {
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: '',
+        subTitle: 'A Simplest Start to everyone',
+        price: 'Free Trial',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Up to 1 user'),
+          PlanModal(title: 'Up to 20 records per month'),
+          PlanModal(title: 'Single record'),
+        ],
+      ),
+    );
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: 'Basic',
+        subTitle: 'A Simplest Start to everyone',
+        price: '99 Rs',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Up to 10 users'),
+          PlanModal(title: 'Up to 100 records per month'),
+          PlanModal(title: 'Single record'),
+        ],
+      ),
+    );
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: 'Standard',
+        subTitle: 'For Small and medium business',
+        price: '199 Rs',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Up to 20 users'),
+          PlanModal(title: 'Up to 200 records per month'),
+          PlanModal(title: 'Single Company record'),
+        ],
+      ),
+    );
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: 'Enterprise',
+        subTitle: 'Solution for big organization',
+        price: '299 Rs',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Unlimited users'),
+          PlanModal(title: 'Unlimited records'),
+          PlanModal(title: 'Multiple Company records'),
+        ],
+      ),
+    );
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    toasty(context, "SUCCESS: " + response.paymentId.validate());
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    toasty(context, "ERROR: " + response.code.toString() + " - " + response.message.validate());
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    toasty(context, "EXTERNAL_WALLET: " + response.walletName.validate());
+  String validatePlanPriceSubTitle(String? subtitle) {
+    return subtitle?.isNotEmpty == true ? subtitle! : 'N/A';
   }
 
   @override
   void dispose() {
-    _razorpay.clear();
+    controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(appColorPrimary);
+    final subscriptionProvider = Provider.of<SubscriptionProvider>(context);
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.only(top: 24, bottom: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(left: 16, right: 16, bottom: 28),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), boxShadow: defaultBoxShadow(), color: whiteColor),
-                 
-                  ),
-                  const SizedBox(height: 16),
-               
-                ],
-              ),
-              Divider(height: 0.5),
-              Text("Name", style: TextStyle(fontSize: textSizeLargeMedium, fontFamily: fontSemibold, color: appColorPrimary) ).paddingAll(16),
+      backgroundColor: context.scaffoldBackgroundColor,
+      body: Container(
+        color: Colors.amber,
+        height: context.height(),
+        width: context.width(),
+        child: PageView.builder(
+          controller: controller,
+          itemCount: planList.length,
+          onPageChanged: (index) {
+            pageIndex = index;
+            setState(() {});
+          },
+          itemBuilder: (_, int index) {
+            bool isPageIndex = selectedIndex == index;
+            Duration duration;
+            switch (index) {
+              case 0:
+                duration = const Duration(seconds: 30);
+                break;
+              case 1:
+                duration = const Duration(days: 30);
+                break;
+              case 2:
+                duration = const Duration(days: 60);
+                break;
+              case 3:
+                duration = const Duration(days: 90);
+                break;
+              default:
+                duration = const Duration(days: 30);
+            }
 
-              Container(
-                margin: EdgeInsets.only(left: 16, right: 16),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor, width: 0.5), borderRadius: BorderRadius.all(Radius.circular(10))),
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                child: Text("Acme Corp.", style: secondaryTextStyle()),
-              ),
-              Text("Email", style: TextStyle(fontSize: textSizeLargeMedium, fontFamily: fontSemibold, color: appColorPrimary) ).paddingAll(16),
-
-              Container(
-                margin: EdgeInsets.only(left: 16, right: 16),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor, width: 0.5), borderRadius: BorderRadius.all(Radius.circular(10))),
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                child: Text("test@razorpay.com", style: secondaryTextStyle()),
-              ),
-              Text("Contact", style: TextStyle(fontSize: textSizeLargeMedium, fontFamily: fontSemibold, color: appColorPrimary) ).paddingAll(16),
-              Container(
-                margin: EdgeInsets.only(left: 16, right: 16),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor, width: 0.5), borderRadius: BorderRadius.all(Radius.circular(10))),
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                child: Text("", style: secondaryTextStyle()),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 16, right: 16, top: 80),
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50),
+              child: AnimatedContainer(
+                margin: EdgeInsets.symmetric(vertical: pageIndex == index ? 16 : 50, horizontal: 8),
+                height: pageIndex == index ? 0.5 : 0.45,
+                width: context.width(),
                 decoration: BoxDecoration(
-                  color: appColorPrimary,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 0.5, 0.7, 0.9],
+                    colors: [
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                    ],
                   ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: defaultBoxShadow(),
                 ),
-                child: Text(
-                  'Pay with RazorPay',
-                  style: primaryTextStyle(color: white),
+                duration: 1000.milliseconds,
+                curve: Curves.linearToEaseOut,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        planList[index].image.validate(),
+                        fit: BoxFit.cover,
+                        height: 190,
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text(planList[index].title.validate(), style: boldTextStyle(size: 30)),
+                          Text(planList[index].subTitle.validate(), style: secondaryTextStyle()),
+                          24.height,
+                          Text(planList[index].price.validate(), style: boldTextStyle(size: 45, color: blueButtonAndTextColor)),
+                          Text(validatePlanPriceSubTitle(planList[index].planPriceSubTitle), style: secondaryTextStyle()),
+                          24.height,
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: UL(
+                              symbolType: SymbolType.Bullet,
+                              symbolColor: Colors.blue,
+                              spacing: 24,
+                              children: List.generate(
+                                planList[index].optionList!.length,
+                                (i) => Text(planList[index].optionList![i].title.validate(), style: boldTextStyle()),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).expand(),
+                    AppButton(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      width: context.width() - 120,
+                      onTap: () {
+                        selectedIndex = index;
+                        setState(() {});
+                        if (!isPageIndex) {
+                          // Navigate to payment page with the selected plan
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentPage(plan: planList[index]),
+                            ),
+                          );
+                        }
+                      },
+                      shapeBorder: RoundedRectangleBorder(borderRadius: radius(defaultRadius)),
+                      color: isPageIndex ? Colors.green.shade100 : blueButtonAndTextColor,
+                      child: TextIcon(
+                        prefix: isPageIndex ? Icon(Icons.check, color: selectedIndex == index ? Colors.green : null, size: 16) : null,
+                        text: isPageIndex ? ' Your current plan' : 'Upgrade',
+                        textStyle: boldTextStyle(size: 18, color: isPageIndex ? Colors.green : Colors.white),
+                      ),
+                    ).paddingBottom(16),
+                    MaterialButton(
+                      onPressed: () {
+                        subscriptionProvider.toggleSubscription(duration);
+                      },
+                      color: subscriptionProvider.trialDuration == duration ? Colors.green : Colors.blue,
+                      textColor: Colors.white,
+                      child: Text(
+                        subscriptionProvider.trialDuration == duration ? 'Subscribed' : 'Subscribe',
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ],
                 ),
-              ).onTap(
-                () {
-                  openCheckout();
-                },
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
   }
-
-  void changeStatusColor(Color color) async {
-    setStatusBarColor(color);
-  }
-
 }

@@ -1,134 +1,236 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:kumari_drivers/components/Text_Edt.dart';
-import 'dart:io';
+import 'package:kumari_drivers/Subscription/payment_page.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
+import '../model/PlanModal.dart';
+import '../subscription_provider.dart';
 
-import 'package:kumari_drivers/components/material_buttons.dart';
-
-class GalleryScreen extends StatefulWidget {
-  const GalleryScreen({super.key});
+class SubscriptionButton extends StatefulWidget {
+  const SubscriptionButton({super.key});
 
   @override
-  _GalleryScreenState createState() => _GalleryScreenState();
+  SubscriptionButtonState createState() => SubscriptionButtonState();
 }
 
-class _GalleryScreenState extends State<GalleryScreen> {
-  Future<void> _signOut() async {
-    await FirebaseAuth.instance.signOut();
+class SubscriptionButtonState extends State<SubscriptionButton> {
+  List<PlanModal> planList = [];
+  PageController controller = PageController(initialPage: 0, viewportFraction: 0.85);
+  int selectedIndex = 0;
+  int pageIndex = 0;
+  Color blueButtonAndTextColor = const Color(0xFF3878ec);
+
+  @override
+  void initState() {
+    super.initState();
+    init();
   }
 
-  final ImagePicker _picker = ImagePicker();
-  List<XFile>? _imageFileList;
+  Future<void> init() async {
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: '',
+        subTitle: 'A Simplest Start to everyone',
+        price: 'Free Trial',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Up to 1 user'),
+          PlanModal(title: 'Up to 20 records per month'),
+          PlanModal(title: 'Single record'),
+        ],
+      ),
+    );
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: 'Basic',
+        subTitle: 'A Simplest Start to everyone',
+        price: '99 Rs',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Up to 10 users'),
+          PlanModal(title: 'Up to 100 records per month'),
+          PlanModal(title: 'Single record'),
+        ],
+      ),
+    );
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: 'Standard',
+        subTitle: 'For Small and medium business',
+        price: '199 Rs',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Up to 20 users'),
+          PlanModal(title: 'Up to 200 records per month'),
+          PlanModal(title: 'Single Company record'),
+        ],
+      ),
+    );
+    planList.add(
+      PlanModal(
+        image: 'assets/images/crown.png',
+        title: 'Enterprise',
+        subTitle: 'Solution for big organization',
+        price: '299 Rs',
+        planPriceSubTitle: 'per user/month',
+        optionList: [
+          PlanModal(title: 'Unlimited users'),
+          PlanModal(title: 'Unlimited records'),
+          PlanModal(title: 'Multiple Company records'),
+        ],
+      ),
+    );
+  }
 
-  void _pickImages() async {
-    final List<XFile> selectedImages = await _picker.pickMultiImage();
-    if (selectedImages.isNotEmpty) {
-      setState(() {
-        _imageFileList = selectedImages;
-      });
-    }
+  String validatePlanPriceSubTitle(String? subtitle) {
+    return subtitle?.isNotEmpty == true ? subtitle! : 'N/A';
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final subscriptionProvider = Provider.of<SubscriptionProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Images'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: _pickImages,
-              child: const Text('Pick Images from Gallery'),
-            ),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-                itemCount: _imageFileList?.length ?? 0,
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.file(File(_imageFileList![index].path));
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20, top: 10),
-              child: Material(
-                elevation: 5,
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.white,
-                child: IconButton(
-                  onPressed: () {
-                    showCupertinoDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            backgroundColor: Colors.black87,
-                            elevation: 20,
-                            title: TextEdt(
-                              text: 'Email Sign Out'.tr(),
-                              color: Colors.white,
-                              fontSize: null,
-                            ),
-                            content: TextEdt(
-                              text:
-                                  'Do you want to continue with sign out?'.tr(),
-                              fontSize: null,
-                              color: Colors.grey,
-                            ),
-                            actions: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  MaterialButtons(
-                                    onTap: () {
-                                      Navigator.of(context).pop(false);
-                                    },
-                                    elevationsize: 20,
-                                    text: '   Cancel    '.tr(),
-                                    fontSize: 17,
-                                    containerheight: 40,
-                                    containerwidth: 100,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    onPressed: null,
-                                  ),
-                                  MaterialButtons(
-                                    onTap: () {
-                                      _signOut();
-                                      Navigator.of(context).pop();
-                                    },
-                                    elevationsize: 20,
-                                    text: 'Continue'.tr(),
-                                    fontSize: 17,
-                                    containerheight: 40,
-                                    containerwidth: 100,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    onPressed: null,
-                                  ),
-                                ],
-                              )
-                            ],
-                          );
-                        });
-                  },
-                  icon: const Icon(
-                    Icons.power_settings_new,
+      backgroundColor: context.scaffoldBackgroundColor,
+      body: Container(
+        color: Colors.amber,
+        height: context.height(),
+        width: context.width(),
+        child: PageView.builder(
+          controller: controller,
+          itemCount: planList.length,
+          onPageChanged: (index) {
+            pageIndex = index;
+            setState(() {});
+          },
+          itemBuilder: (_, int index) {
+            bool isPageIndex = selectedIndex == index;
+            Duration duration;
+            switch (index) {
+              case 0:
+                duration = const Duration(seconds: 30);
+                break;
+              case 1:
+                duration = const Duration(days: 30);
+                break;
+              case 2:
+                duration = const Duration(days: 60);
+                break;
+              case 3:
+                duration = const Duration(days: 90);
+                break;
+              default:
+                duration = const Duration(days: 30);
+            }
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50),
+              child: AnimatedContainer(
+                margin: EdgeInsets.symmetric(vertical: pageIndex == index ? 16 : 50, horizontal: 8),
+                height: pageIndex == index ? 0.5 : 0.45,
+                width: context.width(),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0.1, 0.5, 0.7, 0.9],
+                    colors: [
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                    ],
                   ),
-                  color: Colors.red,
-                  iconSize: 30,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: defaultBoxShadow(),
+                ),
+                duration: 1000.milliseconds,
+                curve: Curves.linearToEaseOut,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        planList[index].image.validate(),
+                        fit: BoxFit.cover,
+                        height: 190,
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text(planList[index].title.validate(), style: boldTextStyle(size: 30)),
+                          Text(planList[index].subTitle.validate(), style: secondaryTextStyle()),
+                          24.height,
+                          Text(planList[index].price.validate(), style: boldTextStyle(size: 45, color: blueButtonAndTextColor)),
+                          Text(validatePlanPriceSubTitle(planList[index].planPriceSubTitle), style: secondaryTextStyle()),
+                          24.height,
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: UL(
+                              symbolType: SymbolType.Bullet,
+                              symbolColor: Colors.blue,
+                              spacing: 24,
+                              children: List.generate(
+                                planList[index].optionList!.length,
+                                (i) => Text(planList[index].optionList![i].title.validate(), style: boldTextStyle()),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).expand(),
+                    AppButton(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      width: context.width() - 120,
+                      onTap: () {
+                        selectedIndex = index;
+                        setState(() {subscriptionProvider.toggleSubscription(duration);});
+                        if (!isPageIndex) {
+                          // Navigate to payment page with the selected plan
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentPage(plan: planList[index]),
+                            ),
+                          );
+                        }
+                      },
+                      shapeBorder: RoundedRectangleBorder(borderRadius: radius(defaultRadius)),
+                      color: isPageIndex ? Colors.green.shade100 : blueButtonAndTextColor,
+                      child: TextIcon(
+                        prefix: isPageIndex ? Icon(Icons.check, color: selectedIndex == index ? Colors.green : null, size: 16) : null,
+                        text: isPageIndex ? ' Your current plan' : 'Upgrade',
+                        textStyle: boldTextStyle(size: 18, color: isPageIndex ? Colors.green : Colors.white),
+                      ),
+                    ).paddingBottom(16),
+                   /* MaterialButton(
+                      onPressed: () {
+                        subscriptionProvider.toggleSubscription(duration);
+                        setState(() {});
+                      },
+                      color: subscriptionProvider.trialDuration == duration ? Colors.green : Colors.blue,
+                      textColor: Colors.white,
+                      child: Text(
+                        subscriptionProvider.trialDuration == duration ? 'Subscribed' : 'Subscribe',
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),*/
+                  ],
                 ),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
