@@ -7,7 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kumari_drivers/components/car_seatsedt.dart';
+//import 'package:kumari_drivers/components/car_seatsedt.dart';
 import 'package:kumari_drivers/components/loading_dialog.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -215,7 +215,7 @@ class _SubscriptionDataState extends State<SubscriptionData> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "  Subscription ",
+          "Subscription".tr(),
           style: TextStyle(
               fontSize: 36.0,
               fontWeight: FontWeight.bold,
@@ -354,7 +354,7 @@ class _SubscriptionDataState extends State<SubscriptionData> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            buildSubheading("User Information"),
+            buildSubheading("User Information".tr()),
             buildTextFormField(
                 _usernameController, 'User Name', data['name'], Icons.person),
             const SizedBox(height: 20),
@@ -383,10 +383,11 @@ class _SubscriptionDataState extends State<SubscriptionData> {
             buildTextFormField(vehicleModelTextEditingController, 'Car Model',
                 data['car_details']?['carModel'] ?? '', Icons.local_taxi),
             const SizedBox(height: 20),
-            DropDown1(
+           /* DropDown1(
               onChanged: (value) => _carSeats = value!,
-              onSaved: (value) => _carSeats = value!,
-            ),
+              onSaved: (value) => _carSeats = value!, initialValue: _carSeats,
+            ),*/
+            
             const SizedBox(height: 20),
             buildTextFormField(
                 vehicleNumberTextEditingController,

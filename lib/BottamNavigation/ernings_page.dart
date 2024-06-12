@@ -1,25 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:kumari_drivers/Subscription/subscription1.dart';
+import 'dart:async';
 
-class EarningsPage extends StatefulWidget {
-  const EarningsPage({super.key});
+import 'package:flutter/services.dart';
+import 'package:flutter_flip_clock/flutter_flip_clock.dart';
+
+
+
+class MyApp1 extends StatefulWidget {
+  const MyApp1({Key? key}) : super(key: key);
 
   @override
-  State<EarningsPage> createState() => _EarningsPageState();
+  State<MyApp1> createState() => _MyApp1State();
 }
 
-class _EarningsPageState extends State<EarningsPage> {
+class _MyApp1State extends State<MyApp1> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const Subscription1()));
-            },
-            child: const Text("Subscribtion")),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter flip clock'),
+        ),
+        body: Center(
+          child: SizedBox(
+            height: 150,
+            child: FlipClock.simple(
+              height: 40.0,
+              width: 40.0,
+              digitColor: Colors.white,
+              backgroundColor: Colors.black,
+              digitSize: 14.0,
+              borderRadius: const BorderRadius.all(Radius.circular(3.0)),
+              startTime: DateTime(2033, 12, 12),
+              timeLeft: const Duration(minutes: 1),
+            ),
+          ),
+        ),
       ),
     );
   }

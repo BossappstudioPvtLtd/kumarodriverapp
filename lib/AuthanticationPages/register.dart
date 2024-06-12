@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kumari_drivers/components/my_Textfield.dart';
 import 'package:kumari_drivers/BottamNavigation/dashbord.dart';
 import 'package:kumari_drivers/components/drop_down.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../Methords/common_methords.dart';
 import '../components/loading_dialog.dart';
@@ -24,11 +25,12 @@ class Register extends StatefulWidget {
 }
 
 class RegisterState extends State<Register>
-  with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   bool passwordVisible = false;
   late int _carSeats;
+
   @override
   void initState() {
     super.initState();
@@ -71,8 +73,6 @@ class RegisterState extends State<Register>
   TextEditingController userNameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
-  // TextEditingController confirmPasswordTextEditinController =
-  // TextEditingController();
   TextEditingController phoneNumberTextEditinController =
       TextEditingController();
   TextEditingController vehicleModelTextEditingController =
@@ -86,31 +86,29 @@ class RegisterState extends State<Register>
   checkIfNetworkIsAvailable() {
     cMethods.checkConnectivity(context);
 
-    if (imageFile != null) //image validation
-    {
+    if (imageFile != null) {
       signUpFormValidation();
     } else {
-      cMethods.displaySnackBar("Please choose image first.", context);
+      cMethods.displaySnackBar("Please choose an image first.", context);
     }
   }
 
   signUpFormValidation() {
     if (userNameTextEditingController.text.trim().length < 4) {
       cMethods.displaySnackBar(
-          "your name must be atleast 4 or more characters.", context);
+          "Your name must be at least 4 or more characters.", context);
     } else if (!emailTextEditingController.text.contains("@")) {
-      cMethods.displaySnackBar("please write valid email.", context);
+      cMethods.displaySnackBar("Please write a valid email.", context);
     } else if (passwordTextEditingController.text.trim().length < 6) {
       cMethods.displaySnackBar(
-          "your password must be atleast 6 or more characters.", context);
-    } 
-    else if (phoneNumberTextEditinController.text.trim().length < 10) {
+          "Your password must be at least 6 or more characters.", context);
+    } else if (phoneNumberTextEditinController.text.trim().length < 10) {
       cMethods.displaySnackBar(
-          "your phone number must be atleast 10 or more characters.", context);
+          "Your phone number must be at least 10 or more characters.", context);
     } else if (vehicleModelTextEditingController.text.trim().isEmpty) {
-      cMethods.displaySnackBar("please write your vehicale model", context);
+      cMethods.displaySnackBar("Please write your vehicle model.", context);
     } else if (vehicleNumberTextEditingController.text.isEmpty) {
-      cMethods.displaySnackBar("please write your vehicale number.", context);
+      cMethods.displaySnackBar("Please write your vehicle number.", context);
     } else {
       uploadImageToStorage();
     }
@@ -135,18 +133,16 @@ class RegisterState extends State<Register>
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) =>  LoadingDialog(
-          messageText: "Registering  account",
-        ),
-      
+      builder: (BuildContext context) => LoadingDialog(
+        messageText: "Registering account",
+      ),
     );
 
     final User? userFirebase = (await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
       email: emailTextEditingController.text.trim(),
       password: passwordTextEditingController.text.trim(),
-    )
-            .catchError((errorMsg) {
+    ).catchError((errorMsg) {
       Navigator.pop(context);
       cMethods.displaySnackBar(errorMsg.toString(), context);
     }))
@@ -194,256 +190,209 @@ class RegisterState extends State<Register>
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    bool isSmallScreen = screenWidth < 600;
+
+    double imageRadius = isSmallScreen ? screenWidth * 0.2 : screenWidth * 0.15;
+    double spacing = screenHeight * 0.02;
+
     return Scaffold(
       backgroundColor: const Color(0xff292C31),
       body: ScrollConfiguration(
         behavior: MyBehavior(),
         child: SingleChildScrollView(
           child: SizedBox(
-            height: height,
+            height: screenHeight,
             child: Column(
               children: [
-                const Expanded(child: SizedBox()),
+                SizedBox(height: spacing),
+                imageFile == null
+                    ? const CircleAvatar(
+                        radius: 50,
+                        backgroundImage:
+                            AssetImage("assets/images/user.jpg",),
+                      )
+                    : Container(
+                        width: imageRadius * 2,
+                        height: imageRadius * 2,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: FileImage(File(imageFile!.path)),
+                          ),
+                        ),
+                      ),
+                SizedBox(height: spacing),
+                GestureDetector(
+                  onTap: chooseImageFromGallery,
+                  child: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.amber,
+                  ),
+                ),
+                SizedBox(height: spacing),
+                MyTextField(
+                  controller: userNameTextEditingController,
+                  materialcolor: const Color(0xffA9DED8),
+                  textstylecolor: const TextStyle(color: Color(0xffA9DED8)),
+                  fillColor: Colors.black,
+                  labelText: "Your Name",
+                  labelStylecolor: const TextStyle(color: Colors.white70),
+                  icon: Icons.person_2_outlined,
+                  iconcolor: Colors.black,
+                  obscureText: false,
+                ),
+                SizedBox(height: spacing),
+                MyTextField(
+                  controller: emailTextEditingController,
+                  materialcolor: const Color(0xffA9DED8),
+                  textstylecolor: const TextStyle(color: Color(0xffA9DED8)),
+                  fillColor: Colors.black,
+                  labelText: "Your Email",
+                  labelStylecolor: const TextStyle(color: Colors.white70),
+                  icon: Icons.email_outlined,
+                  iconcolor: Colors.black,
+                  obscureText: false,
+                ),
+                SizedBox(height: spacing),
+                MyTextField(
+                  controller: passwordTextEditingController,
+                  materialcolor: const Color(0xffA9DED8),
+                  textstylecolor: const TextStyle(color: Color(0xffA9DED8)),
+                  fillColor: Colors.black,
+                  labelText: "Your Password",
+                  labelStylecolor: const TextStyle(color: Colors.white70),
+                  icon: Icons.lock_outline_sharp,
+                  iconcolor: Colors.black,
+                  obscureText: passwordVisible,
+                  suffixIcon: IconButton(
+                    icon: Icon(passwordVisible
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(height: spacing),
+                MyTextField(
+                  controller: phoneNumberTextEditinController,
+                  keyboardType: TextInputType.phone,
+                  materialcolor: const Color(0xffA9DED8),
+                  textstylecolor: const TextStyle(color: Color(0xffA9DED8)),
+                  fillColor: Colors.black,
+                  labelText: "Phone Number",
+                  labelStylecolor: const TextStyle(color: Colors.white70),
+                  icon: Icons.smartphone_sharp,
+                  iconcolor: Colors.black,
+                  obscureText: false,
+                ),
+                SizedBox(height: spacing),
+                MyTextField(
+                  controller: vehicleModelTextEditingController,
+                  materialcolor: const Color(0xffA9DED8),
+                  textstylecolor: const TextStyle(color: Color(0xffA9DED8)),
+                  fillColor: Colors.black,
+                  labelText: "Vehicle Model",
+                  labelStylecolor: const TextStyle(color: Colors.white70),
+                  icon: Icons.local_taxi,
+                  iconcolor: Colors.black,
+                  obscureText: false,
+                ),
+                SizedBox(height: spacing),
+                DropDown(
+                  onChanged: (value) => _carSeats = value!,
+                  onSaved: (value) => _carSeats = value!,
+                ),
+                SizedBox(height: spacing),
+                MyTextField(
+                  controller: vehicleNumberTextEditingController,
+                  materialcolor: const Color(0xffA9DED8),
+                  textstylecolor: const TextStyle(color: Color(0xffA9DED8)),
+                  fillColor: Colors.black,
+                  labelText: "Vehicle Number",
+                  labelStylecolor: const TextStyle(color: Colors.white70),
+                  icon: Icons.numbers_outlined,
+                  iconcolor: Colors.black,
+                  obscureText: false,
+                ),
+                SizedBox(height: spacing),
+                RichText(
+                  text: TextSpan(
+                    text: 'Already have an Account? Login Here',
+                    style: const TextStyle(color: Colors.white70),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        HapticFeedback.lightImpact();
+                        Fluttertoast.showToast(
+                          msg: 'Already have an account',
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const LoginScreen(),
+                          ),
+                        );
+                      },
+                  ),
+                ),
                 Expanded(
-                  flex: 25,
-                  child: Column(
+                  child: Stack(
                     children: [
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      imageFile == null
-                          ? const CircleAvatar(
-                              radius: 50,
-                              backgroundImage:
-                                  AssetImage("assets/images/user.jpg"),
-                            )
-                          : Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey,
-                                  image: DecorationImage(
-                                      fit: BoxFit.fitHeight,
-                                      image: FileImage(
-                                        File(
-                                          imageFile!.path,
-                                        ),
-                                        
-                                      ))),
-                            ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          chooseImageFromGallery();
-                        },
-                        child: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.amber,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      MyTextField(
-                        controller: userNameTextEditingController,
-                        materialcolor: const Color(0xffA9DED8),
-                        textstylecolor: const TextStyle(
-                          color: Color(0xffA9DED8),
-                        ),
-                        fillColor: Colors.black,
-                        labelText: "Your Name",
-                        labelStylecolor: const TextStyle(color: Colors.white70),
-                        icon: Icons.person_2_outlined,
-                        iconcolor: Colors.black,
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      MyTextField(
-                        controller: emailTextEditingController,
-                        materialcolor: const Color(0xffA9DED8),
-                        textstylecolor: const TextStyle(
-                          color: Color(0xffA9DED8),
-                        ),
-                        fillColor: Colors.black,
-                        labelText: "Your Email",
-                        labelStylecolor: const TextStyle(color: Colors.white70),
-                        icon: Icons.email_outlined,
-                        iconcolor: Colors.black,
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      MyTextField(
-                        controller: passwordTextEditingController,
-                        materialcolor: const Color(0xffA9DED8),
-                        textstylecolor: const TextStyle(
-                          color: Color(0xffA9DED8),
-                        ),
-                        fillColor: Colors.black,
-                        labelText: "Your Password",
-                        labelStylecolor: const TextStyle(color: Colors.white70),
-                        icon: Icons.lock_outline_sharp,
-                        iconcolor: Colors.black,
-                        obscureText: passwordVisible,
-                        suffixIcon: IconButton(
-                          icon: Icon(passwordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () {
-                            setState(
-                              () {
-                                passwordVisible = !passwordVisible;
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      MyTextField(
-                        controller: phoneNumberTextEditinController,
-                        keyboardType: TextInputType.phone,
-                        materialcolor: const Color(0xffA9DED8),
-                        textstylecolor: const TextStyle(
-                          color: Color(0xffA9DED8),
-                        ),
-                        fillColor: Colors.black,
-                        labelText: "Phone Number",
-                        labelStylecolor: const TextStyle(color: Colors.white70),
-                        icon: Icons.smartphone_sharp,
-                        iconcolor: Colors.black,
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      MyTextField(
-                        controller: vehicleModelTextEditingController,
-                        materialcolor: const Color(0xffA9DED8),
-                        textstylecolor: const TextStyle(
-                          color: Color(0xffA9DED8),
-                        ),
-                        fillColor: Colors.black,
-                        labelText: "Vehicle Model",
-                        labelStylecolor: const TextStyle(color: Colors.white70),
-                        icon: Icons.local_taxi,
-                        iconcolor: Colors.black,
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      DropDown(
-                        onChanged: (value) => _carSeats = value!,
-                        onSaved: (value) => _carSeats = value!,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      MyTextField(
-                        controller: vehicleNumberTextEditingController,
-                        materialcolor: const Color(0xffA9DED8),
-                        textstylecolor: const TextStyle(
-                          color: Color(0xffA9DED8),
-                        ),
-                        fillColor: Colors.black,
-                        labelText: "Vehicle Number",
-                        labelStylecolor: const TextStyle(color: Colors.white70),
-                        icon: Icons.numbers_outlined,
-                        iconcolor: Colors.black,
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              text: 'Already have an Account? Login Here',
-                              style: const TextStyle(color: Colors.white70),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  HapticFeedback.lightImpact();
-                                  Fluttertoast.showToast(
-                                    msg: 'Already have an account ',
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const LoginScreen(),
-                                    ),
-                                  );
-                                },
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: screenWidth * .03),
+                          height: screenWidth * .3,
+                          width: screenWidth * .3,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.transparent,
+                                Colors.transparent,
+                                Color(0xff09090A),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                      Expanded(
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: width * .03),
-                                height: width * .3,
-                                width: width * .3,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.transparent,
-                                      Colors.transparent,
-                                      Color(0xff09090A),
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
+                      Center(
+                        child: Transform.scale(
+                          scale: _animation.value,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () {
+                              checkIfNetworkIsAvailable();
+                              HapticFeedback.lightImpact();
+                              Fluttertoast.showToast(
+                                msg: 'Register',
+                              );
+                            },
+                            child: Container(
+                              height: screenWidth * .2,
+                              width: screenWidth * .2,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                color: Color(0xffA9DED8),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            Center(
-                              child: Transform.scale(
-                                scale: _animation.value,
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () {
-                                    checkIfNetworkIsAvailable();
-                                    HapticFeedback.lightImpact();
-                                    Fluttertoast.showToast(
-                                      msg: 'Register ',
-                                    );
-                                  },
-                                  child: Container(
-                                    height: width * .2,
-                                    width: width * .2,
-                                    alignment: Alignment.center,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xffA9DED8),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: const Text(
-                                      'Register',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ],

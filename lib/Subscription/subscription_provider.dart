@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SubscriptionProvider with ChangeNotifier {
   bool _subscribed = false;
   Duration _trialDuration = const Duration(seconds: 30);
-  int _secondsLeft = 30;
+  int _secondsLeft = 0;
   DateTime? _endDate;
   Timer? _timer;
 
@@ -21,7 +21,8 @@ class SubscriptionProvider with ChangeNotifier {
   void _loadSubscriptionData() async {
     final prefs = await SharedPreferences.getInstance();
     _subscribed = prefs.getBool('subscribed') ?? false;
-    _secondsLeft = prefs.getInt('secondsLeft') ?? 30;
+   //_secondsLeft = prefs.getInt('secondsLeft') ?? 30;
+   // print('PRINT{$_secondsLeft}');
     final endDateString = prefs.getString('endDate');
     if (endDateString != null) {
       _endDate = DateTime.parse(endDateString);

@@ -41,55 +41,60 @@ class ScreanBrightnessState extends State<ScreanBrightness> {
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Material(
-                  elevation: 20,
-                  borderRadius: BorderRadius.circular(12),
-                  child: Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.white),
-                   
-                    height: 100,
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 25,right: 25,top: 20),
-                          child: Row(
-                            children: [
-                              Icon(Icons.sunny),
-                              Spacer(),
-                              Icon(Icons.wb_sunny_outlined,color: Colors.amber,)
-                            ],
-                          ),
+    // Use MediaQuery to get the screen width
+    var screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallScreen = screenWidth < 600;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 10 : 30),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 10 : 25),
+              child: Material(
+                elevation: 20,
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  height: 100,
+                  child: Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 25, right: 25, top: 20),
+                        child: Row(
+                          children: [
+                            Icon(Icons.sunny),
+                            Spacer(),
+                            Icon(Icons.wb_sunny_outlined, color: Colors.amber),
+                          ],
                         ),
-                        Slider(
-                          autofocus: true,
-                          secondaryTrackValue:1.0 ,
-                          secondaryActiveColor: Colors.grey,
-                          activeColor: Colors.amber,
-                          overlayColor: WidgetStateProperty.all<Color>(Colors.transparent),
-                          value: _currentBrightness,
-                          min: 0.0,
-                          max: 1.0,
-                          onChanged: (value) {
-                            _setBrightness(value);
-                          },
-                        ),
-                      ],
-                    ),
+                      ),
+                      Slider(
+                        autofocus: true,
+                        secondaryTrackValue: 1.0,
+                        secondaryActiveColor: Colors.grey,
+                        activeColor: Colors.amber,
+                        overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                        value: _currentBrightness,
+                        min: 0.0,
+                        max: 1.0,
+                        onChanged: (value) {
+                          _setBrightness(value);
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      
+      ),
     );
   }
 }

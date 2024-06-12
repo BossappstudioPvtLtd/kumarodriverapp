@@ -2,9 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kumari_drivers/Subscription/driver_avl.dart';
+import 'package:kumari_drivers/Subscription/switch_state.dart';
 import 'package:kumari_drivers/onBoding.dart';
 import 'package:provider/provider.dart';
-import 'subscription_provider.dart'; // Make sure to import your provider
+import 'package:kumari_drivers/Subscription/subscription_provider.dart'; // Make sure to import your provider
+// Import SwitchState
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +32,8 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SubscriptionProvider()),
+        ChangeNotifierProvider(create: (_) => SwitchState()), // Provide SwitchState
+         ChangeNotifierProvider(create: (_) => DriverAvailability()),
       ],
       child: EasyLocalization(
         supportedLocales: const [
@@ -59,7 +64,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const OnBoding(),
+      home: const  OnBoding(), // Set HomePage as the home
     );
   }
 }

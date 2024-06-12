@@ -13,44 +13,50 @@ class TextAnimation extends StatefulWidget {
 class _TextAnimationState extends State<TextAnimation> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    // Use MediaQuery to get the screen width
+    var screenWidth = MediaQuery.of(context).size.width;
+    bool isSmallScreen = screenWidth < 600;
+
+    return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SlideFadeTransition(
           curve: Curves.elasticOut,
-          delayStart: Duration(milliseconds: 500),
-          animationDuration: Duration(milliseconds: 1200),
+          delayStart: const Duration(milliseconds: 500),
+          animationDuration: const Duration(milliseconds: 1200),
           offset: 2.5,
           direction: Direction.horizontal,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 15 : 25),
             child: Text(
               "Safe Ride With Us!",
               style: TextStyle(
-                  color: Color.fromARGB(255, 15, 6, 77),
-                  fontSize: 26,
+                  color: const Color.fromARGB(255, 15, 6, 77),
+                  fontSize: isSmallScreen ? 28 : 26,
                   fontWeight: FontWeight.bold),
             ),
           ),
         ),
         SlideFadeTransition(
           curve: Curves.elasticOut,
-          delayStart: Duration(milliseconds: 1000),
-          animationDuration: Duration(milliseconds: 1200),
+          delayStart: const Duration(milliseconds: 1000),
+          animationDuration: const Duration(milliseconds: 1200),
           offset: 2.5,
           direction: Direction.vertical,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 80),
-            child: Text(
-              "Discover the freedom of   travel with Kumari Cabs! ",
-              style: TextStyle(
-                  color: Color.fromARGB(255, 15, 6, 77),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+            padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 70 : 80),
+            child: Center(
+              child: Text(
+                "Discover the freedom of travel with Kumari Cabs!",
+                style: TextStyle(
+                    color: const Color.fromARGB(255, 15, 6, 77),
+                    fontSize: isSmallScreen ? 16 : 20,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
-        SlideFadeTransition(
+        const SlideFadeTransition(
           delayStart: Duration(milliseconds: 1000),
           animationDuration: Duration(milliseconds: 700),
           child: Text(
@@ -58,7 +64,7 @@ class _TextAnimationState extends State<TextAnimation> {
             style: TextStyle(fontSize: 20),
           ),
         ),
-        SlideFadeTransition(
+        const SlideFadeTransition(
           curve: Curves.elasticOut,
           delayStart: Duration(milliseconds: 1800),
           animationDuration: Duration(milliseconds: 1200),
@@ -66,7 +72,7 @@ class _TextAnimationState extends State<TextAnimation> {
           direction: Direction.vertical,
           child: Text('', style: TextStyle(color: Colors.white)),
         ),
-        SlideFadeTransition(
+        const SlideFadeTransition(
           delayStart: Duration(milliseconds: 2300),
           animationDuration: Duration(milliseconds: 1000),
           curve: Curves.fastLinearToSlowEaseIn,
@@ -85,15 +91,10 @@ enum Direction { vertical, horizontal }
 
 class SlideFadeTransition extends StatefulWidget {
   final Widget child;
-
   final double offset;
-
   final Curve curve;
-
   final Direction direction;
-
   final Duration delayStart;
-
   final Duration animationDuration;
 
   const SlideFadeTransition({
@@ -113,9 +114,7 @@ class SlideFadeTransition extends StatefulWidget {
 class _SlideFadeTransitionState extends State<SlideFadeTransition>
     with SingleTickerProviderStateMixin {
   late Animation<Offset> _animationSlide;
-
   late AnimationController _animationController;
-
   late Animation<double> _animationFade;
 
   @override

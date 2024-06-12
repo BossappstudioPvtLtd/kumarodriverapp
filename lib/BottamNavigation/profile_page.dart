@@ -12,6 +12,7 @@ import 'package:kumari_drivers/Settings/Screens/setting_screen.dart';
 import 'package:kumari_drivers/components/Text_Edt.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
 import 'package:kumari_drivers/components/screen_bright.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -56,18 +57,20 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var isSmallScreen = screenWidth < 600;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: currentUser == null || userRef == null
           ? const Center(child: Text('No user logged in'))
-          : StreamBuilder<Object>(
+          : StreamBuilder<DatabaseEvent>(
               stream: userRef!.onValue,
-              builder: (context, AsyncSnapshot event) {
+              builder: (context, AsyncSnapshot<DatabaseEvent> event) {
                 if (event.hasData &&
                     !event.hasError &&
-                    event.data.snapshot.value != null) {
-                  Map data = event.data.snapshot.value;
-
+                    event.data!.snapshot.value != null) {
+                  Map data = event.data!.snapshot.value as Map;
                   return SafeArea(
                     child: Container(
                       child: Column(
@@ -79,17 +82,17 @@ class ProfilePageState extends State<ProfilePage> {
                               children: <Widget>[
                                 Column(
                                   children: <Widget>[
-                                    const SizedBox(
-                                      height: 30,
+                                    SizedBox(
+                                      height: isSmallScreen ? 20 : 30,
                                     ),
                                     Material(
                                       elevation: 15,
                                       borderRadius: BorderRadius.circular(42),
                                       child: CircleAvatar(
-                                        radius: 42,
+                                        radius: isSmallScreen ? 43 : 42,
                                         backgroundColor: Colors.grey,
                                         child: CircleAvatar(
-                                          radius: 40,
+                                          radius: isSmallScreen ? 90 : 40,
                                           backgroundColor: Colors.white,
                                           child: ClipRRect(
                                             borderRadius:
@@ -100,8 +103,10 @@ class ProfilePageState extends State<ProfilePage> {
                                                   BorderRadius.circular(100.0),
                                               child: Image.network(
                                                   "${data['photo']}",
-                                                  width: 75,
-                                                  height: 75,
+                                                  width:
+                                                      isSmallScreen ? 80 : 75,
+                                                  height:
+                                                      isSmallScreen ? 80 : 75,
                                                   fit: BoxFit.cover),
                                             ),
                                           ),
@@ -110,8 +115,8 @@ class ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 15,
+                                SizedBox(
+                                  height: isSmallScreen ? 10 : 15,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,74 +124,96 @@ class ProfilePageState extends State<ProfilePage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10),
+                                      padding: EdgeInsets.only(
+                                          top: isSmallScreen ? 5 : 10),
                                       child: MaterialButton(
-                                          height: 50,
-                                          color: Colors.white,
-                                          shape: const CircleBorder(),
-                                          elevation: 6,
-                                          child: const Icon(
-                                            Icons.edit,
+                                        height: isSmallScreen ? 40 : 50,
+                                        color: Colors.white,
+                                        shape: const CircleBorder(),
+                                        elevation: 6,
+                                        child: const Icon(
+                                          Icons.edit,
+                                          size: 30,
+                                          color:
+                                              Color.fromARGB(255, 21, 81, 130),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => PrifileEdt(
+                                                name: "${data['name']}"
+                                                    .toString(),
+                                                email: "${data['email']}"
+                                                    .toString(),
+                                                phone: "${data['phone']}"
+                                                    .toString(),
+                                                photo: "${data['photo']}"
+                                                    .toString(),
+                                                carModel:
+                                                    "${data['car_details']['carModel']}"
+                                                        .toString(),
+                                                carSeats: data['car_details']
+                                                        ['carSeats']
+                                                    .toString(),
+                                                carNumber:
+                                                    "${data['car_details']['carNumber']}"
+                                                        .toString(),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: isSmallScreen ? 5 : 10),
+                                      child: MaterialButton(
+                                        height: isSmallScreen ? 40 : 50,
+                                        color: Colors.white,
+                                        shape: const CircleBorder(),
+                                        elevation: 6,
+                                        child: const Icon(
+                                            Icons.settings_suggest_outlined,
                                             size: 30,
-                                            color: Color.fromARGB(
-                                                255, 21, 81, 130),
-                                          ),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (_) => PrifileEdt(
-                                                        name: "${data['name']}",
-                                                        email:
-                                                            " ${data['email']}",
-                                                        phone:
-                                                            "${data['phone']}",
-                                                        photo:
-                                                            "${data['photo']}")));
-                                          }),
+                                            color: Colors.blueGrey),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => const Settings(),
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10),
+                                      padding: EdgeInsets.only(
+                                          top: isSmallScreen ? 5 : 10),
                                       child: MaterialButton(
-                                          height: 50,
-                                          color: Colors.white,
-                                          shape: const CircleBorder(),
-                                          elevation: 6,
-                                          child: const Icon(
-                                              Icons.settings_suggest_outlined,
-                                              size: 30,
-                                              color: Colors.blueGrey),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        const Settings()));
-                                          }),
+                                        height: isSmallScreen ? 40 : 50,
+                                        color: Colors.white,
+                                        shape: const CircleBorder(),
+                                        elevation: 6,
+                                        child: Icon(
+                                          Icons.wb_sunny_outlined,
+                                          size: 30,
+                                          color: Colors.green[900],
+                                        ),
+                                        onPressed: () {
+                                          showCupertinoModalPopup(
+                                            context: context,
+                                            builder: (builder) {
+                                              return const ScreanBrightness();
+                                            },
+                                          );
+                                        },
+                                      ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: MaterialButton(
-                                          height: 50,
-                                          color: Colors.white,
-                                          shape: const CircleBorder(),
-                                          elevation: 6,
-                                          child: Icon(
-                                            Icons.wb_sunny_outlined,
-                                            size: 30,
-                                            color: Colors.green[900],
-                                          ),
-                                          onPressed: () {
-                                            showCupertinoModalPopup(
-                                                context: context,
-                                                builder: (builder) {
-                                                  return const ScreanBrightness();
-                                                });
-                                          }),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 20, top: 10),
+                                      padding: EdgeInsets.only(
+                                          right: isSmallScreen ? 10 : 20,
+                                          top: isSmallScreen ? 5 : 10),
                                       child: Material(
                                         elevation: 5,
                                         borderRadius: BorderRadius.circular(25),
@@ -194,77 +221,74 @@ class ProfilePageState extends State<ProfilePage> {
                                         child: IconButton(
                                           onPressed: () {
                                             showCupertinoDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    backgroundColor:
-                                                        Colors.black87,
-                                                    elevation: 20,
-                                                    title: TextEdt(
-                                                      text:
-                                                          'Email Sign Out'.tr(),
-                                                      color: Colors.white,
-                                                      fontSize: null,
-                                                    ),
-                                                    content: TextEdt(
-                                                      text:
-                                                          'Do you want to continue with sign out?'
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  backgroundColor:
+                                                      Colors.black87,
+                                                  elevation: 20,
+                                                  title: TextEdt(
+                                                    text: 'Email Sign Out'.tr(),
+                                                    color: Colors.white,
+                                                    fontSize: null,
+                                                  ),
+                                                  content: TextEdt(
+                                                    text:
+                                                        'Do you want to continue with sign out?'
+                                                            .tr(),
+                                                    fontSize: null,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  actions: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        MaterialButtons(
+                                                          onTap: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(false);
+                                                          },
+                                                          elevationsize: 20,
+                                                          text: '   Cancel    '
                                                               .tr(),
-                                                      fontSize: null,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    actions: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          MaterialButtons(
-                                                            onTap: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop(false);
-                                                            },
-                                                            elevationsize: 20,
-                                                            text:
-                                                                '   Cancel    '
-                                                                    .tr(),
-                                                            fontSize: 17,
-                                                            containerheight: 40,
-                                                            containerwidth: 100,
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10)),
-                                                            onPressed: null,
+                                                          fontSize: 17,
+                                                          containerheight: 40,
+                                                          containerwidth: 100,
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                  .all(
+                                                            Radius.circular(10),
                                                           ),
-                                                          MaterialButtons(
-                                                            onTap: () {
-                                                              _signOut();
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            elevationsize: 20,
-                                                            text:
-                                                                'Continue'.tr(),
-                                                            fontSize: 17,
-                                                            containerheight: 40,
-                                                            containerwidth: 100,
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10)),
-                                                            onPressed: null,
+                                                          onPressed: null,
+                                                        ),
+                                                        MaterialButtons(
+                                                          onTap: () {
+                                                            _signOut();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          elevationsize: 20,
+                                                          text: 'Continue'.tr(),
+                                                          fontSize: 17,
+                                                          containerheight: 40,
+                                                          containerwidth: 100,
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                  .all(
+                                                            Radius.circular(10),
                                                           ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  );
-                                                });
+                                                          onPressed: null,
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            );
                                           },
                                           icon: const Icon(
                                             Icons.power_settings_new,
@@ -279,9 +303,7 @@ class ProfilePageState extends State<ProfilePage> {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 25,
-                          ),
+                          25.height,
                           const Divider(
                             height: 1,
                             color: Colors.black,
@@ -290,82 +312,79 @@ class ProfilePageState extends State<ProfilePage> {
                             thickness: 0.5,
                           ),
                           Expanded(
-                              flex: 2,
-                              child: SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 10),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      containerList("Current Location".tr(),
-                                          _locationMessage, Icons.my_location),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      containerList("User Name".tr(),
-                                          "${data['name']}", Icons.person),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      containerList("User Email".tr(),
-                                          "${data['email']}", Icons.email),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      containerList(
-                                          "Phone Number".tr(),
-                                          "${data['phone']}",
-                                          Icons.phone_android_rounded),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      containerList(
-                                          "Car Model".tr(),
-                                          "${data['car_details']['carModel']}",
-                                          Icons.local_taxi),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      containerList(
-                                          "Car Seats".tr(),
-                                          "${data['car_details']['carSeats']}",
-                                          Icons
-                                              .airline_seat_recline_normal_rounded),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      containerList(
-                                          "Car Number".tr(),
-                                          "${data['car_details']['carNumber']}",
-                                          Icons.numbers_outlined),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-
-                                      /* containerList("Change Language",
-                                  "You can change Language", Icons.language),
-                              const SizedBox(
-                                height: 15,
-                              ),*/
-                                    ],
-                                  ),
+                            flex: 2,
+                            child: SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, top: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    containerList(
+                                        "Current Location".tr(),
+                                        _locationMessage,
+                                        Icons.my_location,
+                                        isSmallScreen),
+                                    15.height,
+                                    containerList(
+                                        "User Name".tr(),
+                                        "${data['name']}",
+                                        Icons.person,
+                                        isSmallScreen),
+                                    15.height,
+                                    containerList(
+                                        "User Email".tr(),
+                                        "${data['email']}",
+                                        Icons.email,
+                                        isSmallScreen),
+                                    15.height,
+                                    containerList(
+                                        "Phone Number".tr(),
+                                        "${data['phone']}",
+                                        Icons.phone_android_rounded,
+                                        isSmallScreen),
+                                    15.height,
+                                    containerList(
+                                        "Car Model".tr(),
+                                        "${data['car_details']['carModel']}",
+                                        Icons.local_taxi,
+                                        isSmallScreen),
+                                    15.height,
+                                    containerList(
+                                        "Car Seats".tr(),
+                                        "${data['car_details']['carSeats']}",
+                                        Icons
+                                            .airline_seat_recline_normal_rounded,
+                                        isSmallScreen),
+                                    15.height,
+                                    containerList(
+                                        "Car Number".tr(),
+                                        "${data['car_details']['carNumber']}",
+                                        Icons.numbers_outlined,
+                                        isSmallScreen),
+                                    15.height,
+                                  ],
                                 ),
-                              )),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   );
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
-              }),
+              },
+            ),
     );
   }
 
-  Widget containerList(String title, String subtitle, IconData icon) {
+  Widget containerList(
+      String title, String subtitle, IconData icon, bool isSmallScreen) {
     return Material(
       elevation: 8,
       borderRadius: BorderRadius.circular(10),
@@ -381,13 +400,17 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           title: Text(
             title,
-            style: const TextStyle(
-                fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                fontSize: isSmallScreen ? 14 : 16,
+                color: Colors.black,
+                fontWeight: FontWeight.w500),
           ),
           subtitle: Text(
             subtitle,
-            style: const TextStyle(
-                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400),
+            style: TextStyle(
+                fontSize: isSmallScreen ? 12 : 14,
+                color: Colors.black,
+                fontWeight: FontWeight.w400),
           ),
           trailing: const Icon(
             Icons.arrow_forward_ios,

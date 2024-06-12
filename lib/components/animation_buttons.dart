@@ -8,6 +8,9 @@ class AnimationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Material(
       color: const Color.fromARGB(255, 15, 6, 77),
       elevation: 10,
@@ -15,17 +18,18 @@ class AnimationButton extends StatelessWidget {
         Radius.circular(30),
       ),
       child: InkWell(
-        onTap:onTap,
-        child: const SizedBox(
-          height: 50,
-          width: 200,
-          child: Center(
+        onTap: onTap,
+        child: SizedBox(
+          height: screenHeight * 0.07, // 7% of screen height
+          width: screenWidth * 0.5, // 50% of screen width
+          child: const Center(
             child: Text(
               "Let's get started!",
               style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -44,9 +48,10 @@ class ScaleTransition1 extends PageRouteBuilder {
           reverseTransitionDuration: const Duration(milliseconds: 200),
           transitionsBuilder: (context, animation, anotherAnimation, child) {
             animation = CurvedAnimation(
-                curve: Curves.fastLinearToSlowEaseIn,
-                parent: animation,
-                reverseCurve: Curves.fastOutSlowIn);
+              curve: Curves.fastLinearToSlowEaseIn,
+              parent: animation,
+              reverseCurve: Curves.fastOutSlowIn,
+            );
             return ScaleTransition(
               alignment: Alignment.bottomCenter,
               scale: animation,

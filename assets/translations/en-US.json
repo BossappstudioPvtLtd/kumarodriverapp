@@ -45,6 +45,27 @@
     "Profile":"Profile",
 
 
+    "Subscription":"Subscription",
+    "Payment Section":"Payment Section",
+    "Plan":"Plan",
+    "Price":"Price",
+    "Details":"Details",
+    "Proceed to Payment":"Proceed to Payment",
+    "Profile Details":"Profile Details",
+    
+
+    "License Details":"License Details",
+    "Driving License Number":"Driving License Number",
+    "License Expiry Date":"License Expiry Date",
+    "Car Details] not found":"Car Details] not found",
+    "Insurance Expiry Date":"Insurance E,xpiry Date",
+    "RC Book Details":"RC Book Details",
+    "User Information":"User Information",
+    "Car Details":"Car Details",
+
+
+
+
     "Going Online":"Going Online",
     "Receiving Ride":"Receiving Ride",
     "Navigating":"Navigating",

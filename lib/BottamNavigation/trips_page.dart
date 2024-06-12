@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kumari_drivers/Subscription/payment_page.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import '../model/PlanModal.dart';
-import '../subscription_provider.dart';
+import '../model/plan_modal.dart';
+import '../Subscription/subscription_provider.dart';
 
 class SubscriptionButton extends StatefulWidget {
   const SubscriptionButton({super.key});
@@ -30,55 +31,55 @@ class SubscriptionButtonState extends State<SubscriptionButton> {
       PlanModal(
         image: 'assets/images/crown.png',
         title: '',
-        subTitle: 'A Simplest Start to everyone',
+        subTitle: 'A Simplest Start to everyone'.tr(),
         price: 'Free Trial',
-        planPriceSubTitle: 'per user/month',
+        planPriceSubTitle: 'per user/month'.tr(),
         optionList: [
-          PlanModal(title: 'Up to 1 user'),
-          PlanModal(title: 'Up to 20 records per month'),
-          PlanModal(title: 'Single record'),
+          PlanModal(title: 'Up to 1 user'.tr(),),
+          PlanModal(title: 'Up to 20 records per month'.tr(),),
+          PlanModal(title: 'Single record'.tr(),),
         ],
       ),
     );
     planList.add(
       PlanModal(
         image: 'assets/images/crown.png',
-        title: 'Basic',
-        subTitle: 'A Simplest Start to everyone',
+        title: 'Basic'.tr(),
+        subTitle: 'A Simplest Start to everyone'.tr(),
         price: '99 Rs',
-        planPriceSubTitle: 'per user/month',
+        planPriceSubTitle: 'per user/month'.tr(),
         optionList: [
-          PlanModal(title: 'Up to 10 users'),
-          PlanModal(title: 'Up to 100 records per month'),
-          PlanModal(title: 'Single record'),
+          PlanModal(title: 'Up to 10 users'.tr(),),
+          PlanModal(title: 'Up to 100 records per month'.tr(),),
+          PlanModal(title: 'Single record'.tr(),),
         ],
       ),
     );
     planList.add(
       PlanModal(
         image: 'assets/images/crown.png',
-        title: 'Standard',
-        subTitle: 'For Small and medium business',
+        title: 'Standard'.tr(),
+        subTitle: 'For Small and medium business'.tr(),
         price: '199 Rs',
-        planPriceSubTitle: 'per user/month',
+        planPriceSubTitle: 'per user/month'.tr(),
         optionList: [
-          PlanModal(title: 'Up to 20 users'),
-          PlanModal(title: 'Up to 200 records per month'),
-          PlanModal(title: 'Single Company record'),
+          PlanModal(title: 'Up to 20 users'.tr(),),
+          PlanModal(title: 'Up to 200 records per month'.tr(),),
+          PlanModal(title: 'Single Company record'.tr(),),
         ],
       ),
     );
     planList.add(
       PlanModal(
         image: 'assets/images/crown.png',
-        title: 'Enterprise',
-        subTitle: 'Solution for big organization',
+        title: 'Enterprise'.tr(),
+        subTitle: 'Solution for big organization'.tr(),
         price: '299 Rs',
-        planPriceSubTitle: 'per user/month',
+        planPriceSubTitle: 'per user/month'.tr(),
         optionList: [
-          PlanModal(title: 'Unlimited users'),
-          PlanModal(title: 'Unlimited records'),
-          PlanModal(title: 'Multiple Company records'),
+          PlanModal(title: 'Unlimited users'.tr(),),
+          PlanModal(title: 'Unlimited records'.tr(),),
+          PlanModal(title: 'Multiple Company records'.tr(),),
         ],
       ),
     );
@@ -210,7 +211,7 @@ class SubscriptionButtonState extends State<SubscriptionButton> {
                       color: isPageIndex ? Colors.green.shade100 : blueButtonAndTextColor,
                       child: TextIcon(
                         prefix: isPageIndex ? Icon(Icons.check, color: selectedIndex == index ? Colors.green : null, size: 16) : null,
-                        text: isPageIndex ? ' Your current plan' : 'Upgrade',
+                        text: isPageIndex ? ' Your current plan'.tr() : 'Upgrade'.tr(),
                         textStyle: boldTextStyle(size: 18, color: isPageIndex ? Colors.green : Colors.white),
                       ),
                     ).paddingBottom(16),

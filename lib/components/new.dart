@@ -44,45 +44,45 @@ class _RegistrationFormState extends State<RegistrationForm> {
     return  Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding:const EdgeInsets.all(16.0),
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'User Name'),
+              decoration:const InputDecoration(labelText: 'User Name'),
               onSaved: (value) => _userName = value!,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration:const InputDecoration(labelText: 'Email'),
               onSaved: (value) => _email = value!,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration:const InputDecoration(labelText: 'Password'),
               onSaved: (value) => _password = value!,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Phone Number'),
+              decoration:const InputDecoration(labelText: 'Phone Number'),
               onSaved: (value) => _phoneNumber = value!,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Car Model'),
+              decoration:const InputDecoration(labelText: 'Car Model'),
               onSaved: (value) => _carModel = value!,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Car Number'),
+              decoration: const InputDecoration(labelText: 'Car Number'),
               onSaved: (value) => _carNumber = value!,
             ),
             DropdownButtonFormField(
-              items: [
-                DropdownMenuItem(child: Text('3 seats'), value: 3),
-                DropdownMenuItem(child: Text('4 seats'), value: 4),
-                DropdownMenuItem(child: Text('7 seats'), value: 7),
+              items: const [
+                DropdownMenuItem(value: 3, child: Text('3 seats')),
+                DropdownMenuItem(value: 4, child: Text('4 seats')),
+                DropdownMenuItem(value: 7, child: Text('7 seats')),
               ],
               onChanged: (value) => _carSeats = value!,
               onSaved: (value) => _carSeats = value!,
-              decoration: InputDecoration(labelText: 'Car Seats'),
+              decoration: const InputDecoration(labelText: 'Car Seats'),
             ),
             ElevatedButton(
               onPressed: _submitForm,
-              child: Text('Register'),
+              child: const Text('Register'),
             ),
           ],
         ),
