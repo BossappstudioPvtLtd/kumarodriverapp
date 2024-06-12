@@ -38,7 +38,7 @@ class _SettingItemState extends State<SettingItem> {
         child: Row(
           children: [
             Padding(
-              padding:  EdgeInsets.only(left: 10),
+              padding:  const EdgeInsets.only(left: 10),
               child: Container(
                 height: 40,
                 width: 40,
@@ -52,25 +52,25 @@ class _SettingItemState extends State<SettingItem> {
                 ),
               ),
             ),
-             SizedBox(width: 20),
+             const SizedBox(width: 20),
             Text(
               widget.title,
-              style:  TextStyle(
+              style:  const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),
-             Spacer(),
+             const Spacer(),
             widget.value != null
                 ? Text(
                     widget.value!,
-                    style:  TextStyle(
+                    style:  const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                     ),
                   )
-                :  SizedBox(),
-             SizedBox(width: 20),
+                :  const SizedBox(),
+             const SizedBox(width: 20),
             Container(
               child:widget.child
             )

@@ -36,7 +36,27 @@
     "Car Model": "கார் மாதிரி",
     "Car Seats": "கார் சீட்டுகள்",
 
-
+     
+    "Subscription":"சந்தா",
+    "Payment Section":"கட்டணம் செலுத்தும் பிரிவு",
+    "Plan": "திட்டம்",
+    "Price": "விலை",
+    "Details": "விவரங்கள்",
+    "Proceed to Payment": "கட்டணத்திற்கு செல்லுங்கள்",
+    "Free Trial": "இலவச சோதனை",
+      
+    "Profile Details":"சுயவிவர விவரங்கள்",
+    "License Details": "உரிமம் விவரங்கள்",
+    "Driving License Number": "ஓட்டுநர் உரிமம் எண்",
+    "License Expiry Date": "உரிம காலாவதி தேதி",
+    "Car Details not found": "கார் விவரங்கள் கண்டுபிடிக்கப்படவில்லை",
+    "Insurance Expiry Date": "காப்பீடு காலாவதி தேதி",
+    "RC Book Details": "ஆர்.சி புத்தக விவரங்கள்",
+    
+    "User Information":"பயனர் தகவல்",
+    "Car Details":"கார் விவரங்கள்",
+   
+      
 
 
     "Navigating": "வழிநடத்தல்",

@@ -305,11 +305,35 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flip_board:
+    dependency: "direct main"
+    description:
+      name: flip_board
+      sha256: "5b3bb7cebc7daa3b950be773a910cca40ff1516972dfb7dd4c5c5d58c94b4416"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_flip_clock:
+    dependency: "direct main"
+    description:
+      name: flutter_flip_clock
+      sha256: "621ae4cf1c3af6bc03f9c998fa3aa76c0d3986be4f1a42eb7027ca2f864546d2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
+  flutter_geofire:
+    dependency: "direct main"
+    description:
+      name: flutter_geofire
+      sha256: "756588ac6ee477d59cb6516a49f69a7306d35765c7de738ec894d77359d4de79"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -1002,6 +1026,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slide_countdown:
+    dependency: "direct main"
+    description:
+      name: slide_countdown
+      sha256: "345cbe6d749bf8525df020cbc3763fa5005fed9a8fce59b32c61a5e1bac07b4e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.1"
   source_span:
     dependency: transitive
     description:
@@ -1034,6 +1066,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  stream_duration:
+    dependency: transitive
+    description:
+      name: stream_duration
+      sha256: d4e833a8db38faec87325ca784079d1e90ba66f78c365ca96f353a59b26bd62e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
   stream_transform:
     dependency: transitive
     description:

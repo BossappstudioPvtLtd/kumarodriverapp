@@ -1,10 +1,10 @@
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kumari_drivers/components/Text_Edt.dart';
 import 'package:kumari_drivers/components/image_add.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
 import 'package:nb_utils/nb_utils.dart';
-import '../model/PlanModal.dart';
+import '../model/plan_modal.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart'; // Import Razorpay Flutter SDK
 
 class PaymentPage extends StatefulWidget {
@@ -33,7 +33,8 @@ class _PaymentPageState extends State<PaymentPage> {
   void _initiatePayment() {
     var options = {
       'key': 'rzp_test_Fq8a7aTL51han5',
-      'amount':int.parse(widget.plan.price!.replaceAll(RegExp(r'[^0-9]'), '')) * 100,
+      'amount':
+          int.parse(widget.plan.price!.replaceAll(RegExp(r'[^0-9]'), '')) * 100,
       'name': 'KUMARI CABS',
       'description': 'Payment for ${widget.plan.title}',
       'prefill': {'contact': '1234567890', 'email': 'example@example.com'},
@@ -62,83 +63,94 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var isSmallScreen = screenWidth < 600;
+
     return Scaffold(
       backgroundColor: Colors.amber,
       appBar: AppBar(
         backgroundColor: Colors.amber,
       ),
-      body: Column(
-        children: [
-         
-          Material(
-            elevation: 20,
-            borderRadius: BorderRadius.circular(16),
-            color: Colors.black,
-            child: const Padding(
-              padding: EdgeInsetsDirectional.only(start: 10, end: 10),
-              child: TextEdt(
-                text: 'Payment Section',
-                fontSize: 32,
-                color: Colors.amber,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: isSmallScreen ? 50 : 50),
+            Material(
+              elevation: 20,
+              borderRadius: BorderRadius.circular(16),
+              color: Colors.black,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
+                child: TextEdt(
+                  text: tr('Payment Section'),
+                  fontSize: isSmallScreen ? 24 : 32,
+                  color: Colors.amber,
+                ),
               ),
             ),
-          ),
-          const ImageAdd(image: "assets/images/mobile-payment_7217472.png",height: 200,width: 400,),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Material(
-              elevation: 20,
-              borderRadius: BorderRadius.circular(32),
-              child: Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(32)),
-                height: 300,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      50.height,
-                      TextEdt(
-                        text: 'Plan: ${widget.plan.title}',
-                        fontSize: 26,
-                        color: null,
-                      ),
-                      10.height,
-
-                      TextEdt(
-                        text: 'Price: ${widget.plan.price}',
-                        fontSize: 18,
-                        color: null,
-                      ),
-                      10.height,
-                      TextEdt(
-                        text: 'Details: ${widget.plan.subTitle}',
-                        fontSize: null,
-                        color: null,
-                      ),
-                      // Add more details as neede
-                      80.height,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: MaterialButtons(
-                          containerheight: 40,
-                          borderRadius: BorderRadius.circular(12),
-                          onTap:
-                              _initiatePayment, // Initiate payment on button press
-                          text: 'Proceed to Payment', elevationsize: 20,
-                          textcolor: Colors.amber,
-                          textweight: FontWeight.bold,
-                          fontSize: 16,
-                          meterialColor: Colors.black,
+            ImageAdd(
+              image: "assets/images/mobile-payment_7217472.png",
+              height: isSmallScreen ? 200 : 200,
+              width: isSmallScreen ? 300 : 400,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Material(
+                elevation: 20,
+                borderRadius: BorderRadius.circular(32),
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(32)),
+                  height: isSmallScreen ? 250 : 300,
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: isSmallScreen ? 35 : 50),
+                        TextEdt(
+                          text: '${tr('Plan')}: ${widget.plan.title}',
+                          fontSize: isSmallScreen ? 20 : 26,
+                          color: null,
                         ),
-                      ),
-                    ],
+                        SizedBox(height: isSmallScreen ? 5 : 10),
+                        TextEdt(
+                          text: '${tr('Price')}: ${widget.plan.price}',
+                          fontSize: isSmallScreen ? 14 : 18,
+                          color: null,
+                        ),
+                        SizedBox(height: isSmallScreen ? 5 : 10),
+                        TextEdt(
+                          text: '${tr('Details')}: ${widget.plan.subTitle}',
+                          fontSize: isSmallScreen ? 12 : 14,
+                          color: null,
+                        ),
+                        // Add more details as needed
+                        SizedBox(height: isSmallScreen ? 40 : 80),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: MaterialButtons(
+                            containerheight: isSmallScreen ? 40 : 40,
+                            borderRadius: BorderRadius.circular(12),
+                            onTap:
+                                _initiatePayment, // Initiate payment on button press
+                            text: tr('Proceed to Payment'),
+                            elevationsize: 20,
+                            textcolor: Colors.amber,
+                            textweight: FontWeight.bold,
+                            fontSize: isSmallScreen ? 14 : 16,
+                            meterialColor: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kumari_drivers/Const/geokey.dart';
 import 'package:kumari_drivers/Methords/common_methords.dart';
 import 'package:kumari_drivers/components/loading_dialog.dart';
 import 'package:kumari_drivers/components/my_Textfield.dart';
@@ -116,13 +117,13 @@ class LoginScreenState extends State<LoginScreen>
       usersRef.once().then((snap) {
         if (snap.snapshot.value != null) {
           if ((snap.snapshot.value as Map)["blockStatus"] == "no") {
-            //userName = (snap.snapshot.value as Map)["name"];
+            userName = (snap.snapshot.value as Map)["name"];
             Navigator.push(
                 context, MaterialPageRoute(builder: (c) =>  const Dashboard()));
           } else {
             FirebaseAuth.instance.signOut();
             cMethods.displaySnackBar(
-                "you are blocked. Contact admin: alizeb875@gmail.com", context);
+                "you are blocked. Contact admin: Kumariacabs@gmail.com", context);
           }
         } else {
           FirebaseAuth.instance.signOut();

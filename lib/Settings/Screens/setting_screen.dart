@@ -11,8 +11,6 @@ import 'package:kumari_drivers/Settings/Screens/info_screen.dart';
 class Settings extends StatefulWidget {
   const Settings({super.key});
 
-  get themeNotifier => null;
-
   @override
   State<Settings> createState() => _AccountScreenState();
 }
@@ -29,23 +27,29 @@ class _AccountScreenState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 600;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const Dashboard()));
-//Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const Dashboard()),
+            );
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+                isSmallScreen ? CrossAxisAlignment.center : CrossAxisAlignment.start,
             children: [
               Text(
                 "Settings".tr(),
