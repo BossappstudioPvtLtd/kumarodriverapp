@@ -7,7 +7,6 @@ import 'package:kumari_drivers/BottamNavigation/profile_page.dart';
 import 'package:kumari_drivers/BottamNavigation/trips_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 

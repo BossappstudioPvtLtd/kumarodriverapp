@@ -4,190 +4,287 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_clock/flutter_flip_clock.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kumari_drivers/Const/geokey.dart';
+import 'package:kumari_drivers/Subscription/driver_avl.dart';
 import 'package:kumari_drivers/Subscription/subscription.dart';
-import 'package:kumari_drivers/Subscription/subscription_data.dart';
 import 'package:kumari_drivers/Subscription/subscription_provider.dart';
-import 'package:kumari_drivers/Subscription/switch_state.dart';
-import 'package:kumari_drivers/components/Text_Edt.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
+import 'package:kumari_drivers/pushNotification/push_notification_system.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage1 extends StatefulWidget {
+  const HomePage1({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePage1State createState() => _HomePage1State();
 }
 
-class _HomePageState extends State<HomePage> {
-  final Completer<GoogleMapController> _controller = Completer();
-  
-  final Completer<GoogleMapController> googleMapCompleterController = Completer<GoogleMapController>();
-
+class _HomePage1State extends State<HomePage1> with WidgetsBindingObserver {
+  final Completer<GoogleMapController> googleMapCompleterController =
+      Completer<GoogleMapController>();
+  GoogleMapController? controllerGoogleMap;
   Position? currentPositionOfUser;
   Color colorToShow = Colors.green;
   String titleToShow = "GO ONLINE NOW";
+  String userName = "";
   bool isDriverAvailable = false;
+  DatabaseReference? newTripRequestReference;
+  late StreamSubscription<Position> positionStreamHomePage;
 
+  getCurrentLiveLocationOfDriver() async
+  {
+    Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+    currentPositionOfUser = positionOfUser;
 
-  static const CameraPosition _kGoogle = CameraPosition(
-    target: LatLng(8.0844, 77.5495),
-    zoom: 14.4746,
-  );
+    LatLng positionOfUserInLatLng = LatLng(currentPositionOfUser!.latitude, currentPositionOfUser!.longitude);
+
+    CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 15);
+    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
+
+  goOnlineNow()
+  {
+    //all drivers who are Available for new trip requests
+    Geofire.initialize("onlineDrivers");
+
+    Geofire.setLocation(
+        FirebaseAuth.instance.currentUser!.uid,
+        currentPositionOfUser!.latitude,
+        currentPositionOfUser!.longitude,
+    );
+
+    newTripRequestReference = FirebaseDatabase.instance.ref()
+        .child("drivers")
+        .child(FirebaseAuth.instance.currentUser!.uid)
+        .child("newTripStatus");
+    newTripRequestReference!.set("waiting");
+
+    newTripRequestReference!.onValue.listen((event) { });
+  }
+
+  setAndGetLocationUpdates()
+  {
+    positionStreamHomePage = Geolocator.getPositionStream()
+        .listen((Position position)
+    {
+      currentPositionOfUser = position;
+
+      if(isDriverAvailable == true)
+      {
+        Geofire.setLocation(
+            FirebaseAuth.instance.currentUser!.uid,
+            currentPositionOfUser!.latitude,
+            currentPositionOfUser!.longitude,
+        );
+      }
+
+      LatLng positionLatLng = LatLng(position.latitude, position.longitude);
+      controllerGoogleMap!.animateCamera(CameraUpdate.newLatLng(positionLatLng));
+    });
+  }
+
+  goOfflineNow()
+  {
+    //stop sharing driver live location updates
+    Geofire.removeLocation(FirebaseAuth.instance.currentUser!.uid);
+
+    //stop listening to the newTripStatus
+    newTripRequestReference!.onDisconnect();
+    newTripRequestReference!.remove();
+    newTripRequestReference = null;
+  }
+
+  initializePushNotificationSystem()
+  {
+    PushNotificationSystem notificationSystem = PushNotificationSystem();
+    notificationSystem.generateDeviceRegistrationToken();
+    notificationSystem.startListeningForNewNotification();
+  }
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
 
-    getUserCurrentLocation().then((value) async {
-      debugPrint("${value.latitude} ${value.longitude}");
-
-      // marker added for current users location
-      _markers.add(Marker(
-        markerId: const MarkerId("1"),
-        position: LatLng(value.latitude, value.longitude),
-        infoWindow: const InfoWindow(
-          title: 'My Current Location',
-        ),
-      ));
-
-      // specified current users location
-      CameraPosition cameraPosition = CameraPosition(
-        target: LatLng(value.latitude, value.longitude),
-        zoom: 14,
-      );
-
-      final GoogleMapController controller = await _controller.future;
-      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-      setState(() {});
-    });
-
-    // Listen for changes in the SubscriptionProvider
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final subscriptionProvider =
-          Provider.of<SubscriptionProvider>(context, listen: false);
-      subscriptionProvider.addListener(_subscriptionListener);
-      _subscriptionListener(); // Check immediately in case secondsLeft is already 0
-    });
+    initializePushNotificationSystem();
   }
 
-  @override
-  void dispose() {
-    // Remove the listener when the widget is disposed
-    final subscriptionProvider =
-        Provider.of<SubscriptionProvider>(context, listen: false);
-    subscriptionProvider.removeListener(_subscriptionListener);
-    super.dispose();
-  }
-
-  void _subscriptionListener() {
-    final subscriptionProvider =
-        Provider.of<SubscriptionProvider>(context, listen: false);
-    final switchState = Provider.of<SwitchState>(context, listen: false);
-
-    if (subscriptionProvider.secondsLeft == 1 && switchState.switchValue) {
-      switchState.setSwitchValue(false);
-    }
-  }
-
-  // on below line we have created the list of markers
-  final List<Marker> _markers = <Marker>[
-    const Marker(
-        markerId: MarkerId('1'),
-        infoWindow: InfoWindow(
-          title: 'My Position',
-        )),
-  ];
-
-  // created method for getting user current location
-  Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission()
-        .then((value) {})
-        .onError((error, stackTrace) async {
-      await Geolocator.requestPermission();
-      debugPrint("ERROR$error");
-    });
-    return await Geolocator.getCurrentPosition();
-  }
-
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
-  }
 
   @override
   Widget build(BuildContext context) {
-
-    final switchState = Provider.of<SwitchState>(context);
     final subscriptionProvider = Provider.of<SubscriptionProvider>(context);
-    var screenWidth = MediaQuery.of(context).size.width;
-    var isSmallScreen = screenWidth < 600;
-
-
-  
-
-
+    final driverAvailability = Provider.of<DriverAvailability>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: switchState.switchValue
+        backgroundColor: driverAvailability.isDriverAvailable
             ? const Color.fromARGB(255, 1, 76, 62).withOpacity(0.8)
             : const Color.fromARGB(255, 15, 6, 77),
         title: (subscriptionProvider.secondsLeft <= 0)
-            ? AnimatedTextKit(
-                animatedTexts: [
-                  WavyAnimatedText('Subscription'.tr(),
-                      textStyle: const TextStyle(color: Colors.white)),
-                ],
-                isRepeatingAnimation: true,
-                onTap: () {
-                  debugPrint("Tap Event");
-                },
+            ? Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: AnimatedTextKit(
+                  totalRepeatCount: Duration.secondsPerMinute,
+                  animatedTexts: [
+                    WavyAnimatedText(
+                      'Subscription'.tr(),
+                      textStyle: const TextStyle(color: Colors.white),
+                    ),
+                  ],
+                  isRepeatingAnimation: true,
+                  onTap: () {
+                    debugPrint("Tap Event");
+                  },
+                ),
               )
             : null,
         actions: [
           if (subscriptionProvider.secondsLeft > 0)
-            /*CupertinoSwitch(
-              value: switchState.switchValue,
-              onChanged: (value) {
-                switchState.setSwitchValue(value);
-              },
-              activeColor: Colors.green.shade300,
-              trackColor: Colors.white.withOpacity(0.2),
-            ),*/
+            Row(
+              children: [
+                CupertinoSwitch(
+                  value: driverAvailability.isDriverAvailable,
+                  onChanged: (value) {
+                    showModalBottomSheet(
+                      context: context,
+                      isDismissible: false,
+                      builder: (BuildContext context) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black87,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 5.0,
+                                spreadRadius: 0.5,
+                                offset: Offset(
+                                   0.7,
+                                  0.7,
+                                ),
+                              ),
+                            ],
+                          ),
+                          height: 250,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 18),
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 11),
+                                Text(
+                                  (!driverAvailability.isDriverAvailable)
+                                      ? "GO ONLINE NOW"
+                                      : "GO OFFLINE NOW",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 21),
+                                Text(
+                                  (!driverAvailability.isDriverAvailable)
+                                      ? "You are about to go online, you will become available to receive trip requests from users."
+                                      : "You are about to go offline, you will stop receiving new trip requests from users.",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.white30,
+                                  ),
+                                ),
+                                const SizedBox(height: 25),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("BACK"),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          driverAvailability
+                                              .toggleAvailability();
+                                          if (!isDriverAvailable) {
+                                            // Go online
+                                            goOnlineNow();
+                                            // Get driver location updates
+                                            setAndGetLocationUpdates();
+                                            setState(() {
+                                              isDriverAvailable = true;
+                                            });
+                                          } else {
+                                            goOfflineNow();
+                                            setState(() {
+                                              isDriverAvailable = false;
+                                            });
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: driverAvailability
+                                                  .isDriverAvailable
+                                              ? Colors.pink
+                                              : Colors.green,
+                                        ),
+                                        child: const Text("CONFIRM"),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+                // Adjusted width to create space
+                Text(
+                  driverAvailability.isDriverAvailable ? 'ONLINE' : 'OFFLINE',
+                  style: const TextStyle(fontSize: 12, color: Colors.white),
+                ),
+              ],
+            ),
           if (subscriptionProvider.subscribed)
             Text(
               ' ${subscriptionProvider.endDate!.toString().substring(0, 10)}',
-              style: const TextStyle(fontSize: 18, color: Colors.white),
+              style: const TextStyle(fontSize: 12, color: Colors.white),
             ),
-          /*Text(
-            subscriptionProvider.subscribed
-                ? _formatDuration(
-                    Duration(seconds: subscriptionProvider.secondsLeft))
-                : '',
-            style: const TextStyle(fontSize: 18, color: Colors.amber),
-          ),*/
-          const SizedBox(width: 20),
-          if (subscriptionProvider.subscribed)
-  Padding(
-    padding: const EdgeInsets.only(top: 12),
-    child: subscriptionProvider.subscribed
-        ? FlipClock.countdown(
-            width: 20,
-            height: 20,
-            digitColor: Colors.white,
-            backgroundColor: const Color.fromARGB(255, 15, 6, 77),
-            digitSize: 14.0,
-            borderRadius: const BorderRadius.all(Radius.circular(3.0)),
-            startTime: DateTime(2033, 12, 12),
-            duration: Duration(seconds: subscriptionProvider.secondsLeft),
-          )
-        : SizedBox(), // Placeholder widget if not subscribed
-  ),
+          const SizedBox(
+            width: 10,
+          ),
+          Flexible(
+            fit: FlexFit.tight,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 0, right: 10),
+              child: subscriptionProvider.subscribed
+                  ? FlipClock.countdown(
+                      width: 20,
+                      height: 25,
+                      digitColor: Colors.white,
+                      backgroundColor:
+                          const Color.fromARGB(255, 15, 6, 77).withOpacity(0.1),
+                      digitSize: 14.0,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(3.0)),
+                      startTime: DateTime(2033, 12, 12),
+                      duration:
+                          Duration(seconds: subscriptionProvider.secondsLeft),
+                    )
+                  : const SizedBox(), // Placeholder widget if not subscribed
+            ),
+          ),
           if (subscriptionProvider.secondsLeft == 0)
             MaterialButtons(
               meterialColor: Colors.amber,
@@ -201,84 +298,6 @@ class _HomePageState extends State<HomePage> {
                     builder: (_) => const Subscription(),
                   ),
                 );
-                /* showCupertinoModalPopup(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Padding(
-                      padding: const EdgeInsets.all(32.0),
-                      child: Center(
-                        child: Material(
-                          color: Colors.amber,
-                          elevation: 20,
-                          borderRadius: BorderRadius.circular(32),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                            height: isSmallScreen ? 250 : 300,
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(height: isSmallScreen ? 40 : 80),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 40),
-                                    child: MaterialButtons(
-                                      containerheight: 40,
-                                      borderRadius: BorderRadius.circular(12),
-                                      onTap: () {
-                                        Navigator.pop(context); // Close the popup
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => SubscriptionData(),
-                                          ),
-                                        );
-                                      },
-                                      text: tr('Add Your Vehicle Details'),
-                                      elevationsize: 20,
-                                      textcolor: Colors.amber,
-                                      textweight: FontWeight.bold,
-                                      fontSize: isSmallScreen ? 14 : 16,
-                                      meterialColor: Colors.black,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 40),
-                                    child: MaterialButtons(
-                                      containerheight: 40,
-                                      borderRadius: BorderRadius.circular(12),
-                                      onTap: () {
-                                        Navigator.pop(context); // Close the popup
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                const Subscription(),
-                                          ),
-                                        );
-                                      },
-                                      text: tr('Subscription'),
-                                      elevationsize: 20,
-                                      textcolor: Colors.amber,
-                                      textweight: FontWeight.bold,
-                                      fontSize: isSmallScreen ? 14 : 16,
-                                      meterialColor: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                );*/
               },
               elevationsize: 2,
               text: 'Subscription'.tr(),
@@ -291,165 +310,17 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: [
             GoogleMap(
-              initialCameraPosition: _kGoogle,
-              markers: Set<Marker>.of(_markers),
-              mapType: MapType.normal,
-              myLocationEnabled: true,
-              compassEnabled: true,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+             mapType: MapType.normal,
+            myLocationEnabled: true,
+            initialCameraPosition: googlePlexInitialPosition,
+            onMapCreated: (GoogleMapController mapController) {
+              controllerGoogleMap = mapController;
+
+              googleMapCompleterController.complete(controllerGoogleMap);
+
+                getCurrentLiveLocationOfDriver();
               },
-            ),
-            Container(
-            height: 136,
-            width: double.infinity,
-            color: Colors.black54,
-          ),
-
-          ///go online offline button
-          Positioned(
-            top: 61,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-                ElevatedButton(
-                  onPressed: ()
-                  {
-                    showModalBottomSheet(
-                        context: context,
-                        isDismissible: false,
-                        builder: (BuildContext context)
-                        {
-                          return Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.black87,
-                              boxShadow:
-                              [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 5.0,
-                                  spreadRadius: 0.5,
-                                  offset: Offset(
-                                    0.7,
-                                    0.7,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            height: 221,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-                              child: Column(
-                                children: [
-
-                                  const SizedBox(height:  11,),
-
-                                  Text(
-                                      (!isDriverAvailable) ? "GO ONLINE NOW" : "GO OFFLINE NOW",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 21,),
-
-                                  Text(
-                                    (!isDriverAvailable)
-                                        ? "You are about to go online, you will become available to receive trip requests from users."
-                                        : "You are about to go offline, you will stop receiving new trip requests from users.",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.white30,
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 25,),
-
-                                  Row(
-                                    children: [
-
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: ()
-                                          {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text(
-                                            "BACK"
-                                          ),
-                                        ),
-                                      ),
-
-                                      const SizedBox(width: 16,),
-
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          onPressed: ()
-                                          {
-                                            if(!isDriverAvailable)
-                                            {
-                                              //go online
-                                              //get driver location updates
-
-                                              Navigator.pop(context);
-
-                                              setState(() {
-                                                colorToShow = Colors.pink;
-                                                titleToShow = "GO OFFLINE NOW";
-                                                isDriverAvailable = true;
-                                              });
-                                            }
-                                            else
-                                            {
-                                              //go offline
-
-                                              Navigator.pop(context);
-
-                                              setState(() {
-                                                colorToShow = Colors.green;
-                                                titleToShow = "GO ONLINE NOW";
-                                                isDriverAvailable = false;
-                                              });
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: (titleToShow == "GO ONLINE NOW")
-                                                ? Colors.green
-                                                : Colors.pink,
-                                          ),
-                                          child: const Text(
-                                              "CONFIRM"
-                                          ),
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorToShow,
-                  ),
-                  child: Text(
-                    titleToShow,
-                  ),
-                ),
-
-              ],
-            ),
-          ),
+            )
           ],
         ),
       ),
