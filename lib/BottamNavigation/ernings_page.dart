@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_flip_clock/flutter_flip_clock.dart';
 
 
 
 class MyApp1 extends StatefulWidget {
-  const MyApp1({Key? key}) : super(key: key);
+  const MyApp1({super.key});
 
   @override
   State<MyApp1> createState() => _MyApp1State();

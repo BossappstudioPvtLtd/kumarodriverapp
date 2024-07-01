@@ -64,6 +64,9 @@ dependencies:
   flutter_flip_clock: ^0.0.1
   slide_countdown: ^1.6.1
   flutter_geofire: ^2.0.3
+  firebase_messaging: ^14.9.4
+  flutter_local_notifications: ^17.2.1
+  app_settings: ^5.1.1
   
 dev_dependencies:
   flutter_test:

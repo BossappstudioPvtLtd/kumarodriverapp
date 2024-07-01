@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:kumari_drivers/Subscription/driver_avl.dart';
 import 'package:kumari_drivers/Subscription/switch_state.dart';
 import 'package:kumari_drivers/onBoding.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:kumari_drivers/Subscription/subscription_provider.dart'; // Make sure to import your provider
 // Import SwitchState
@@ -14,14 +15,30 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-      apiKey: 'AIzaSyBevn7kkdLhblWAVvG6lhLYoDk7C12LPKA',
+      apiKey: 'AIzaSyCH-K_JDF4Sfaa2EL7MKeD0PQ0jPfIQv98',
       appId: '1:1028914323103:android:b2429b3396633ec037ccaa',
       messagingSenderId: '1028914323103',
       projectId: 'bossapp-9fba7',
       authDomain: 'bossapp-9fba7.firebaseapp.com',
       storageBucket: 'bossapp-9fba7.appspot.com',
     ),
+    
   );
+  await Permission.notification.isDenied.then((valueofPermission)
+  {
+    if(valueofPermission)
+    {
+      Permission.notification.request();
+    }
+  });
+
+   await Permission.notification.isDenied.then((valueOfPermission)
+  {
+    if(valueOfPermission)
+    {
+      Permission.notification.request();
+    }
+  });
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -59,7 +76,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Drivers App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

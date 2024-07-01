@@ -4,13 +4,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_clock/flutter_flip_clock.dart';
+import 'package:flutter_geofire/flutter_geofire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kumari_drivers/AuthanticationPages/login.dart';
+import 'package:kumari_drivers/Const/geokey.dart';
 import 'package:kumari_drivers/Subscription/driver_avl.dart';
 import 'package:kumari_drivers/Subscription/subscription.dart';
 import 'package:kumari_drivers/Subscription/subscription_provider.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
+import 'package:kumari_drivers/pushNotification/push_notification_system.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -23,45 +26,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
-  final Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> googleMapCompleterController =
+      Completer<GoogleMapController>();
+  GoogleMapController? controllerGoogleMap;
   Position? currentPositionOfUser;
   Color colorToShow = Colors.green;
   String titleToShow = "GO ONLINE NOW";
   String userName = "";
-
-  static const CameraPosition _kGoogle = CameraPosition(
-    target: LatLng(8.0844, 77.5495),
-    zoom: 14.4746,
-  );
+  bool isDriverAvailable = false;
+  DatabaseReference? newTripRequestReference;
+  late StreamSubscription<Position> positionStreamHomePage;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    getUserInfoAndCheckBlockStatus();
     initializeGeoFireListener();
-    getUserCurrentLocation().then((value) async {
-      debugPrint("${value.latitude} ${value.longitude}");
-
-      // marker added for current users location
-      _markers.add(Marker(
-        markerId: const MarkerId("1"),
-        position: LatLng(value.latitude, value.longitude),
-        infoWindow: const InfoWindow(
-          title: 'My Current Location',
-        ),
-      ));
-
-      // specified current users location
-      CameraPosition cameraPosition = CameraPosition(
-        target: LatLng(value.latitude, value.longitude),
-        zoom: 14,
-      );
-
-      final GoogleMapController controller = await _controller.future;
-      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-      setState(() {});
-    });
+    initializePushNotificationSystem();
+    getUserCurrentLocation();
+    getUserInfoAndCheckBlockStatus();
+   
+    checkSubscriptionTimer();
   }
 
   @override
@@ -75,6 +60,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    positionStreamHomePage.cancel();
     super.dispose();
   }
 
@@ -96,8 +82,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         await FirebaseAuth.instance.signOut();
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (c) => const LoginScreen()));
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("You are blocked. Contact admin: Kumariacabs@gmail.com")));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content:
+                Text("You are blocked. Contact admin: Kumariacabs@gmail.com")));
       }
     } else {
       await FirebaseAuth.instance.signOut();
@@ -105,9 +92,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           context, MaterialPageRoute(builder: (c) => const LoginScreen()));
     }
   }
+  
 
   void initializeGeoFireListener() {
-    // Your logic for GeoFire listener goes here
+    // Your GeoFire initialization code here
   }
 
   void checkSubscriptionTimer() {
@@ -116,24 +104,48 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     final driverAvailability =
         Provider.of<DriverAvailability>(context, listen: false);
 
-    // If subscription timer countdown is zero, set driver's availability to offline
-    if (subscriptionProvider.secondsLeft == 0 &&
-        driverAvailability.isDriverAvailable) {
-      driverAvailability.toggleAvailability();
-    }
+    // Listen to changes in subscriptionProvider.secondsLeft
+    subscriptionProvider.addListener(() {
+      if (subscriptionProvider.secondsLeft == 0 &&
+          driverAvailability.isDriverAvailable) {
+        driverAvailability.toggleAvailability();
+        goOfflineNow();
+        setState(() {
+          isDriverAvailable = false;
+        });
+      }
+    });
+  }
+  
+
+  // Method to go online
+  void goOnlineNow() {
+    Geofire.initialize("onlineDrivers");
+    Geofire.setLocation(
+      FirebaseAuth.instance.currentUser!.uid,
+      currentPositionOfUser!.latitude,
+      currentPositionOfUser!.longitude,
+    );
+
+    newTripRequestReference = FirebaseDatabase.instance
+        .ref()
+        .child("drivers")
+        .child(FirebaseAuth.instance.currentUser!.uid)
+        .child("newTripStatus");
+    newTripRequestReference!.set("waiting");
+
+    newTripRequestReference!.onValue.listen((event) {});
   }
 
-  // on below line we have created the list of markers
-  final List<Marker> _markers = <Marker>[
-    const Marker(
-      markerId: MarkerId('1'),
-      infoWindow: InfoWindow(
-        title: 'My Position',
-      ),
-    ),
-  ];
+  // Method to go offline
+  void goOfflineNow() {
+    Geofire.removeLocation(FirebaseAuth.instance.currentUser!.uid);
+    newTripRequestReference!.onDisconnect();
+    newTripRequestReference!.remove();
+    newTripRequestReference = null;
+  }
 
-  // created method for getting user current location
+  // Method to get user current location
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
         .then((value) {})
@@ -144,28 +156,46 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return await Geolocator.getCurrentPosition();
   }
 
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  // Method to get current live location of driver
+  void getCurrentLiveLocationOfDriver() async {
+    Position positionOfUser = await 
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);currentPositionOfUser = positionOfUser;
+    LatLng positionOfUserInLatLng = LatLng(currentPositionOfUser!.latitude, currentPositionOfUser!.longitude);
+    CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 15);
+    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 
+  setAndGetLocationUpdates() {
+    positionStreamHomePage =Geolocator.getPositionStream().listen((Position position) {
+      currentPositionOfUser = position;if (isDriverAvailable) { Geofire.setLocation(FirebaseAuth.instance.currentUser!.uid,
+          currentPositionOfUser!.latitude,
+          currentPositionOfUser!.longitude,
+        );
+      }
+      LatLng positionLatLng = LatLng(position.latitude, position.longitude);
+      controllerGoogleMap!.animateCamera(CameraUpdate.newLatLng(positionLatLng));
+    });
+  }
+
+  initializePushNotificationSystem()
+  {
+    PushNotificationSystem notificationSystem = PushNotificationSystem();
+    notificationSystem.generateDeviceRegistrationToken(); 
+    notificationSystem.startListeningForNewNotification();
+  }
+
+ 
+
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    initializePushNotificationSystem();
+  }
 
   @override
   Widget build(BuildContext context) {
     final subscriptionProvider = Provider.of<SubscriptionProvider>(context);
     final driverAvailability = Provider.of<DriverAvailability>(context);
-
-    var screenWidth = MediaQuery.of(context).size.width;
-    var isSmallScreen = screenWidth < 600;
-
-    // Check if subscription timer countdown is 0 and toggle availability
-    if (subscriptionProvider.secondsLeft == 0 &&
-        driverAvailability.isDriverAvailable) {
-      driverAvailability.toggleAvailability();
-    }
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -176,13 +206,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ? Padding(
                 padding: const EdgeInsets.only(left: 50),
                 child: AnimatedTextKit(
+                  totalRepeatCount: Duration.secondsPerMinute,
                   animatedTexts: [
                     WavyAnimatedText(
                       'Subscription'.tr(),
                       textStyle: const TextStyle(color: Colors.white),
                     ),
                   ],
-
                   isRepeatingAnimation: true,
                   onTap: () {
                     debugPrint("Tap Event");
@@ -262,6 +292,20 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                           Navigator.pop(context);
                                           driverAvailability
                                               .toggleAvailability();
+                                          if (!isDriverAvailable) {
+                                            // Go online
+                                            goOnlineNow();
+                                            // Get driver location updates
+                                            setAndGetLocationUpdates();
+                                            setState(() {
+                                              isDriverAvailable = true;
+                                            });
+                                          } else {
+                                            goOfflineNow();
+                                            setState(() {
+                                              isDriverAvailable = false;
+                                            });
+                                          }
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: driverAvailability
@@ -315,7 +359,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       duration:
                           Duration(seconds: subscriptionProvider.secondsLeft),
                     )
-                  : SizedBox(), // Placeholder widget if not subscribed
+                  : const SizedBox(), // Placeholder widget if not subscribed
             ),
           ),
           if (subscriptionProvider.secondsLeft == 0)
@@ -343,15 +387,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         child: Stack(
           children: [
             GoogleMap(
-              initialCameraPosition: _kGoogle,
-              markers: Set<Marker>.of(_markers),
-              mapType: MapType.normal,
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+             mapType: MapType.normal,
+            myLocationEnabled: true,
+            initialCameraPosition: googlePlexInitialPosition,
+            onMapCreated: (GoogleMapController mapController) {
+              controllerGoogleMap = mapController;
+
+              googleMapCompleterController.complete(controllerGoogleMap);
+
+                getCurrentLiveLocationOfDriver();
               },
-            ),
+            )
           ],
         ),
       ),
