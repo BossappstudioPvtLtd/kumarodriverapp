@@ -150,15 +150,9 @@ class ProfilePageState extends State<ProfilePage> {
                                                     .toString(),
                                                 photo: "${data['photo']}"
                                                     .toString(),
-                                                carModel:
-                                                    "${data['car_details']['carModel']}"
-                                                        .toString(),
-                                                carSeats: data['car_details']
-                                                        ['carSeats']
-                                                    .toString(),
-                                                carNumber:
-                                                    "${data['car_details']['carNumber']}"
-                                                        .toString(),
+                                                carModel:"${data['car_details']['carModel']}".toString(),
+                                                carSeats: data['car_details']['carSeats'].toString(),
+                                                carNumber:"${data['car_details']['carNumber']}" .toString(),
                                               ),
                                             ),
                                           );
