@@ -29,40 +29,49 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final Completer<GoogleMapController> googleMapCompleterController =
       Completer<GoogleMapController>();
   GoogleMapController? controllerGoogleMap;
-  Position? currentPositionOfUser;
+  Position? currentPositionOfDriver;
   Color colorToShow = Colors.green;
   String titleToShow = "GO ONLINE NOW";
-  String userName = "";
   bool isDriverAvailable = false;
   DatabaseReference? newTripRequestReference;
-  late StreamSubscription<Position> positionStreamHomePage;
+
+
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    initializeGeoFireListener();
+     retrieveCurrentDriverInfo();
     initializePushNotificationSystem();
-    getUserCurrentLocation();
-    getUserInfoAndCheckBlockStatus();
+    
    
-    checkSubscriptionTimer();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
+     getUserCurrentLocation();
       getUserInfoAndCheckBlockStatus();
-    }
+     checkSubscriptionTimer();
   }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    positionStreamHomePage.cancel();
-    super.dispose();
+
+
+  Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) async {
+      await Geolocator.requestPermission();
+      debugPrint("ERROR$error");
+    });
+    return await Geolocator.getCurrentPosition();
   }
+
+  // Method to get current live location of driver
+  void getCurrentLiveLocationOfDriver() async {
+    Position positionOfUser = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);
+    currentPositionOfDriver = positionOfUser;driverCurrentPosition = currentPositionOfDriver;
+    LatLng positionOfUserInLatLng = LatLng(currentPositionOfDriver!.latitude, currentPositionOfDriver!.longitude);
+    CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 15);
+    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
+
+ 
 
   Future<void> getUserInfoAndCheckBlockStatus() async {
     DatabaseReference usersRef = FirebaseDatabase.instance
@@ -92,11 +101,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           context, MaterialPageRoute(builder: (c) => const LoginScreen()));
     }
   }
-  
 
-  void initializeGeoFireListener() {
-    // Your GeoFire initialization code here
-  }
+
 
   void checkSubscriptionTimer() {
     final subscriptionProvider =
@@ -116,15 +122,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       }
     });
   }
-  
 
   // Method to go online
-  void goOnlineNow() {
+ goOnlineNow() {
     Geofire.initialize("onlineDrivers");
     Geofire.setLocation(
       FirebaseAuth.instance.currentUser!.uid,
-      currentPositionOfUser!.latitude,
-      currentPositionOfUser!.longitude,
+      currentPositionOfDriver!.latitude,
+      currentPositionOfDriver!.longitude,
     );
 
     newTripRequestReference = FirebaseDatabase.instance
@@ -137,59 +142,64 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     newTripRequestReference!.onValue.listen((event) {});
   }
 
-  // Method to go offline
-  void goOfflineNow() {
+ 
+
+  // Method to get user current location
+
+  setAndGetLocationUpdates() {
+    positionStreamHomePage =
+        Geolocator.getPositionStream().listen((Position position) {
+      currentPositionOfDriver = position;
+      if (isDriverAvailable) {
+        Geofire.setLocation(
+          FirebaseAuth.instance.currentUser!.uid,
+          currentPositionOfDriver!.latitude,
+          currentPositionOfDriver!.longitude,
+        );
+      }
+      LatLng positionLatLng = LatLng(position.latitude, position.longitude);
+      controllerGoogleMap!
+          .animateCamera(CameraUpdate.newLatLng(positionLatLng));
+    });
+  }
+
+   // Method to go offline
+ goOfflineNow() {
     Geofire.removeLocation(FirebaseAuth.instance.currentUser!.uid);
     newTripRequestReference!.onDisconnect();
     newTripRequestReference!.remove();
     newTripRequestReference = null;
   }
 
-  // Method to get user current location
-  Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission()
-        .then((value) {})
-        .onError((error, stackTrace) async {
-      await Geolocator.requestPermission();
-      debugPrint("ERROR$error");
-    });
-    return await Geolocator.getCurrentPosition();
-  }
-
-  // Method to get current live location of driver
-  void getCurrentLiveLocationOfDriver() async {
-    Position positionOfUser = await 
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.bestForNavigation);currentPositionOfUser = positionOfUser;
-    LatLng positionOfUserInLatLng = LatLng(currentPositionOfUser!.latitude, currentPositionOfUser!.longitude);
-    CameraPosition cameraPosition = CameraPosition(target: positionOfUserInLatLng, zoom: 15);
-    controllerGoogleMap!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-  }
-
-  setAndGetLocationUpdates() {
-    positionStreamHomePage =Geolocator.getPositionStream().listen((Position position) {
-      currentPositionOfUser = position;if (isDriverAvailable) { Geofire.setLocation(FirebaseAuth.instance.currentUser!.uid,
-          currentPositionOfUser!.latitude,
-          currentPositionOfUser!.longitude,
-        );
-      }
-      LatLng positionLatLng = LatLng(position.latitude, position.longitude);
-      controllerGoogleMap!.animateCamera(CameraUpdate.newLatLng(positionLatLng));
-    });
-  }
-
-  initializePushNotificationSystem()
-  {
+  initializePushNotificationSystem() {
     PushNotificationSystem notificationSystem = PushNotificationSystem();
-    notificationSystem.generateDeviceRegistrationToken(); 
-    notificationSystem.startListeningForNewNotification();
+    notificationSystem.generateDeviceRegistrationToken();
+    notificationSystem.startListeningForNewNotification(context);
   }
 
- 
+  retrieveCurrentDriverInfo() async {
+    await FirebaseDatabase.instance.ref()
+        .child("drivers")
+        .child(FirebaseAuth.instance.currentUser!.uid)
+        .once()
+        .then((snap) {
+      driverName  = (snap.snapshot.value as Map)["name"];
+      driverPhone = (snap.snapshot.value as Map)["phone"];
+      driverPhoto = (snap.snapshot.value as Map)["photo"];
+      carModel    = (snap.snapshot.value as Map)["car_details"]["carModel"];
+      carNumber   = (snap.snapshot.value as Map)["car_details"]["carNumber"];
+      carSeats    = (snap.snapshot.value as Map)["car_details"]["carSeats"].toString();
+    });
+   
+    initializePushNotificationSystem();
+    
+  }
 
   @override
   void setState(VoidCallback fn) {
+    // TODO: implement setState
     super.setState(fn);
-    initializePushNotificationSystem();
+     retrieveCurrentDriverInfo();
   }
 
   @override
@@ -387,13 +397,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         child: Stack(
           children: [
             GoogleMap(
-             mapType: MapType.normal,
-            myLocationEnabled: true,
-            initialCameraPosition: googlePlexInitialPosition,
-            onMapCreated: (GoogleMapController mapController) {
-              controllerGoogleMap = mapController;
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              initialCameraPosition: googlePlexInitialPosition,
+              onMapCreated: (GoogleMapController mapController) {
+                controllerGoogleMap = mapController;
 
-              googleMapCompleterController.complete(controllerGoogleMap);
+                googleMapCompleterController.complete(controllerGoogleMap);
 
                 getCurrentLiveLocationOfDriver();
               },

@@ -67,6 +67,12 @@ dependencies:
   firebase_messaging: ^14.9.4
   flutter_local_notifications: ^17.2.1
   app_settings: ^5.1.1
+  assets_audio_player: ^3.1.1
+  google_maps_polyline: ^1.0.3
+  flutter_polyline_points: ^2.1.0
+  url_launcher: ^6.3.0
+  restart_app: ^1.2.1
+
   
 dev_dependencies:
   flutter_test:
@@ -96,6 +102,8 @@ flutter:
      - assets/logo/
      - assets/avatar/
      - assets/translations/
+     - assets/Audio/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

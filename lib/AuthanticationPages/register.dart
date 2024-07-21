@@ -14,7 +14,7 @@ import 'package:kumari_drivers/components/drop_down.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../Methords/common_methords.dart';
-import '../components/loading_dialog.dart';
+import '../Dialog/loading_dialog.dart';
 import 'login.dart';
 
 class Register extends StatefulWidget {
@@ -157,7 +157,7 @@ class RegisterState extends State<Register>
         .child(userFirebase!.uid);
 
     Map driverCarInfo = {
-      "careModel": vehicleModelTextEditingController.text.trim(),
+      "carModel": vehicleModelTextEditingController.text.trim(),
       'carSeats': _carSeats,
       "carNumber": vehicleNumberTextEditingController.text.trim(),
     };

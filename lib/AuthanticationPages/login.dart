@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kumari_drivers/Const/geokey.dart';
 import 'package:kumari_drivers/Methords/common_methords.dart';
-import 'package:kumari_drivers/components/loading_dialog.dart';
+import 'package:kumari_drivers/Dialog/loading_dialog.dart';
 import 'package:kumari_drivers/components/my_Textfield.dart';
 import 'package:kumari_drivers/BottamNavigation/dashbord.dart';
 import 'package:kumari_drivers/AuthanticationPages/register.dart';

@@ -8,7 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 //import 'package:kumari_drivers/components/car_seatsedt.dart';
-import 'package:kumari_drivers/components/loading_dialog.dart';
+import 'package:kumari_drivers/Dialog/loading_dialog.dart';
 import 'package:kumari_drivers/components/material_buttons.dart';
 import 'package:nb_utils/nb_utils.dart';
 

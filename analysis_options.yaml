@@ -12,7 +12,11 @@ analyzer:
     body_might_complete_normally_nullable: ignore
     deprecated_member_use: ignore
     library_private_types_in_public_api: ignore
+    must_be_immutable: ignore
     non_constant_identifier_names: ignore
+    unnecessary_import: ignore
+    unused_element: ignore
+    unused_import: ignore
     unused_local_variable: ignore
     use_build_context_synchronously: ignore
 include: package:flutter_lints/flutter.yaml
